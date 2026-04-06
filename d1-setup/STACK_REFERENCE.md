@@ -1,0 +1,159 @@
+# Meta Views Stack Reference
+
+This is the single source of truth for the site-building stack supported by `wp-theme-toolkit`.
+
+## Stack Definition
+
+The Meta Views Stack is a code-first WordPress site workflow built around these tools:
+
+- LocalWP for local WordPress development
+- Blocksy Pro as the parent theme
+- a Blocksy child theme as the code surface
+- Meta Box AIO for CPTs, fields, groups, repeaters, and MB Views
+- MB Views for Twig, HTML, and CSS rendering
+- Git for version control
+- VS Code, Copilot, Codex, Cursor, or Windsurf for generation and review
+- Element to LLM for live DOM and style capture during refinement
+
+The defining rule: do not rely on a visual page builder as the primary template system. Keep the data model, design tokens, view markup, and CSS legible in plain-text files.
+
+## Canonical Child Theme Structure
+
+```text
+blocksy-child/
+├── style.css
+├── functions.php
+├── _project-context.md
+├── inc/
+│   └── cpt.php
+├── mb-json/
+│   └── [name].mbjson
+└── views/
+    ├── single/
+    ├── archive/
+    ├── sections/
+    └── reference/
+```
+
+Rules:
+- `style.css` contains the child-theme header and the canonical token block
+- `functions.php` loads the parent stylesheet and child includes
+- `_project-context.md` is the operational context file for AI and humans
+- `inc/cpt.php` stores CPT registration snippets
+- `mb-json/` stores reusable field schemas as files
+- `views/` stores local reference copies of all Twig and CSS pasted into MB Views
+
+## Required Project Artifacts
+
+Every project should maintain these artifacts:
+
+1. `_project-context.md`
+2. a placement map inside `_project-context.md`
+3. `mb-json/*.mbjson` files for field groups and repeaters
+4. local reference copies of view Twig and CSS under `views/`
+5. `inc/cpt.php` for CPT registration when CPTs are used
+
+## Minimum Child Theme Boilerplate
+
+### style.css
+
+```css
+/*
+Theme Name: Blocksy Child
+Template: blocksy
+Version: 1.0.0
+Text Domain: blocksy-child
+*/
+
+:root {
+  --content-max-width: 72rem;
+  --content-narrow-width: 48rem;
+  --space-xs: 0.25rem;
+  --space-sm: 0.5rem;
+  --space-md: 1rem;
+  --space-lg: 2rem;
+  --space-xl: 4rem;
+  --space-2xl: 6rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.25rem;
+  --text-2xl: 1.5rem;
+  --text-3xl: 2rem;
+  --text-4xl: clamp(2rem, 5vw, 3.2rem);
+}
+```
+
+### functions.php
+
+```php
+<?php
+/**
+ * Child theme bootstrap.
+ */
+
+add_action( 'wp_enqueue_scripts', function () {
+    wp_enqueue_style(
+        'blocksy-parent-style',
+        get_template_directory_uri() . '/style.css',
+        array(),
+        wp_get_theme( get_template() )->get( 'Version' )
+    );
+
+    wp_enqueue_style(
+        'blocksy-child-style',
+        get_stylesheet_uri(),
+        array( 'blocksy-parent-style' ),
+        wp_get_theme()->get( 'Version' )
+    );
+} );
+
+$cpt_file = get_stylesheet_directory() . '/inc/cpt.php';
+
+if ( file_exists( $cpt_file ) ) {
+    require_once $cpt_file;
+}
+```
+
+### inc/cpt.php
+
+```php
+<?php
+/**
+ * CPT registrations for the child theme.
+ */
+```
+
+## Workflow Loop
+
+Use this sequence for all new work:
+
+1. Plan the page or data model in `_project-context.md`
+2. Generate or update `.mbjson` and `inc/cpt.php` artifacts from the plan
+3. Generate Twig markup for the MB View
+4. Generate CSS that only consumes the documented token system
+5. Paste the Twig and CSS into MB Views
+6. Record the live view name, slug, and placement rule in the placement map
+7. Capture the live result with Element to LLM
+8. Refine Twig and CSS against the real rendered output
+9. Update the local reference copy under `views/`
+
+## Placement Map Rule
+
+MB View assignments and Blocksy Content Block conditions often live in the database. That makes them easy to lose.
+
+For every live assignment, add an entry to the placement map in `_project-context.md` with:
+- artifact name
+- source file or reference path
+- live view name or content block name
+- assigned location
+- conditions
+- notes about dependencies or sequence
+
+## What Not To Do
+
+- Do not use the Meta Box Builder UI as the primary source of truth for fields
+- Do not keep the only copy of Twig or CSS inside the WordPress admin
+- Do not introduce a second spacing system or ad hoc breakpoint set
+- Do not use raw hex values in view CSS
+- Do not blur the boundary between MB Views and Blocksy Content Blocks

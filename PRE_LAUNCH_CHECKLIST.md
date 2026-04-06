@@ -1,0 +1,107 @@
+# Site Launch Checklist
+
+Track bootstrap workflows, build workflows, review workflows, and pre-launch reviews for each site project in one place.
+
+## How to use
+
+1. Copy the template at the bottom for each new project.
+2. Keep one consistently structured entry per project.
+3. When a supported workflow completes successfully, update the matching row immediately.
+4. Use the Notes column when a workflow was intentionally skipped or partially replaced by a project-specific decision.
+
+## Sections per project
+
+- Setup & Build - project bootstrap, session bootstrap, tokens, pages, and CPT work
+- Review Workflows - view review and design-system audits
+- Pre-Launch Reviews - the ordered 01-06 launch sequence
+- Launch Notes - final notes, blockers, or follow-up work
+
+---
+
+## Project: Example Site
+**Primary Theme Root:** /path/to/blocksy-child
+**Started:** 2026-04-06
+**Launch Date:** -
+
+### Setup & Build
+
+| Workflow | Done | Date | Notes |
+|----------|------|------|-------|
+| Project Bootstrap | [ ] | | |
+| Session Bootstrap | [ ] | | |
+| Design Tokens | [ ] | | |
+| New Page Build | [ ] | | |
+| New CPT Build | [ ] | | |
+
+### Review Workflows
+
+| Workflow | Done | Date | Notes |
+|----------|------|------|-------|
+| View Review | [ ] | | |
+| CSS Consistency Audit | [ ] | | |
+| Design System Compliance Audit | [ ] | | |
+
+### Pre-Launch Reviews
+
+| # | Prompt | Done | Date | Notes |
+|---|--------|------|------|-------|
+| 01 | Responsive QA | [ ] | | |
+| 02 | Accessibility Review | [ ] | | |
+| 03 | SEO Review | [ ] | | |
+| 04 | Performance Review | [ ] | | |
+| 05 | Cross-Browser QA | [ ] | | |
+| 06 | Final Checklist | [ ] | | |
+
+### Launch Notes
+
+| Item | Status | Notes |
+|------|--------|-------|
+| Forms tested | Pending | |
+| Analytics connected | Pending | |
+| 404 page verified | Pending | |
+| Redirects verified | Pending | |
+
+---
+
+## Template
+
+```text
+## Project: [site name]
+**Primary Theme Root:** [path]
+**Started:** [YYYY-MM-DD]
+**Launch Date:** -
+
+### Setup & Build
+| Workflow | Done | Date | Notes |
+|----------|------|------|-------|
+| Project Bootstrap | [ ] | | |
+| Session Bootstrap | [ ] | | |
+| Design Tokens | [ ] | | |
+| New Page Build | [ ] | | |
+| New CPT Build | [ ] | | |
+
+### Review Workflows
+| Workflow | Done | Date | Notes |
+|----------|------|------|-------|
+| View Review | [ ] | | |
+| CSS Consistency Audit | [ ] | | |
+| Design System Compliance Audit | [ ] | | |
+
+### Pre-Launch Reviews
+| # | Prompt | Done | Date | Notes |
+|---|--------|------|------|-------|
+| 01 | Responsive QA | [ ] | | |
+| 02 | Accessibility Review | [ ] | | |
+| 03 | SEO Review | [ ] | | |
+| 04 | Performance Review | [ ] | | |
+| 05 | Cross-Browser QA | [ ] | | |
+| 06 | Final Checklist | [ ] | | |
+
+### Launch Notes
+| Item | Status | Notes |
+|------|--------|-------|
+| Forms tested | Pending | |
+| Analytics connected | Pending | |
+| 404 page verified | Pending | |
+| Redirects verified | Pending | |
+```

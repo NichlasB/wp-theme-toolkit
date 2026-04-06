@@ -1,0 +1,106 @@
+===========================================================================
+MODEL DELEGATION GUIDE FOR THE META VIEWS STACK
+===========================================================================
+
+This guide recommends which model to use for each toolkit workflow based on
+the kind of work involved.
+
+Stable delegation logic:
+- Use GPT for exploration, inventories, and planning
+- Use Codex for bounded implementation and pattern-based transformation
+- Use a standards-oriented model for accessibility and written review quality
+- Use a deeper judgment-oriented model for high-stakes launch decisions
+
+---------------------------------------------------------------------------
+CURRENT MODEL LINEUP
+---------------------------------------------------------------------------
+
+- GPT-5.4
+- GPT-5.4 Mini
+- GPT-5.3 Codex
+- Claude Sonnet 4.6
+- Claude Opus 4.6
+
+---------------------------------------------------------------------------
+OPENAI-ONLY SUBSTITUTES
+---------------------------------------------------------------------------
+
+NON-OPENAI MODEL      BEST OPENAI SUBSTITUTE      USE WHEN
+--------------------  --------------------------  -----------------------------------------
+Claude Opus 4.6       GPT-5.4                     Deep judgment, trade-offs, launch risk
+Claude Sonnet 4.6     GPT-5.4                     Standards-heavy review and stronger prose
+Claude Sonnet 4.6     GPT-5.4 Mini                Lighter documentation or bootstrap work
+
+---------------------------------------------------------------------------
+TL;DR: MODEL SELECTION BY TASK
+---------------------------------------------------------------------------
+
+TASK                         MODEL(S)                    REASONING       PATTERN
+---------------------------  --------------------------  --------------  ----------
+Project Bootstrap            GPT-5.4                     High            Single
+Session Bootstrap            GPT-5.4 Mini or GPT-5.4    Medium-High     Single
+Restore Point Workflow       GPT-5.4 Mini or GPT-5.4    Medium-High     Single
+Design Tokens                GPT-5.4 -> GPT-5.3 Codex   High -> Medium  Single
+New Page Build               GPT-5.4 -> GPT-5.3 Codex   High -> Medium  Single
+New CPT Build                GPT-5.4 -> GPT-5.3 Codex   High -> Medium  Single
+View Review                  GPT-5.4                     High            Single
+CSS Consistency Audit        GPT-5.4 -> GPT-5.3 Codex   High -> Medium  Single
+Design System Compliance     GPT-5.4                     High            Single
+Responsive QA                GPT-5.4                     High            Single
+Accessibility Review         Sonnet 4.6 or GPT-5.4      Medium-High     Single
+SEO Review                   GPT-5.4                     High            Single
+Performance Review           GPT-5.4 -> Opus 4.6        High            Single
+Cross-Browser QA             GPT-5.4                     High            Single
+Final Checklist              GPT-5.4                     Medium          Single
+
+---------------------------------------------------------------------------
+WHEN TO USE EACH MODEL
+---------------------------------------------------------------------------
+
+GPT-5.4
+  - project planning and schema definition
+  - session bootstrap and file-tree mapping
+  - review inventories and structured audits
+  - design-token and naming-rule analysis
+
+GPT-5.4 Mini
+  - cheaper bootstrap passes on small or tidy projects
+  - lower-risk restore-point check and create operations
+
+GPT-5.3 Codex
+  - generating or cleaning bounded PHP, Twig, CSS, and mbjson artifacts
+  - pattern-based transformations after the design or audit decision is clear
+
+Claude Sonnet 4.6
+  - accessibility review
+  - standards-heavy written audit output
+
+Claude Opus 4.6
+  - final judgment on harder performance or launch-risk questions
+  - situations where missing a serious issue would be costly
+
+---------------------------------------------------------------------------
+REASONING LEVEL GUIDE
+---------------------------------------------------------------------------
+
+LOW
+- mechanical cleanup
+- repetitive transformations
+
+MEDIUM
+- implementation from a clear plan
+- review work with limited ambiguity
+
+HIGH
+- bootstrap and discovery work
+- schema or workflow design
+- launch-readiness reviews
+
+EXTRA HIGH
+- large or unusually tangled site projects
+- broad audits where the first pass must be especially complete
+
+Default rule:
+- Start with GPT-5.4 at High when you are still mapping the work.
+- Drop to Codex once the change is bounded.
+- Escalate to stronger judgment models for accessibility or high-stakes launch calls.

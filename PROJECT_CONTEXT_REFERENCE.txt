@@ -1,0 +1,134 @@
+=======================================================================
+WP THEME TOOLKIT - PROJECT CONTEXT REFERENCE
+=======================================================================
+Generated: April 6, 2026
+Purpose: Compact repository map and context-transfer reference for AI
+assistants working with the Meta Views Stack toolkit.
+
+=======================================================================
+PROJECT OVERVIEW
+=======================================================================
+
+Repository Name: wp-theme-toolkit
+Description: A toolkit of prompts, guides, examples, and helper scripts for
+             AI-assisted WordPress site building with Blocksy, Meta Box AIO,
+             and MB Views.
+
+Purpose: Provide structured workflow documents for project bootstrap,
+         session bootstrap, design-token generation, new page and CPT
+         creation, view review, and launch-readiness QA.
+
+Target Audience: WordPress developers building sites with the Meta Views
+                 Stack in VS Code, Cursor, Windsurf, Copilot, or Codex-like
+                 environments.
+
+=======================================================================
+CURRENT SHAPE
+=======================================================================
+
+- Repository type: Toolkit / documentation-first repo
+- Dominant file types: Markdown, text references, helper scripts
+- Runtime code surface: Minimal; operational logic mainly lives in
+  d2-scripts/restore-point.ps1 and d2-scripts/restore-point.sh
+- Target domain: Blocksy child-theme site projects using Meta Box AIO and
+  MB Views, not generic theme-authoring or plugin internals
+
+Core workflow order:
+1. PROJECT_BOOTSTRAP_PROMPT.md for new projects
+2. SESSION_BOOTSTRAP_PROMPT.md for new chats
+3. RESTORE_POINT_PROMPT.md before edit-heavy work
+4. Build prompts in ds2-build/
+5. Review prompts in ds3-review/
+6. Pre-launch prompts 01-06 in ds4-pre-launch/
+
+=======================================================================
+FOLDER STRUCTURE
+=======================================================================
+
+wp-theme-toolkit/
+|-- README.md
+|-- readme.txt
+|-- CHANGELOG.md
+|-- _TASK_RUNNER.md
+|-- PROJECT_CONTEXT_REFERENCE.txt
+|-- PRE_LAUNCH_CHECKLIST.md
+|-- TOOLKIT_QA_REFERENCE.md
+|-- LICENSE
+|
+|-- d1-setup/
+|   |-- STACK_REFERENCE.md
+|   |-- IDE_SETUP_GUIDE.md
+|   |-- PROJECT_CONTEXT_TEMPLATE.md
+|   `-- 00_REFERENCE_SYSTEM_PROMPTS_FILES_STRUCTURE.txt
+|
+|-- d2-scripts/
+|   |-- restore-point.ps1
+|   `-- restore-point.sh
+|
+|-- d3-guides/
+|   |-- DESIGN_SYSTEM_GUIDE.md
+|   |-- TWIG_PATTERNS_GUIDE.md
+|   |-- BLOCKSY_INTEGRATION_GUIDE.md
+|   |-- ELEMENT_TO_LLM_WORKFLOW.md
+|   |-- WORKFLOW_QUICK_REFERENCE.md
+|   `-- MODEL_DELEGATION_GUIDE.txt
+|
+|-- d4-prompts/
+|   |-- ds1-setup/
+|   |-- ds2-build/
+|   |-- ds3-review/
+|   `-- ds4-pre-launch/
+|
+`-- d5-examples/
+    |-- example-project-context.md
+    `-- example-landing-page-build.md
+
+=======================================================================
+HIGH-VALUE FILES
+=======================================================================
+
+_TASK_RUNNER.md
+  - Entry point for all prompt runs
+  - Defines target-selection rules, task syntax, and output expectations
+
+README.md
+  - Main overview, quick start, repository structure, and workflow order
+
+PRE_LAUNCH_CHECKLIST.md
+  - Per-project tracking sheet for bootstrap, review, and pre-launch runs
+
+PROJECT_CONTEXT_TEMPLATE.md
+  - Canonical schema for the target project's _project-context.md
+
+STACK_REFERENCE.md
+  - Single source of truth for the Meta Views Stack workflow and child-theme
+    file structure
+
+DESIGN_SYSTEM_GUIDE.md
+  - Authoritative design-token, layout, naming, and CSS rule set
+
+TWIG_PATTERNS_GUIDE.md
+  - Authoritative MB Views Twig conventions and examples
+
+=======================================================================
+WORKING ASSUMPTIONS
+=======================================================================
+
+- The toolkit itself is not normally the target of its own prompts.
+- The preferred target is a site repository or Blocksy child-theme root that
+  contains style.css, functions.php, _project-context.md, mb-json/, or views/.
+- Local copies of MB View Twig and CSS should be kept in the target repo even
+  when the live rendering is pasted into the WordPress admin.
+- Template assignments that live in the database must also be recorded in a
+  placement map inside _project-context.md.
+
+=======================================================================
+DOCUMENTATION RISKS TO WATCH
+=======================================================================
+
+- The toolkit depends on consistent path references across README, quick
+  reference, task runner, and prompts.
+- The design system guide is the highest-leverage file; weak rules there will
+  propagate directly into generated views.
+- Database-resident MB Views and Blocksy assignments are easy to lose if the
+  placement map is not kept current.
