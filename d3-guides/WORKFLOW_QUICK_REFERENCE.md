@@ -26,6 +26,15 @@ This is the fast route map for operating `wp-theme-toolkit` day to day.
 4.  Continue with build, review, or pre-launch workflows
 ```
 
+## Git Operations
+
+```text
+1.  Confirm whether the target is wp-theme-toolkit or a child-theme repo
+2.  @GIT_OPERATIONS_PROMPT.md run
+3.  Choose Option A, B, C, or D
+4.  For child-theme repos, keep database-only content out of the Git summary
+```
+
 Strict-order variant:
 
 ```text
@@ -113,4 +122,10 @@ Run launch sequence starting at step 01:
 
 ```text
 @01-RESPONSIVE_QA_PROMPT.md run
+```
+
+Git operations:
+
+```text
+@GIT_OPERATIONS_PROMPT.md run
 ```

@@ -21,14 +21,17 @@ The defining rule: do not rely on a visual page builder as the primary template 
 
 ```text
 blocksy-child/
+├── .gitignore
 ├── style.css
 ├── functions.php
 ├── _project-context.md
 ├── inc/
 │   └── cpt.php
 ├── mb-json/
+│   ├── .gitkeep
 │   └── [name].mbjson
 └── views/
+    ├── .gitkeep
     ├── single/
     ├── archive/
     ├── sections/
@@ -37,11 +40,12 @@ blocksy-child/
 
 Rules:
 - `style.css` contains the child-theme header and the canonical token block
-- `functions.php` loads the parent stylesheet and child includes
+- `functions.php` loads the parent stylesheet and conditionally loads child includes
 - `_project-context.md` is the operational context file for AI and humans
 - `inc/cpt.php` stores CPT registration snippets
-- `mb-json/` stores reusable field schemas as files
-- `views/` stores local reference copies of all Twig and CSS pasted into MB Views
+- `mb-json/` stores reusable field schemas as files and should contain a `.gitkeep` file until real files exist
+- `views/` stores local reference copies of all Twig and CSS pasted into MB Views and should contain a `.gitkeep` file until real files exist
+- `.gitignore` excludes editor folders and temporary session files from the child-theme repository
 
 ## Required Project Artifacts
 
@@ -52,6 +56,10 @@ Every project should maintain these artifacts:
 3. `mb-json/*.mbjson` files for field groups and repeaters
 4. local reference copies of view Twig and CSS under `views/`
 5. `inc/cpt.php` for CPT registration when CPTs are used
+
+For faster new project setup, build from the reusable LocalWP blueprint in `LOCALWP_BLUEPRINT_SETUP.md`.
+
+Git should enter the project only after the child-theme scaffold exists. See `d3-guides/GIT_WORKFLOW_GUIDE.md` for the exact timing.
 
 ## Minimum Child Theme Boilerplate
 
@@ -115,6 +123,8 @@ if ( file_exists( $cpt_file ) ) {
 }
 ```
 
+Keep the `inc/cpt.php` include conditional. A fresh blueprint or early project scaffold may not have real CPT registrations yet.
+
 ### inc/cpt.php
 
 ```php
@@ -125,6 +135,8 @@ if ( file_exists( $cpt_file ) ) {
 ```
 
 ## Workflow Loop
+
+For new projects, use `LOCALWP_BLUEPRINT_SETUP.md` to standardize the LocalWP starter site and `d3-guides/GIT_WORKFLOW_GUIDE.md` to introduce Git at the right point.
 
 Use this sequence for all new work:
 

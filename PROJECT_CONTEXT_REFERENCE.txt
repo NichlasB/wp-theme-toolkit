@@ -1,7 +1,7 @@
 =======================================================================
 WP THEME TOOLKIT - PROJECT CONTEXT REFERENCE
 =======================================================================
-Generated: April 6, 2026
+Generated: April 9, 2026
 Purpose: Compact repository map and context-transfer reference for AI
 assistants working with the Meta Views Stack toolkit.
 
@@ -10,13 +10,15 @@ PROJECT OVERVIEW
 =======================================================================
 
 Repository Name: wp-theme-toolkit
-Description: A toolkit of prompts, guides, examples, and helper scripts for
-             AI-assisted WordPress site building with Blocksy, Meta Box AIO,
-             and MB Views.
+Description: A documentation-first toolkit of prompts, guides, examples,
+             checklists, and helper scripts for AI-assisted WordPress site
+             building with Blocksy, Meta Box AIO, MB Views, and GridPane
+             deployment.
 
 Purpose: Provide structured workflow documents for project bootstrap,
-         session bootstrap, design-token generation, new page and CPT
-         creation, view review, and launch-readiness QA.
+         session bootstrap, restore points, design-token generation, new
+         page and CPT creation, view review, launch-readiness QA, deployment,
+         Git operations, and post-launch Git guidance.
 
 Target Audience: WordPress developers building sites with the Meta Views
                  Stack in VS Code, Cursor, Windsurf, Copilot, or Codex-like
@@ -30,8 +32,10 @@ CURRENT SHAPE
 - Dominant file types: Markdown, text references, helper scripts
 - Runtime code surface: Minimal; operational logic mainly lives in
   d2-scripts/restore-point.ps1 and d2-scripts/restore-point.sh
-- Target domain: Blocksy child-theme site projects using Meta Box AIO and
-  MB Views, not generic theme-authoring or plugin internals
+- Target domain: Blocksy child-theme site projects using Meta Box AIO,
+  MB Views, and Git-backed child-theme code deployment
+- Deployment coverage: documented GridPane deployment workflow plus a
+  per-project deployment checklist
 
 Core workflow order:
 1. PROJECT_BOOTSTRAP_PROMPT.md for new projects
@@ -40,6 +44,8 @@ Core workflow order:
 4. Build prompts in ds2-build/
 5. Review prompts in ds3-review/
 6. Pre-launch prompts 01-06 in ds4-pre-launch/
+7. GRIDPANE_DEPLOYMENT_PROMPT.md in ds5-deploy/
+8. GIT_OPERATIONS_PROMPT.md in ds6-git/
 
 =======================================================================
 FOLDER STRUCTURE
@@ -52,12 +58,14 @@ wp-theme-toolkit/
 |-- _TASK_RUNNER.md
 |-- PROJECT_CONTEXT_REFERENCE.txt
 |-- PRE_LAUNCH_CHECKLIST.md
+|-- DEPLOYMENT_CHECKLIST.md
 |-- TOOLKIT_QA_REFERENCE.md
 |-- LICENSE
 |
 |-- d1-setup/
 |   |-- STACK_REFERENCE.md
 |   |-- IDE_SETUP_GUIDE.md
+|   |-- LOCALWP_BLUEPRINT_SETUP.md
 |   |-- PROJECT_CONTEXT_TEMPLATE.md
 |   `-- 00_REFERENCE_SYSTEM_PROMPTS_FILES_STRUCTURE.txt
 |
@@ -69,6 +77,8 @@ wp-theme-toolkit/
 |   |-- DESIGN_SYSTEM_GUIDE.md
 |   |-- TWIG_PATTERNS_GUIDE.md
 |   |-- BLOCKSY_INTEGRATION_GUIDE.md
+|   |-- GIT_WORKFLOW_GUIDE.md
+|   |-- IMAGE_ASSET_WORKFLOW.md
 |   |-- ELEMENT_TO_LLM_WORKFLOW.md
 |   |-- WORKFLOW_QUICK_REFERENCE.md
 |   `-- MODEL_DELEGATION_GUIDE.txt
@@ -77,11 +87,18 @@ wp-theme-toolkit/
 |   |-- ds1-setup/
 |   |-- ds2-build/
 |   |-- ds3-review/
-|   `-- ds4-pre-launch/
+|   |-- ds4-pre-launch/
+|   |-- ds5-deploy/
+|   |   `-- GRIDPANE_DEPLOYMENT_PROMPT.md
+|   `-- ds6-git/
+|       `-- GIT_OPERATIONS_PROMPT.md
 |
 `-- d5-examples/
     |-- example-project-context.md
     `-- example-landing-page-build.md
+
+Temporary local workflow artifact that may appear in the repo root:
+- session-context.tmp.md
 
 =======================================================================
 HIGH-VALUE FILES
@@ -89,46 +106,78 @@ HIGH-VALUE FILES
 
 _TASK_RUNNER.md
   - Entry point for all prompt runs
-  - Defines target-selection rules, task syntax, and output expectations
+  - Defines target-selection rules, task syntax, checklist expectations,
+    and prompt-family scope
 
 README.md
-  - Main overview, quick start, repository structure, and workflow order
-
-PRE_LAUNCH_CHECKLIST.md
-  - Per-project tracking sheet for bootstrap, review, and pre-launch runs
-
-PROJECT_CONTEXT_TEMPLATE.md
-  - Canonical schema for the target project's _project-context.md
+  - Main overview, quick start, repository structure, V1 scope, and prompt
+    entry points
 
 STACK_REFERENCE.md
-  - Single source of truth for the Meta Views Stack workflow and child-theme
-    file structure
+  - Single source of truth for the Meta Views Stack workflow, child-theme
+    scaffold, `.gitkeep` rule, and conditional `inc/cpt.php` loading
+
+LOCALWP_BLUEPRINT_SETUP.md
+  - Reusable LocalWP starter specification for new projects before Git begins
+
+GIT_WORKFLOW_GUIDE.md
+  - Exact timing for `git init`, what the child-theme repo tracks, and the
+    two-channel split between code and database-backed content
 
 DESIGN_SYSTEM_GUIDE.md
-  - Authoritative design-token, layout, naming, and CSS rule set
+  - Authoritative design-token, layout, naming, responsive, and multi-section
+    page guidance
 
 TWIG_PATTERNS_GUIDE.md
-  - Authoritative MB Views Twig conventions and examples
+  - Authoritative MB Views Twig conventions, page-specific field-group ID
+    targeting, and multi-section page shorthand
+
+BLOCKSY_INTEGRATION_GUIDE.md
+  - Boundary rules for Blocksy layout ownership, sidebars, content blocks,
+    MB Views, and the HTML widget escape hatch
+
+PRE_LAUNCH_CHECKLIST.md
+  - Per-project tracking sheet for bootstrap, review, and launch-readiness
+    workflows before deployment
+
+DEPLOYMENT_CHECKLIST.md
+  - Per-project phase tracker for GridPane deployment after pre-launch passes
+
+GRIDPANE_DEPLOYMENT_PROMPT.md
+  - Eight-phase deployment workflow covering Git deploy, DB migration,
+    search-replace, go-live, and post-launch update rhythm
+
+GIT_OPERATIONS_PROMPT.md
+  - Git commit, push, tag, dry-run, and release workflow for either the
+    toolkit repo or a child-theme/site repository
 
 =======================================================================
 WORKING ASSUMPTIONS
 =======================================================================
 
-- The toolkit itself is not normally the target of its own prompts.
+- The toolkit itself is not normally the target of its own prompts, except
+  when GIT_OPERATIONS_PROMPT.md is used intentionally against this repo.
 - The preferred target is a site repository or Blocksy child-theme root that
   contains style.css, functions.php, _project-context.md, mb-json/, or views/.
 - Local copies of MB View Twig and CSS should be kept in the target repo even
   when the live rendering is pasted into the WordPress admin.
 - Template assignments that live in the database must also be recorded in a
   placement map inside _project-context.md.
+- Git enters the lifecycle after the child-theme scaffold exists and before
+  real code generation begins.
+- Code moves through Git; content and settings move through a database
+  migration workflow.
 
 =======================================================================
 DOCUMENTATION RISKS TO WATCH
 =======================================================================
 
-- The toolkit depends on consistent path references across README, quick
-  reference, task runner, and prompts.
-- The design system guide is the highest-leverage file; weak rules there will
-  propagate directly into generated views.
-- Database-resident MB Views and Blocksy assignments are easy to lose if the
-  placement map is not kept current.
+- The toolkit depends on consistent path references across README, task
+  runner, quick reference, prompt files, and both checklists.
+- The design system and Blocksy integration guides are the highest-leverage
+  architecture files; weak rules there propagate directly into generated
+  views and placement decisions.
+- Deployment guidance must stay honest about scope, and Git automation must
+  stay scoped to repository-tracked assets rather than database-only content.
+- Database-resident MB Views, Blocksy assignments, and HTML widget content are
+  easy to lose if placement decisions and deployment notes are not recorded.

@@ -163,6 +163,66 @@ Rules:
 - Use Flexbox for one-dimensional alignment only
 - Never use floats for layout
 
+## Multi-Section Page Pattern
+
+Rule:
+
+One field group, one MB View, all sections in a single Twig template.
+
+Each page section should be a real `<section>` element inside the same view, not a separate MB View, when the sections belong only to that page.
+
+Follow this rule when:
+- the page contains multiple distinct content sections that belong to one page, such as a homepage, about page, or services page
+- the sections are unique to that page and are not expected to be reused elsewhere
+
+Split into separate views when:
+- a section needs to be reused on other pages, in which case it should move to its own view and be assigned through a Blocksy Content Block
+- the page grows beyond roughly 8 sections or the Twig file becomes difficult to scan, in which case split by logical grouping
+
+Field naming convention:
+
+```text
+hero_headline, hero_subheadline, hero_cta_text, hero_cta_url, hero_bg_image
+features_heading, features_intro, features_items
+testimonial_quote, testimonial_author, testimonial_photo
+cta_heading, cta_button_text, cta_button_url
+```
+
+Prefix every field with its section name so the WordPress editor groups fields visually and the Twig template remains readable.
+
+Twig structure convention:
+
+```twig
+{# ── Hero ── #}
+<section class="mv-home--hero">
+  ...
+</section>
+
+{# ── Features ── #}
+<section class="mv-home--features">
+  ...
+</section>
+
+{# ── Testimonial ── #}
+<section class="mv-home--testimonial">
+  ...
+</section>
+
+{# ── CTA Banner ── #}
+<section class="mv-home--cta">
+  ...
+</section>
+```
+
+CSS organization convention:
+- organize the view CSS by section with matching comment dividers
+- keep section-specific styles together instead of scattering them across the file
+- keep the class naming aligned to `.mv-{page}--{section}` and `.mv-{page}--{section}-{element}`
+
+Cross-reference:
+- see `TWIG_PATTERNS_GUIDE.md` for the Twig-side shorthand rule
+- see `IMAGE_ASSET_WORKFLOW.md` when a hero, card, or CTA section depends on isolated transparent PNG assets
+
 ## Component Naming Convention
 
 Every section or component uses the `.mv-{name}` prefix.

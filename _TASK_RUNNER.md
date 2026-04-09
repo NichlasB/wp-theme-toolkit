@@ -6,9 +6,11 @@ This file provides execution context for AI assistants running tasks from this t
 
 ## Overview
 
-This toolkit contains build, review, and launch-readiness tasks for WordPress site projects built with the Meta Views Stack.
+This toolkit contains build, review, launch-readiness, and deployment tasks for WordPress site projects built with the Meta Views Stack.
 
 Important: the `wp-theme-toolkit/` folder is normally not the target of these tasks. It contains the instructions, not the site code.
+
+Exception: `d4-prompts/ds6-git/GIT_OPERATIONS_PROMPT.md` may target either `wp-theme-toolkit/` itself or a child-theme/site repository in the same workspace.
 
 ---
 
@@ -39,6 +41,10 @@ A target site project or child theme is usually identified by one or more of the
 6. `inc/cpt.php` or equivalent registration files
 
 ### Before Starting Any Task
+
+For site-facing prompts, use the rules below.
+
+For `GIT_OPERATIONS_PROMPT.md`, the valid target may be either `wp-theme-toolkit/` itself or a site/child-theme repository.
 
 1. Scan the workspace for likely site targets, excluding `wp-theme-toolkit/`.
 2. If one likely target exists, proceed with it and confirm to the user.
@@ -72,6 +78,8 @@ They may still create files, update files, or produce temporary context artifact
 - 04-PERFORMANCE_REVIEW_PROMPT.md
 - 05-CROSS_BROWSER_QA_PROMPT.md
 - 06-FINAL_CHECKLIST_PROMPT.md
+- GRIDPANE_DEPLOYMENT_PROMPT.md
+- GIT_OPERATIONS_PROMPT.md
 
 ---
 
@@ -116,6 +124,9 @@ Prompt-to-checklist mapping:
 - `05-CROSS_BROWSER_QA_PROMPT.md` -> `Pre-Launch Reviews` -> `05 Cross-Browser QA`
 - `06-FINAL_CHECKLIST_PROMPT.md` -> `Pre-Launch Reviews` -> `06 Final Checklist`
 
+Deployment workflows:
+- `GRIDPANE_DEPLOYMENT_PROMPT.md` updates `DEPLOYMENT_CHECKLIST.md`, not `PRE_LAUNCH_CHECKLIST.md`
+
 ---
 
 ## File Modification Rules
@@ -147,6 +158,8 @@ wp-theme-toolkit/   <- normally not the target
 │   ├── ds1-setup/      <- project bootstrap, session bootstrap, restore point
 │   ├── ds2-build/      <- page, CPT, and token generation
 │   ├── ds3-review/     <- view and CSS audits
-│   └── ds4-pre-launch/ <- launch-readiness sequence
+│   ├── ds4-pre-launch/ <- launch-readiness sequence
+│   ├── ds5-deploy/     <- deployment workflow prompts
+│   └── ds6-git/        <- git operations and release workflow prompt
 └── other-folders/  <- target site projects or child themes
 ```

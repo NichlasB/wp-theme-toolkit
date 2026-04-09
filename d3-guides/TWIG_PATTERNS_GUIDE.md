@@ -69,6 +69,47 @@ Rules:
 - loop variables should use descriptive names like `item`, `member`, or `card`
 - keep list markup semantic when the content is a real list
 
+## Multi-Section Page Views
+
+For pages like home, about, or services, keep one field group and one MB View when the sections belong only to that page.
+
+Use Twig comment dividers to separate each section and keep every section inside the same template as its own `<section>` block.
+
+```twig
+{# ── Hero ── #}
+<section class="mv-home--hero">
+  ...
+</section>
+
+{# ── Features ── #}
+<section class="mv-home--features">
+  ...
+</section>
+```
+
+Field names should stay section-prefixed so the template remains easy to scan, for example `hero_headline` and `features_heading`.
+
+See `DESIGN_SYSTEM_GUIDE.md` for the full multi-section page pattern, split rules, and CSS organization rule.
+
+## Field Group Page ID Targeting
+
+When a field group should appear on one specific page, use the `include` rule with a placeholder page ID first.
+
+```json
+"include": {
+  "ID": [0]
+}
+```
+
+Workflow:
+1. Start with `"ID": [0]` as a placeholder in the `.mbjson` file
+2. Create the page in WordPress first
+3. Note the real page ID from the URL, for example `post=42`
+4. Update the `.mbjson` to use the real ID, for example `"ID": [42]`
+5. Reload the page editor so the field group appears on that page
+
+If the fields do not appear, check the real page ID first. This is a common two-step setup issue.
+
 ## Shortcodes
 
 ### Static shortcode

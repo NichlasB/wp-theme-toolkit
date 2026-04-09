@@ -24,6 +24,8 @@ The goal: build launch-ready WordPress sites with a repeatable AI workflow, whil
 - a clear boundary between MB Views template logic and Blocksy Content Block placement
 - reusable session bootstrap and restore-point workflows
 - ordered review and pre-launch quality gates before a site goes live
+- a documented GridPane deployment flow and Git timing guidance for the child theme lifecycle
+- a Git operations workflow for committing, pushing, and releasing either the toolkit repo or a target child-theme repo
 
 ## Quick Start
 
@@ -33,12 +35,12 @@ Add this repository and your target site project to the same IDE workspace.
 
 ### 2. Starting A New Site Project
 
-1. Read `d1-setup/STACK_REFERENCE.md`
-2. Read `d3-guides/DESIGN_SYSTEM_GUIDE.md`
-3. Read `d1-setup/PROJECT_CONTEXT_TEMPLATE.md`
-4. Run `@PROJECT_BOOTSTRAP_PROMPT.md run`
-5. Review the generated `_project-context.md`, token block, and placement map
-6. Continue with `@DESIGN_TOKENS_PROMPT.md run`, `@NEW_PAGE_PROMPT.md run`, or `@NEW_CPT_PROMPT.md run`
+1. Read `d1-setup/STACK_REFERENCE.md`, `d1-setup/LOCALWP_BLUEPRINT_SETUP.md`, `d3-guides/DESIGN_SYSTEM_GUIDE.md`, and `d1-setup/PROJECT_CONTEXT_TEMPLATE.md`
+2. Run `@PROJECT_BOOTSTRAP_PROMPT.md run`
+3. Continue with `@DESIGN_TOKENS_PROMPT.md run`, `@NEW_PAGE_PROMPT.md run`, or `@NEW_CPT_PROMPT.md run`
+4. Run the review prompts and the pre-launch sequence `@01-RESPONSIVE_QA_PROMPT.md run` through `@06-FINAL_CHECKLIST_PROMPT.md run`
+5. Run `@GRIDPANE_DEPLOYMENT_PROMPT.md run`
+6. Run `@GIT_OPERATIONS_PROMPT.md run` when you want assisted commit, push, or release help for either the toolkit repo or the child theme repo
 
 ### 3. Starting A New Chat On An Existing Site
 
@@ -64,6 +66,7 @@ Run these prompts in order before launch:
 wp-theme-toolkit/
 |
 |-- CHANGELOG.md
+|-- DEPLOYMENT_CHECKLIST.md
 |-- LICENSE
 |-- PRE_LAUNCH_CHECKLIST.md
 |-- PROJECT_CONTEXT_REFERENCE.txt
@@ -75,6 +78,7 @@ wp-theme-toolkit/
 |-- d1-setup/
 |   |-- 00_REFERENCE_SYSTEM_PROMPTS_FILES_STRUCTURE.txt
 |   |-- IDE_SETUP_GUIDE.md
+|   |-- LOCALWP_BLUEPRINT_SETUP.md
 |   |-- PROJECT_CONTEXT_TEMPLATE.md
 |   `-- STACK_REFERENCE.md
 |
@@ -86,6 +90,8 @@ wp-theme-toolkit/
 |   |-- BLOCKSY_INTEGRATION_GUIDE.md
 |   |-- DESIGN_SYSTEM_GUIDE.md
 |   |-- ELEMENT_TO_LLM_WORKFLOW.md
+|   |-- GIT_WORKFLOW_GUIDE.md
+|   |-- IMAGE_ASSET_WORKFLOW.md
 |   |-- MODEL_DELEGATION_GUIDE.txt
 |   |-- TWIG_PATTERNS_GUIDE.md
 |   `-- WORKFLOW_QUICK_REFERENCE.md
@@ -106,13 +112,19 @@ wp-theme-toolkit/
 |   |   |-- DESIGN_SYSTEM_COMPLIANCE_PROMPT.md
 |   |   `-- VIEW_REVIEW_PROMPT.md
 |   |
-|   `-- ds4-pre-launch/
-|       |-- 01-RESPONSIVE_QA_PROMPT.md
-|       |-- 02-ACCESSIBILITY_REVIEW_PROMPT.md
-|       |-- 03-SEO_REVIEW_PROMPT.md
-|       |-- 04-PERFORMANCE_REVIEW_PROMPT.md
-|       |-- 05-CROSS_BROWSER_QA_PROMPT.md
-|       `-- 06-FINAL_CHECKLIST_PROMPT.md
+|   |-- ds4-pre-launch/
+|   |   |-- 01-RESPONSIVE_QA_PROMPT.md
+|   |   |-- 02-ACCESSIBILITY_REVIEW_PROMPT.md
+|   |   |-- 03-SEO_REVIEW_PROMPT.md
+|   |   |-- 04-PERFORMANCE_REVIEW_PROMPT.md
+|   |   |-- 05-CROSS_BROWSER_QA_PROMPT.md
+|   |   `-- 06-FINAL_CHECKLIST_PROMPT.md
+|   |
+|   |-- ds5-deploy/
+|   |   `-- GRIDPANE_DEPLOYMENT_PROMPT.md
+|   |
+|   `-- ds6-git/
+|       `-- GIT_OPERATIONS_PROMPT.md
 |
 `-- d5-examples/
     |-- example-landing-page-build.md
@@ -127,6 +139,8 @@ wp-theme-toolkit/
 4. Record placement decisions in the assignment map
 5. Refine the live result with Element to LLM
 6. Run review prompts before launch
+7. Deploy with the GridPane workflow and track rollout in `DEPLOYMENT_CHECKLIST.md`
+8. Use the Git operations prompt when you want assisted commit, push, tag, or release work for the toolkit repo or a child-theme repo
 
 ## V1 Scope
 
@@ -136,12 +150,15 @@ Included in v1:
 - project bootstrap and session bootstrap
 - design tokens, page creation, CPT creation, view reviews, and pre-launch QA
 - restore-point safety workflow
+- deployment checklist and GridPane deployment workflow
+- Git workflow guidance for scaffold timing and code updates
+- Git operations prompt for toolkit and child-theme repositories
 
 Deferred from v1:
 - generic WordPress theme-authoring guidance outside the Meta Views Stack
 - theme.json strategy
 - WP.org theme-review compliance workflows
-- deployment, git automation, and maintenance prompt families
+- maintenance prompt families
 
 ## Using With AI IDEs
 
@@ -157,6 +174,14 @@ Reference prompts directly in chat:
 
 ```text
 @VIEW_REVIEW_PROMPT.md run
+```
+
+```text
+@GRIDPANE_DEPLOYMENT_PROMPT.md run
+```
+
+```text
+@GIT_OPERATIONS_PROMPT.md run
 ```
 
 See `d1-setup/IDE_SETUP_GUIDE.md` and `d3-guides/WORKFLOW_QUICK_REFERENCE.md` for the operating sequence.
