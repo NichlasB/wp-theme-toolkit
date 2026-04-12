@@ -57,12 +57,15 @@ Do not turn this into a full-project audit unless the user asked for that. Keep 
 
 ### 4. Content-model alignment
 - [ ] The Twig field access matches the intended single or archive context
+- [ ] Main-query fields use `post.*` and explicit lookups use `mb.rwmb_meta()`
+- [ ] No normal custom fields are accessed as `mb.field_id`
 - [ ] Optional fields are guarded with sensible conditionals
 - [ ] Image fields use a defensive pattern
 - [ ] Shortcode usage is rendered with the documented `do_shortcode` pattern when needed
 
 ### 5. Placement and reuse
 - [ ] The placement decision is clear
+- [ ] Full-width intent is explicit; replacement-content views use `alignfull` on the root wrapper when they should break out of Blocksy's constrained shell
 - [ ] The placement map entry exists or is updated
 - [ ] The local reference copy reflects the live MB View content
 - [ ] Similar reusable fragments are not drifting from the project standard

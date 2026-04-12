@@ -90,6 +90,11 @@ Do not dump the full file tree unless the project is tiny. Prefer a trimmed path
 - placement map status
 - obvious missing relationships between CPTs, fields, and views
 
+### 3a. Runtime validation note
+- if CPT work, archive work, or taxonomy-driven homepage sections appear likely, check whether the expected CPTs are actually visible in wp-admin or otherwise confirmed active at runtime
+- if the codebase contains staged or feature-flagged CPT registrations, note the active source of truth and any risk of double registration or disabled admin menus
+- if a new CPT was recently enabled, note whether a permalink flush may be required
+
 ### 4. Design-system surface
 - whether the token block exists
 - whether the naming rules appear consistent
@@ -103,6 +108,7 @@ Do not dump the full file tree unless the project is tiny. Prefer a trimmed path
 ### 6. Risks and unknowns
 - identify the few uncertainties most likely to matter in later turns
 - flag missing `_project-context.md`, missing placement map, or no local view copies as operational risks
+- include missing runtime confirmation for expected CPTs as a risk when relevant
 
 ---
 
@@ -138,6 +144,11 @@ Write the file in this structure:
 - Local view files: [summary]
 - Placement map: [summary]
 
+## 3a. Runtime Validation
+- CPT visibility: [confirmed / unconfirmed / blocked]
+- Active registration source: [summary]
+- Notes: [brief note]
+
 ## 4. Design System Status
 - Token block: [present / missing]
 - Placement map: [present / missing / partial]
@@ -158,6 +169,7 @@ Write the file in this structure:
 
 Keep the file concise and scannable.
 Aim for something that is genuinely useful as a session reference, not a full audit.
+When runtime confirmation is not possible from the current environment, say so explicitly and recommend the smallest manual check needed in wp-admin.
 
 ---
 

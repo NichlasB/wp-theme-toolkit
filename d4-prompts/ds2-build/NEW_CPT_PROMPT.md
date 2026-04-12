@@ -69,6 +69,9 @@ Naming rules:
 ### 2. Register the CPT
 - add a clear CPT registration snippet to `inc/cpt.php`
 - keep labels human-readable and slugs machine-stable
+- decide the canonical registration source before adding migration flags or staged replacements
+- if a feature flag is used, make the active source obvious and document how double registration will be avoided
+- after registration, confirm the CPT is visible in wp-admin and note whether permalinks should be flushed
 
 ### 3. Create the Meta Box schema
 - generate the `.mbjson` file with stable field IDs
@@ -78,7 +81,8 @@ Naming rules:
 - generate single-view Twig and CSS
 - generate archive-view Twig and CSS
 - keep both aligned to the design system
-- use `mb.*` for single context and `post.*` for archive context
+- use `post.*` for main-query field output and `mb.rwmb_meta()` for explicit page or post lookups
+- do not output normal custom fields as `mb.field_id`
 - keep local reference copies in files even if the live views are created in admin
 
 ### 5. Record the assignment plan

@@ -60,6 +60,22 @@ These tools are often combined:
 4. Apply location rules or place it through a Content Block
 5. Record the assignment immediately
 
+## Full-Width MB Views
+
+When an MB View replaces the main content area, it still renders inside Blocksy's content shell.
+
+If the design should break edge to edge, add `alignfull` to the outermost wrapper of the view, for example:
+
+```twig
+<main class="mv-home alignfull">
+	...
+</main>
+```
+
+Use this only when the design intentionally needs to break out of the constrained content width.
+
+Check the live markup if a view still looks capped unexpectedly. A common cause is the default WordPress or Blocksy constrained wrapper around `.entry-content`, which will keep the custom view narrow until the root element is treated as full width.
+
 ## Sidebar Ownership
 
 Rule:
@@ -134,4 +150,5 @@ Important constraint for the AI:
 - styling views with hardcoded colors instead of Blocksy palette variables
 - duplicating the same data-driven section in multiple Content Blocks without a shared local reference copy
 - trying to make MB Views own the theme sidebar shell instead of letting Blocksy manage it
+- forgetting `alignfull` on a root view wrapper when a replacement-content MB View is supposed to render full width
 - pasting static custom widget code into the database without noting the decision in project context when it matters operationally

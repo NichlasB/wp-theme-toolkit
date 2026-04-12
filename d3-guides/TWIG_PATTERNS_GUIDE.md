@@ -4,35 +4,54 @@ This guide defines the default Twig conventions for MB Views in the Meta Views S
 
 ## Core Rule
 
-Keep Twig predictable. Prefer direct field access, explicit conditionals, and small, readable blocks over clever template logic.
+Keep Twig predictable. Use the current MB Views context object for field output and reserve `mb.*` for helper calls, custom queries, and explicit Meta Box lookups.
+
+## MB Views Context Rule
+
+`mb` is the PHP-function proxy inside MB Views. It is not the default container for normal custom-field output.
+
+Use these rules:
+- use `post.field_id` for fields exposed by the current main-query item in a singular or archive view
+- use `posts` and `post` inside archive loops
+- use `mb.rwmb_meta('field_id', '', post.ID ?: mb.get_queried_object_id())` when you need an explicit page or post lookup, especially in external template files or helper fragments
+- never write normal field output as `mb.field_id`
 
 ## Field Access
 
 ### Text field
 
 ```twig
-<h2 class="mv-team--name">{{ mb.team_name }}</h2>
+<h2 class="mv-team--name">{{ post.team_name }}</h2>
 ```
 
 ### Rich text field
 
 ```twig
-<div class="mv-team--bio">{{ mb.team_bio }}</div>
+<div class="mv-team--bio">{{ post.team_bio }}</div>
 ```
 
 ### URL field
 
 ```twig
-<a class="mv-team--link" href="{{ mb.team_profile_url }}">View profile</a>
+<a class="mv-team--link" href="{{ post.team_profile_url }}">View profile</a>
+```
+
+### Explicit page lookup
+
+```twig
+{% set current_page_id = post.ID ?: mb.get_queried_object_id() %}
+{% set hero_heading = mb.rwmb_meta('home_hero_title_part_1', '', current_page_id) ?: 'Raw' %}
+
+<h1 class="mv-home--hero-title">{{ hero_heading }}</h1>
 ```
 
 ## Image Pattern
 
 ```twig
-{% set photo = mb.team_photo %}
+{% set photo = post.team_photo %}
 
 {% if photo %}
-  <img class="mv-team--photo" src="{{ photo.url }}" alt="{{ photo.alt ?: mb.team_name }}">
+  <img class="mv-team--photo" src="{{ photo.url }}" alt="{{ photo.alt ?: post.team_name }}">
 {% endif %}
 ```
 
@@ -44,8 +63,8 @@ Rules:
 ## Conditionals
 
 ```twig
-{% if mb.team_role %}
-  <p class="mv-team--role">{{ mb.team_role }}</p>
+{% if post.team_role %}
+  <p class="mv-team--role">{{ post.team_role }}</p>
 {% endif %}
 ```
 
@@ -54,9 +73,9 @@ Use conditionals for optional fields, not for every line of output.
 ## Repeater And Group Loops
 
 ```twig
-{% if mb.team_links %}
+{% if post.team_links %}
   <ul class="mv-team--links">
-    {% for item in mb.team_links %}
+    {% for item in post.team_links %}
       <li class="mv-team--links-item">
         <a href="{{ item.url }}">{{ item.label }}</a>
       </li>
@@ -121,7 +140,7 @@ If the fields do not appear, check the real page ID first. This is a common two-
 ### Shortcode stored in a field
 
 ```twig
-{{ function('do_shortcode', mb.contact_form_shortcode) }}
+{{ function('do_shortcode', post.contact_form_shortcode) }}
 ```
 
 ### Shortcode inside archive context
@@ -132,7 +151,7 @@ If the fields do not appear, check the real page ID first. This is a common two-
 
 ## Archive Context
 
-When rendering archive items, use `posts` and `post`, not `mb`.
+When rendering the main query, use `post` for the current item and `posts` for archive loops. Use `mb.*` only for helper calls and explicit field lookups.
 
 ```twig
 {% for post in posts %}
@@ -146,16 +165,17 @@ When rendering archive items, use `posts` and `post`, not `mb`.
 ```
 
 Rules:
-- single views use `mb.*`
+- singular main-query fields use `post.*`
 - archive loops use `post.*`
+- explicit page or post lookups use `mb.rwmb_meta()`
 - post links use `post.url`
 - post titles use `post.title`
 
 ## Fallback Pattern
 
 ```twig
-{% if mb.team_quote %}
-  <blockquote class="mv-team--quote">{{ mb.team_quote }}</blockquote>
+{% if post.team_quote %}
+  <blockquote class="mv-team--quote">{{ post.team_quote }}</blockquote>
 {% else %}
   <p class="mv-team--quote mv-team--quote-is-empty">No quote available.</p>
 {% endif %}
@@ -180,7 +200,7 @@ Match Twig classes to the design-system naming convention:
 ```twig
 <section class="mv-team">
   <div class="mv-team--card">
-    <h2 class="mv-team--name">{{ mb.team_name }}</h2>
+    <h2 class="mv-team--name">{{ post.team_name }}</h2>
   </div>
 </section>
 ```
@@ -190,4 +210,5 @@ Match Twig classes to the design-system naming convention:
 - deeply nested conditionals when the content model should be simplified instead
 - ad hoc class names that do not match the design system
 - mixing `mb` and `post` access patterns in the same context without reason
+- writing normal field output as `mb.field_id`
 - outputting media fields without null checks

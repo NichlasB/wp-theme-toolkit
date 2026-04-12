@@ -26,7 +26,7 @@ All real code generation and refinement should happen after this point so every 
 - `style.css`
 - `functions.php`
 - `inc/`
-- `mb-json/`
+- tracked `.mbjson` files under `mb-json/`
 - `views/` local reference copies
 - `_project-context.md`
 - `.gitignore`
@@ -85,9 +85,14 @@ Thumbs.db
 .vscode/
 .idea/
 
+# Meta Box export copies
+mb-json/*.json
+
 # Session context files
 session-context.tmp.md
 ```
+
+Track `.mbjson` files as the canonical Meta Box schema source and ignore duplicate `.json` export copies to prevent drift.
 
 Keep `.gitkeep` in empty folders such as `mb-json/` and `views/` so a fresh scaffold clones correctly.
 

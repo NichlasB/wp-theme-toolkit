@@ -64,6 +64,8 @@ If live MB View creation is part of the task, keep the file copy as the source-o
 
 ### 3. Generate the view artifacts
 - generate Twig markup using the naming rules
+- decide whether field output comes from the main-query `post.*` context or explicit `mb.rwmb_meta()` lookups
+- do not output normal custom fields as `mb.field_id`
 - generate CSS that only uses the token system and Blocksy palette variables
 - keep the markup semantic and the layout patterns aligned to the design system
 

@@ -43,7 +43,7 @@ Rules:
 - `functions.php` loads the parent stylesheet and conditionally loads child includes
 - `_project-context.md` is the operational context file for AI and humans
 - `inc/cpt.php` stores CPT registration snippets
-- `mb-json/` stores reusable field schemas as files and should contain a `.gitkeep` file until real files exist
+- `mb-json/` stores reusable field schemas as tracked `.mbjson` files and should contain a `.gitkeep` file until real files exist
 - `views/` stores local reference copies of all Twig and CSS pasted into MB Views and should contain a `.gitkeep` file until real files exist
 - `.gitignore` excludes editor folders and temporary session files from the child-theme repository
 
@@ -150,6 +150,11 @@ Use this sequence for all new work:
 8. Refine Twig and CSS against the real rendered output
 9. Update the local reference copy under `views/`
 
+During steps 3 and 8, confirm the MB Views data-access pattern is correct:
+- use `post.*` for main-query field output
+- use `mb.rwmb_meta()` for explicit page or post lookups
+- do not write normal custom fields as `mb.field_id`
+
 ## Placement Map Rule
 
 MB View assignments and Blocksy Content Block conditions often live in the database. That makes them easy to lose.
@@ -165,7 +170,9 @@ For every live assignment, add an entry to the placement map in `_project-contex
 ## What Not To Do
 
 - Do not use the Meta Box Builder UI as the primary source of truth for fields
+- Do not track duplicate Meta Box `.json` export twins alongside canonical `.mbjson` files
 - Do not keep the only copy of Twig or CSS inside the WordPress admin
 - Do not introduce a second spacing system or ad hoc breakpoint set
 - Do not use raw hex values in view CSS
+- Do not output normal custom fields as `mb.field_id`; use `post.*` or `mb.rwmb_meta()`
 - Do not blur the boundary between MB Views and Blocksy Content Blocks

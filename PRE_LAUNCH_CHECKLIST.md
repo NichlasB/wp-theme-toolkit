@@ -108,6 +108,51 @@ Track bootstrap workflows, build workflows, review workflows, and pre-launch rev
 
 ---
 
+## Project: DrMorses.TV
+**Primary Theme Root:** C:\Users\Captain\Local Sites\drmorsestv\app\public\wp-content\themes\blocksy-child
+**Started:** 2026-04-09
+**Launch Date:** -
+
+### Setup & Build
+
+| Workflow | Done | Date | Notes |
+|----------|------|------|-------|
+| Project Bootstrap | [x] | 2026-04-09 | Existing child theme normalized; canonical token block, context file, scaffold folders, and checklist entry created/updated. |
+| Session Bootstrap | [x] | 2026-04-12 | `session-context.tmp.md` written to child theme root; active build state, homepage focus, partial placement map. |
+| Design Tokens | [ ] | | |
+| New Page Build | [ ] | | |
+| New CPT Build | [ ] | | |
+
+### Review Workflows
+
+| Workflow | Done | Date | Notes |
+|----------|------|------|-------|
+| View Review | [ ] | | |
+| CSS Consistency Audit | [ ] | | |
+| Design System Compliance Audit | [ ] | | |
+
+### Pre-Launch Reviews
+
+| # | Prompt | Done | Date | Notes |
+|---|--------|------|------|-------|
+| 01 | Responsive QA | [ ] | | |
+| 02 | Accessibility Review | [ ] | | |
+| 03 | SEO Review | [ ] | | |
+| 04 | Performance Review | [ ] | | |
+| 05 | Cross-Browser QA | [ ] | | |
+| 06 | Final Checklist | [ ] | | |
+
+### Launch Notes
+
+| Item | Status | Notes |
+|------|--------|-------|
+| Forms tested | Pending | |
+| Analytics connected | Pending | |
+| 404 page verified | Pending | |
+| Redirects verified | Pending | |
+
+---
+
 ## Template
 
 ```text
