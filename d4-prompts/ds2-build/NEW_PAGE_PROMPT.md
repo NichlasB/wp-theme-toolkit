@@ -44,6 +44,7 @@ Create or update as needed:
 - a local Twig reference file under `views/`
 - a local CSS reference file under `views/` or paired reference notes
 - a `.mbjson` file when new fields are required
+- `functions.php` when the project uses tracked `.mbjson` schemas without duplicate `.json` copies and still needs the `mbb_json_files` bridge
 - the placement map entry for the new page artifact
 
 If live MB View creation is part of the task, keep the file copy as the source-of-truth reference even if the final paste happens in WordPress admin.
@@ -60,6 +61,7 @@ If live MB View creation is part of the task, keep the file copy as the source-o
 ### 2. Decide whether new fields are required
 - reuse existing fields where practical
 - add new `.mbjson` only when the content really needs structured data
+- if the project keeps `.mbjson` only, confirm `functions.php` exposes those files to Meta Box Builder through `mbb_json_files`
 - avoid creating fields for content that is simpler as static view markup
 
 ### 3. Generate the view artifacts
@@ -78,6 +80,7 @@ If live MB View creation is part of the task, keep the file copy as the source-o
 - confirm no hardcoded colors are introduced
 - confirm no off-scale spacing values are introduced
 - confirm only `900px` and `600px` breakpoints are used
+- confirm any new `.mbjson` fields will still load in wp-admin when `mb-json/` exists and `.json` twins are intentionally ignored
 
 ---
 

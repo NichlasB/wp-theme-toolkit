@@ -94,6 +94,22 @@ session-context.tmp.md
 
 Track `.mbjson` files as the canonical Meta Box schema source and ignore duplicate `.json` export copies to prevent drift.
 
+Important: Meta Box Builder local-file mode scans `*.json` by default. If the project intentionally keeps only tracked `.mbjson` files, add this bridge to `functions.php` so field groups still load in wp-admin:
+
+```php
+add_filter( 'mbb_json_files', static function ( $files ) {
+	$mbjson_files = glob( get_stylesheet_directory() . '/mb-json/*.mbjson' );
+
+	if ( false === $mbjson_files || empty( $mbjson_files ) ) {
+		return $files;
+	}
+
+	return array_values( array_unique( array_merge( $files, $mbjson_files ) ) );
+} );
+```
+
+Without that bridge, Meta Box can show `File not found` or `No JSON available` and may stop loading the field groups from the editor even though the tracked `.mbjson` files exist in Git.
+
 Keep `.gitkeep` in empty folders such as `mb-json/` and `views/` so a fresh scaffold clones correctly.
 
 ## Cross-Reference

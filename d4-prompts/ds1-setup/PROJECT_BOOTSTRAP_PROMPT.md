@@ -62,7 +62,7 @@ Create or update these artifacts in the target project:
 2. child theme directories: `inc/`, `mb-json/`, `views/`
 3. view subdirectories when practical: `views/sections/`, `views/single/`, `views/archive/`, `views/reference/`
 4. `style.css` token block when it does not exist yet
-5. `functions.php` child-theme bootstrap when it does not exist yet
+5. `functions.php` child-theme bootstrap when it does not exist yet, including the `mbb_json_files` bridge when the project uses tracked `.mbjson` schemas without duplicate `.json` copies
 6. `inc/cpt.php` placeholder when it does not exist
 7. placement map section inside `_project-context.md`
 
@@ -110,6 +110,7 @@ If the child theme does not exist yet:
 - ensure `style.css`, `functions.php`, `inc/cpt.php`, `mb-json/`, and `views/` exist
 - create the view subdirectories when useful for immediate work
 - keep boilerplate aligned with `d1-setup/STACK_REFERENCE.md`
+- if `mb-json/` is part of the scaffold and `.mbjson` is the canonical format, register those files through `mbb_json_files` in `functions.php`
 
 ### 4. Add the first token block
 - add the canonical token block to `style.css`
@@ -124,6 +125,7 @@ If the child theme does not exist yet:
 - confirm `_project-context.md` exists and contains the placement map section
 - confirm the token block exists in `style.css`
 - confirm `functions.php` and `inc/cpt.php` are present when needed
+- confirm a `.mbjson`-only scaffold still loads field groups in Meta Box local-file mode because the `mbb_json_files` bridge exists
 - confirm the next workflow is obvious from the generated artifact set
 
 ---
@@ -134,6 +136,7 @@ If the child theme does not exist yet:
 - do not leave placement decisions undocumented
 - do not invent alternate spacing or breakpoint systems
 - do not rely on the Meta Box UI as the only source of truth
+- do not create a `.mbjson`-only scaffold without the `mbb_json_files` compatibility bridge in `functions.php`
 - do not create placeholder content that conflicts with the actual brief
 - do not create deployment or launch files that are out of v1 scope
 

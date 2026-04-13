@@ -103,4 +103,5 @@ Use this file as the canonical schema for each target project's `_project-contex
 - Keep this file in the target project root
 - Update the placement map after every live assignment change
 - Treat the token block as the canonical source for spacing and type scale
+- If the project tracks `.mbjson` without duplicate `.json` export twins, note the `mbb_json_files` bridge in `functions.php` so future sessions know how Meta Box local-file mode is being satisfied
 - Do not let the only source of truth live in the WordPress admin

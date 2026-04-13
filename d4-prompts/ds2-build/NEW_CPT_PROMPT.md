@@ -44,6 +44,7 @@ Treat `_project-context.md` as the naming and modeling source of truth unless th
 Create or update:
 - `inc/cpt.php`
 - one or more `.mbjson` files in `mb-json/`
+- `functions.php` when the project needs the `mbb_json_files` bridge for tracked `.mbjson` schemas
 - local reference Twig and CSS files for the single and archive views
 - `_project-context.md`
 - placement map entries for both single and archive usage
@@ -76,6 +77,7 @@ Naming rules:
 ### 3. Create the Meta Box schema
 - generate the `.mbjson` file with stable field IDs
 - keep groups and repeaters explicit rather than burying structure in vague generic fields
+- if the project keeps `.mbjson` files without duplicate `.json` copies, confirm `functions.php` exposes them to Meta Box Builder through `mbb_json_files`
 
 ### 4. Create the views
 - generate single-view Twig and CSS
@@ -91,6 +93,7 @@ Naming rules:
 
 ### 6. Validate the artifact set
 - confirm the CPT registration, `.mbjson`, views, and placement map agree with each other
+- confirm the project will still load the CPT field group in wp-admin when `mb-json/` exists and `.json` twins are not tracked
 - confirm no hardcoded colors or unsupported breakpoints were introduced
 - confirm the naming is consistent across PHP, JSON, Twig, CSS, and project context
 

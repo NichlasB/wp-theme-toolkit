@@ -21,3 +21,29 @@ A: Yes. Keep local reference copies of Twig and CSS in the target repo even when
 
 ### Q: What are the only supported responsive breakpoints in v1?
 A: `900px` for tablet and `600px` for mobile.
+
+### Q: Why do Meta Box field groups disappear or show `File not found` / `No JSON available` in a `.mbjson`-only project?
+A: Meta Box Builder switches into local-file mode as soon as the project has an `mb-json/` directory, but by default it scans only `*.json`. If the project tracks only canonical `.mbjson` files, the field groups can disappear from the editor even though the schema files exist in Git. The fix is to keep `.mbjson` as the source of truth and expose those files through `mbb_json_files` in `functions.php`:
+
+```php
+add_filter( 'mbb_json_files', static function ( $files ) {
+	$mbjson_files = glob( get_stylesheet_directory() . '/mb-json/*.mbjson' );
+
+	if ( false === $mbjson_files || empty( $mbjson_files ) ) {
+		return $files;
+	}
+
+	return array_values( array_unique( array_merge( $files, $mbjson_files ) ) );
+} );
+```
+
+Quick diagnosis checklist:
+- confirm the project has an `mb-json/` directory
+- confirm the tracked schema files end in `.mbjson`
+- confirm the field groups disappear in the editor or the Meta Box list shows `File not found` / `No JSON available`
+- confirm `functions.php` does or does not contain the `mbb_json_files` bridge
+
+Do not restore duplicate `.json` twins as the long-term fix unless the project intentionally wants Meta Box's default `.json` workflow.
+
+### Q: What does `Sync available` mean after the fields come back?
+A: Meta Box can now see both the local schema file and the database field group, and it believes they differ. In a file-first workflow, review the diff and sync intentionally. The important part is that the field group is loading again; `Sync available` is a state to review, not the original failure mode.

@@ -40,7 +40,7 @@ blocksy-child/
 
 Rules:
 - `style.css` contains the child-theme header and the canonical token block
-- `functions.php` loads the parent stylesheet and conditionally loads child includes
+- `functions.php` loads the parent stylesheet, conditionally loads child includes, and exposes tracked `.mbjson` field-group files to Meta Box Builder through `mbb_json_files` when the project does not keep duplicate `.json` twins
 - `_project-context.md` is the operational context file for AI and humans
 - `inc/cpt.php` stores CPT registration snippets
 - `mb-json/` stores reusable field schemas as tracked `.mbjson` files and should contain a `.gitkeep` file until real files exist
@@ -116,6 +116,16 @@ add_action( 'wp_enqueue_scripts', function () {
     );
 } );
 
+add_filter( 'mbb_json_files', static function ( $files ) {
+    $mbjson_files = glob( get_stylesheet_directory() . '/mb-json/*.mbjson' );
+
+    if ( false === $mbjson_files || empty( $mbjson_files ) ) {
+        return $files;
+    }
+
+    return array_values( array_unique( array_merge( $files, $mbjson_files ) ) );
+} );
+
 $cpt_file = get_stylesheet_directory() . '/inc/cpt.php';
 
 if ( file_exists( $cpt_file ) ) {
@@ -141,7 +151,7 @@ For new projects, use `LOCALWP_BLUEPRINT_SETUP.md` to standardize the LocalWP st
 Use this sequence for all new work:
 
 1. Plan the page or data model in `_project-context.md`
-2. Generate or update `.mbjson` and `inc/cpt.php` artifacts from the plan
+2. Generate or update `.mbjson` and `inc/cpt.php` artifacts from the plan, and keep the `mbb_json_files` bridge in `functions.php` when `.json` twins are intentionally not tracked
 3. Generate Twig markup for the MB View
 4. Generate CSS that only consumes the documented token system
 5. Paste the Twig and CSS into MB Views
@@ -170,7 +180,7 @@ For every live assignment, add an entry to the placement map in `_project-contex
 ## What Not To Do
 
 - Do not use the Meta Box Builder UI as the primary source of truth for fields
-- Do not track duplicate Meta Box `.json` export twins alongside canonical `.mbjson` files
+- Do not track duplicate Meta Box `.json` export twins alongside canonical `.mbjson` files, but do not omit the `mbb_json_files` bridge in `functions.php` when the project keeps `.mbjson` only
 - Do not keep the only copy of Twig or CSS inside the WordPress admin
 - Do not introduce a second spacing system or ad hoc breakpoint set
 - Do not use raw hex values in view CSS

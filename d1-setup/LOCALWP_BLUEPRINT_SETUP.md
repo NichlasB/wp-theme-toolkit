@@ -36,6 +36,8 @@ This removes repetitive setup work and makes `PROJECT_BOOTSTRAP_PROMPT.md` start
 
 `functions.php` in the scaffold must load `inc/cpt.php` conditionally so a fresh blueprint does not break before any CPT code exists.
 
+If the scaffold keeps Meta Box schemas as tracked `.mbjson` files without duplicate `.json` copies, `functions.php` must also expose those `.mbjson` files to Meta Box Builder through `mbb_json_files`; otherwise Meta Box local-file mode looks only for `*.json` and field groups can disappear from the editor.
+
 ## Child Theme Scaffold Structure
 
 ```text
@@ -55,6 +57,7 @@ blocksy-child/
 Notes:
 - `mb-json/` and `views/` need `.gitkeep` so Git tracks the empty folders in a fresh scaffold
 - `inc/cpt.php` can remain a placeholder file with only the opening PHP tag and docblock until real CPT registrations exist
+- if the project tracks `.mbjson` only, add the `mbb_json_files` bridge to `functions.php` from the start instead of waiting for the first field-group sync issue
 - keep the scaffold aligned with `STACK_REFERENCE.md`
 
 ### Minimum `functions.php` pattern
@@ -80,6 +83,16 @@ add_action( 'wp_enqueue_scripts', function () {
         wp_get_theme()->get( 'Version' )
     );
 } );
+
+    add_filter( 'mbb_json_files', static function ( $files ) {
+      $mbjson_files = glob( get_stylesheet_directory() . '/mb-json/*.mbjson' );
+
+      if ( false === $mbjson_files || empty( $mbjson_files ) ) {
+        return $files;
+      }
+
+      return array_values( array_unique( array_merge( $files, $mbjson_files ) ) );
+    } );
 
 $cpt_file = get_stylesheet_directory() . '/inc/cpt.php';
 
