@@ -54,6 +54,15 @@ Rules:
 - Never use `rgb()`, `rgba()`, `hsl()`, or named colors in view CSS
 - If a new color role is needed, map it to an existing Blocksy palette slot and record the meaning in `_project-context.md`
 
+## Global Interaction States
+
+Sitewide interaction states such as text selection belong in the shared child-theme layer, not in page-level MB View CSS.
+
+Rules:
+- keep `::selection` and similar sitewide chrome states in `style.css` tokens or another globally loaded child-theme stylesheet
+- if Blocksy already exposes a variable for that state, set the Blocksy variable instead of only adding a lower-specificity selector in view CSS
+- inspect computed styles before troubleshooting a sitewide state from component CSS; the active value may be coming from a parent-theme variable or a more specific shared selector
+
 ## Typography Rules
 
 Use the documented token steps for type size and rely on Blocksy's global font-family settings for font selection.

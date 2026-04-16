@@ -83,6 +83,7 @@
 | Team Single | views/single/team-member-single.twig | view-team-single | MB View | Single: team-member | none | primary single template |
 | Team Archive | views/archive/team-member-archive.twig | view-team-archive | MB View | Archive: team-member | none | archive cards and intro |
 | Home Hero | views/sections/home-hero.twig | Home Hero | Blocksy Content Block | Front page before content | page is home | CTA links to contact page |
+| Global Footer | views/sections/site-footer.twig | Global Footer | Blocksy Footer Template | Sitewide footer shell | all front-end pages | Content Block can render `[mbv name="sections/site-footer.twig"]`; add `alignfull` to the root wrapper if the design should break out of the constrained block wrapper |
 
 ## 8. Active Layout Patterns
 - Section wrapper

@@ -47,3 +47,10 @@ Do not restore duplicate `.json` twins as the long-term fix unless the project i
 
 ### Q: What does `Sync available` mean after the fields come back?
 A: Meta Box can now see both the local schema file and the database field group, and it believes they differ. In a file-first workflow, review the diff and sync intentionally. The important part is that the field group is loading again; `Sync available` is a state to review, not the original failure mode.
+
+### Q: Why does a child-theme CSS change sometimes look ignored even when the file is loaded?
+A: Check three things in order:
+
+1. Inspect computed styles in DevTools. Blocksy or WordPress may be driving the surface through a shared variable or a stronger selector such as `body ::selection` or `#reply-title`.
+2. If the parent theme is styling through variables, override those variables in the shared child-theme layer such as `style.css` or another globally loaded stylesheet. If the parent theme is using a more specific selector, match or exceed that specificity in the child theme.
+3. Confirm child CSS and JS assets are versioned by file modification time instead of only the static theme version header, otherwise the browser can keep serving stale files during local iteration.

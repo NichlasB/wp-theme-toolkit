@@ -12,6 +12,9 @@ The format is based on Keep a Changelog.
 - Clarified MB Views Twig data-access rules across the Twig guide, stack reference, page-build prompt, and view-review prompt so normal custom fields are read from `post.*` or explicit `mb.rwmb_meta()` lookups instead of `mb.field_id`
 - Corrected stale CPT prompt guidance so MB Views field access uses `post.*` or explicit `mb.rwmb_meta()` lookups instead of `mb.*` for normal single-context fields
 - Added Blocksy full-width MB View guidance and review checks so replacement-content views use `alignfull` intentionally when they need to escape the constrained content shell
+- Updated the child-theme scaffold examples so child CSS and JS assets use filemtime-based versioning during local development instead of only the static theme version header
+- Added Blocksy troubleshooting guidance for parent-theme variables and higher-specificity selectors such as `body ::selection` and `#reply-title`
+- Added design-system and Q&A guidance for sitewide interaction states so selection colors are set in the shared child-theme layer instead of page-level CSS
 - Added CPT build guardrails around canonical registration source, migration flags, wp-admin visibility, and permalink flushing
 - Added a runtime-validation note to the session bootstrap flow so expected CPT visibility, registration source, and permalink-flush risk are checked earlier in new sessions
 - Declared `.mbjson` as the canonical tracked Meta Box schema format and added guidance to ignore duplicate `.json` export copies to prevent repo drift

@@ -17,6 +17,7 @@ Blocksy Content Blocks bridge the two when custom output needs to appear in Bloc
 | Standard layout with widgets, menus, columns | Pure Blocksy |
 | Mostly Blocksy plus one custom-designed section | Blocksy plus HTML widget with AI-generated code |
 | Custom block reused across multiple pages | Blocksy Content Block |
+| Sitewide custom footer or header that should stay Git-tracked | Blocksy Footer/Header Template Content Block plus MB Views shortcode or file-backed view |
 | Fully custom layout with editable fields | MB View plus Settings Page assigned through a Content Block |
 | Layout pulling dynamic data such as live counts or taxonomy-aware output | MB View with Twig queries |
 | Replace the main content area of a single or archive | MB View with location rules |
@@ -44,12 +45,31 @@ background: var(--theme-palette-color-6);
 color: var(--theme-palette-color-1);
 ```
 
+## Theme Variables And Specificity
+
+When a style change appears to do nothing, do not assume the child stylesheet failed to load.
+
+Check the live computed styles first.
+
+Common Blocksy or WordPress patterns:
+- theme-wide behaviors can be driven by Blocksy variables and selectors such as `body ::selection`
+- WordPress comments and other shared surfaces can use high-specificity selectors such as `#reply-title`
+- the browser may still be serving stale child-theme CSS or JS if asset versions never change during local development
+
+Working rule:
+1. Inspect the live selector and computed styles in DevTools
+2. If the parent theme is styling through Blocksy variables, override those variables in the shared child-theme layer such as `style.css` or another globally loaded stylesheet
+3. If the parent theme is styling through a more specific selector, match or exceed that specificity in the child theme and keep the override scoped to the intended surface
+4. If the rule still does not update, verify the child asset URL changes when the file changes instead of using only the static theme version header
+
+Use this pattern for global states such as text selection and for theme-owned UI such as comment headings, not just for page-section CSS.
+
 ## Content Blocks And MB Views Together
 
 These tools are often combined:
 
 1. MB View renders the data-driven card, hero, or archive markup
-2. Blocksy Content Block controls where the object appears
+2. Blocksy Content Block controls where the object appears, including dedicated Header Template and Footer Template assignments
 3. `_project-context.md` records the relationship
 
 ## Recommended Working Pattern
@@ -59,6 +79,31 @@ These tools are often combined:
 3. Create the live MB View in WordPress admin
 4. Apply location rules or place it through a Content Block
 5. Record the assignment immediately
+
+## Footer And Header Templates
+
+Pattern:
+
+For a sitewide custom footer or header, prefer Blocksy's dedicated Footer Template or Header Template content block instead of a page-scoped MB View or a large database-only HTML block.
+
+Recommended setup:
+1. Keep the Blocksy Content Block thin and treat it as the placement layer
+2. Keep the real Twig, CSS, and JS in the child theme or site repo
+3. Render that file-backed output through an MB Views shortcode or a live MB View
+4. Record both the Content Block name and the underlying source file in `_project-context.md`
+
+If the project registers `mbv_fs_paths`, MB Views can render a child-theme Twig file directly from a Shortcode block inside the template, for example:
+
+```text
+[mbv name="sections/site-footer.twig"]
+```
+
+Use this when:
+- the footer or header needs custom layout but should remain globally owned by Blocksy
+- the markup should stay Git-tracked instead of living only in WordPress admin
+- the same object will be refined repeatedly over time
+
+Do not use this pattern when a small static HTML widget is enough.
 
 ## Full-Width MB Views
 
@@ -75,6 +120,14 @@ If the design should break edge to edge, add `alignfull` to the outermost wrappe
 Use this only when the design intentionally needs to break out of the constrained content width.
 
 Check the live markup if a view still looks capped unexpectedly. A common cause is the default WordPress or Blocksy constrained wrapper around `.entry-content`, which will keep the custom view narrow until the root element is treated as full width.
+
+This applies inside Blocksy Content Blocks and Footer/Header Templates as well. Those surfaces often render inside a Gutenberg constrained wrapper, so a full-bleed section still needs `alignfull` on the outermost element, for example:
+
+```twig
+<section class="mv-site-footer alignfull">
+	...
+</section>
+```
 
 ## Sidebar Ownership
 
@@ -151,4 +204,8 @@ Important constraint for the AI:
 - duplicating the same data-driven section in multiple Content Blocks without a shared local reference copy
 - trying to make MB Views own the theme sidebar shell instead of letting Blocksy manage it
 - forgetting `alignfull` on a root view wrapper when a replacement-content MB View is supposed to render full width
+- assuming a Footer Template or other Content Block automatically escapes Gutenberg's constrained width without `alignfull`
+- putting the only copy of a global footer or header layout inside the Blocksy Content Block instead of keeping the source in a tracked file
 - pasting static custom widget code into the database without noting the decision in project context when it matters operationally
+- trying to override a Blocksy theme variable such as selection color only from page-level CSS instead of setting the underlying shared variable
+- assuming a child-theme CSS change failed when the real issue is a stale asset URL or a parent selector with higher specificity such as `#reply-title`

@@ -68,7 +68,24 @@ Notes:
  * Child theme bootstrap.
  */
 
+function mv_get_child_asset_version( $relative_path, $fallback_version ) {
+  $relative_path = ltrim( (string) $relative_path, '/\\' );
+  $asset_path    = get_stylesheet_directory() . '/' . $relative_path;
+
+  if ( file_exists( $asset_path ) ) {
+    $modified_time = filemtime( $asset_path );
+
+    if ( false !== $modified_time ) {
+      return (string) $modified_time;
+    }
+  }
+
+  return (string) $fallback_version;
+}
+
 add_action( 'wp_enqueue_scripts', function () {
+  $theme_version = wp_get_theme()->get( 'Version' );
+
     wp_enqueue_style(
         'blocksy-parent-style',
         get_template_directory_uri() . '/style.css',
@@ -80,7 +97,7 @@ add_action( 'wp_enqueue_scripts', function () {
         'blocksy-child-style',
         get_stylesheet_uri(),
         array( 'blocksy-parent-style' ),
-        wp_get_theme()->get( 'Version' )
+      mv_get_child_asset_version( 'style.css', $theme_version )
     );
 } );
 
@@ -100,6 +117,8 @@ if ( file_exists( $cpt_file ) ) {
     require_once $cpt_file;
 }
 ```
+
+If the project later adds feature stylesheets or JS files, version those child assets with the same helper instead of the static theme version so browsers do not keep stale local copies during refinement.
 
 ### Suggested `.gitignore`
 

@@ -100,7 +100,24 @@ Text Domain: blocksy-child
  * Child theme bootstrap.
  */
 
+function mv_get_child_asset_version( $relative_path, $fallback_version ) {
+    $relative_path = ltrim( (string) $relative_path, '/\\' );
+    $asset_path    = get_stylesheet_directory() . '/' . $relative_path;
+
+    if ( file_exists( $asset_path ) ) {
+        $modified_time = filemtime( $asset_path );
+
+        if ( false !== $modified_time ) {
+            return (string) $modified_time;
+        }
+    }
+
+    return (string) $fallback_version;
+}
+
 add_action( 'wp_enqueue_scripts', function () {
+    $theme_version = wp_get_theme()->get( 'Version' );
+
     wp_enqueue_style(
         'blocksy-parent-style',
         get_template_directory_uri() . '/style.css',
@@ -112,7 +129,7 @@ add_action( 'wp_enqueue_scripts', function () {
         'blocksy-child-style',
         get_stylesheet_uri(),
         array( 'blocksy-parent-style' ),
-        wp_get_theme()->get( 'Version' )
+        mv_get_child_asset_version( 'style.css', $theme_version )
     );
 } );
 
@@ -132,6 +149,13 @@ if ( file_exists( $cpt_file ) ) {
     require_once $cpt_file;
 }
 ```
+
+Use the same helper for every child-theme CSS or JS asset added later.
+
+Reason:
+- a static `Version: 1.0.0` header is not enough during active refinement
+- browsers can keep serving stale child-theme CSS or JS even when the file changed
+- filemtime-based versions make local iteration and review much more reliable
 
 Keep the `inc/cpt.php` include conditional. A fresh blueprint or early project scaffold may not have real CPT registrations yet.
 
@@ -176,6 +200,15 @@ For every live assignment, add an entry to the placement map in `_project-contex
 - assigned location
 - conditions
 - notes about dependencies or sequence
+
+If a Blocksy Content Block is only a placement layer for a file-backed MB View, record both sides of the relationship.
+
+Example note:
+- Content Block name: `Global Footer`
+- source file: `views/sections/site-footer.twig`
+- render bridge: Shortcode block with `[mbv name="sections/site-footer.twig"]`
+
+If the project registers `mbv_fs_paths`, that shortcode can render the child-theme Twig file directly without creating a second MB View post just to hold the same template.
 
 ## What Not To Do
 
