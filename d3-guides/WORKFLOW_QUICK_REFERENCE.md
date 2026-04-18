@@ -22,8 +22,16 @@ This is the fast route map for operating `wp-theme-toolkit` day to day.
 ```text
 1.  @SESSION_BOOTSTRAP_PROMPT.md run
 2.  @RESTORE_POINT_PROMPT.md run
-3.  Review session-context.tmp.md
+3.  Review session-context.tmp.md and session-handoff.tmp.md when present
 4.  Continue with build, review, or pre-launch workflows
+```
+
+## End A Working Chat
+
+```text
+1.  @SESSION_HANDOFF_PROMPT.md run
+2.  Save the code-block Context Transfer Prompt for the next chat
+3.  In the next chat, review session-handoff.tmp.md and session-context.tmp.md when present
 ```
 
 ## Git Operations
@@ -87,6 +95,7 @@ Strict-order variant:
 | Workflow | Default Model | Notes |
 |----------|---------------|-------|
 | Session bootstrap | GPT-5.4 Mini or GPT-5.4 | Use the larger model for older or larger projects |
+| Session handoff | GPT-5.4 Mini or GPT-5.4 | Use when pausing work or switching to a fresh chat |
 | Restore point | GPT-5.4 Mini or GPT-5.4 | Preview before rollback |
 | Project bootstrap | GPT-5.4 | Best when planning and file generation happen together |
 | New page / new CPT | GPT-5.4 then GPT-5.3 Codex | Explore first, then implement |
@@ -98,6 +107,12 @@ Session bootstrap:
 
 ```text
 @SESSION_BOOTSTRAP_PROMPT.md run
+```
+
+Session handoff:
+
+```text
+@SESSION_HANDOFF_PROMPT.md run
 ```
 
 Create restore point:

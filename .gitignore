@@ -10,6 +10,7 @@
 *.userosscache
 *.sln.docstates
 session-context.tmp.md
+session-handoff.tmp.md
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs

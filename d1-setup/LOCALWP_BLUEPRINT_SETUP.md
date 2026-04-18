@@ -134,6 +134,7 @@ Thumbs.db
 
 # Temporary context files
 session-context.tmp.md
+session-handoff.tmp.md
 ```
 
 ## WordPress Settings To Pre-Configure

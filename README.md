@@ -22,7 +22,7 @@ The goal: build launch-ready WordPress sites with a repeatable AI workflow, whil
 - a shared design-token system for spacing, typography, width, and color usage
 - consistent Twig patterns for Meta Box fields and archive loops
 - a clear boundary between MB Views template logic and Blocksy Content Block placement
-- reusable session bootstrap and restore-point workflows
+- reusable session bootstrap, session handoff, and restore-point workflows
 - ordered review and pre-launch quality gates before a site goes live
 - a documented GridPane deployment flow and Git timing guidance for the child theme lifecycle
 - a Git operations workflow for committing, pushing, and releasing either the toolkit repo or a target child-theme repo
@@ -46,8 +46,10 @@ Add this repository and your target site project to the same IDE workspace.
 
 1. Run `@SESSION_BOOTSTRAP_PROMPT.md run`
 2. Run `@RESTORE_POINT_PROMPT.md run`
-3. Review `session-context.tmp.md` in the target root
+3. Review `session-context.tmp.md` and `session-handoff.tmp.md` when present in the target root
 4. Continue with build, review, or pre-launch prompts
+
+When you want to pause and continue the same work in a fresh chat, run `@SESSION_HANDOFF_PROMPT.md run` before switching.
 
 ### 4. Pre-Launch Review Order
 
@@ -100,6 +102,7 @@ wp-theme-toolkit/
 |   |-- ds1-setup/
 |   |   |-- PROJECT_BOOTSTRAP_PROMPT.md
 |   |   |-- RESTORE_POINT_PROMPT.md
+|   |   |-- SESSION_HANDOFF_PROMPT.md
 |   |   `-- SESSION_BOOTSTRAP_PROMPT.md
 |   |
 |   |-- ds2-build/
@@ -147,7 +150,7 @@ wp-theme-toolkit/
 Included in v1:
 - Blocksy child theme workflows
 - Meta Box AIO and MB Views usage
-- project bootstrap and session bootstrap
+- project bootstrap, session bootstrap, and session handoff
 - design tokens, page creation, CPT creation, view reviews, and pre-launch QA
 - restore-point safety workflow
 - deployment checklist and GridPane deployment workflow
@@ -166,6 +169,10 @@ Reference prompts directly in chat:
 
 ```text
 @SESSION_BOOTSTRAP_PROMPT.md run
+```
+
+```text
+@SESSION_HANDOFF_PROMPT.md run
 ```
 
 ```text

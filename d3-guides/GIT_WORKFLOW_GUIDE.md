@@ -90,6 +90,7 @@ mb-json/*.json
 
 # Session context files
 session-context.tmp.md
+session-handoff.tmp.md
 ```
 
 Track `.mbjson` files as the canonical Meta Box schema source and ignore duplicate `.json` export copies to prevent drift.

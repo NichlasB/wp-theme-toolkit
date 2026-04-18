@@ -15,7 +15,7 @@ This workflow creates and uses exact external restore points. It is not a substi
 - release tags
 - environment or secret management
 
-If `session-context.tmp.md` already exists in the target root, you may use it as helper context, but verify rollback-relevant details directly from the current filesystem and git state before making decisions.
+If `session-context.tmp.md` or `session-handoff.tmp.md` already exist in the target root, you may use them as helper context, but verify rollback-relevant details directly from the current filesystem and git state before making decisions.
 
 ---
 

@@ -28,6 +28,10 @@ wp-theme-toolkit/
 │
 ├── d4-prompts/
 │   ├── ds1-setup/
+│   │   ├── PROJECT_BOOTSTRAP_PROMPT.md
+│   │   ├── RESTORE_POINT_PROMPT.md
+│   │   ├── SESSION_HANDOFF_PROMPT.md
+│   │   └── SESSION_BOOTSTRAP_PROMPT.md
 │   ├── ds2-build/
 │   ├── ds3-review/
 │   └── ds4-pre-launch/

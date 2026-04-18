@@ -19,6 +19,8 @@ This is an orientation workflow, not an implementation workflow.
 
 If the likely next step will modify files, recommend `RESTORE_POINT_PROMPT.md` before the first edit-heavy workflow unless the user already created a restore point for the session.
 
+If `session-handoff.tmp.md` already exists in the target root, use it as helper context for recent chat decisions and open threads, but verify current filesystem and git state directly before carrying those details forward.
+
 ---
 
 ## Primary References
