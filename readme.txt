@@ -22,13 +22,14 @@ Primary workflow:
 3. Run d4-prompts/ds1-setup/PROJECT_BOOTSTRAP_PROMPT.md for new projects
 4. Run d4-prompts/ds1-setup/SESSION_BOOTSTRAP_PROMPT.md for new chats
 5. Run d4-prompts/ds1-setup/SESSION_HANDOFF_PROMPT.md before switching to a fresh chat
-6. Build with d4-prompts/ds2-build/
-7. Review with d4-prompts/ds3-review/
-8. Launch-check with d4-prompts/ds4-pre-launch/01 through 06
+6. Run d4-prompts/ds7-maintenance/TOOLKIT_LESSONS_AUDIT_PROMPT.md against wp-theme-toolkit when a working chat reveals reusable toolkit lessons
+7. Build with d4-prompts/ds2-build/
+8. Review with d4-prompts/ds3-review/
+9. Launch-check with d4-prompts/ds4-pre-launch/01 through 06
 
 Repository structure:
 - d1-setup/      setup references and project schema
 - d2-scripts/    restore-point helpers
 - d3-guides/     design, Twig, Blocksy, workflow, and model guides
-- d4-prompts/    setup, build, review, and pre-launch prompts
+- d4-prompts/    setup, build, review, pre-launch, git, and maintenance prompts
 - d5-examples/   example project context and build walkthrough

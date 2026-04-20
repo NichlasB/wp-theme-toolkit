@@ -26,6 +26,7 @@ The goal: build launch-ready WordPress sites with a repeatable AI workflow, whil
 - ordered review and pre-launch quality gates before a site goes live
 - a documented GridPane deployment flow and Git timing guidance for the child theme lifecycle
 - a Git operations workflow for committing, pushing, and releasing either the toolkit repo or a target child-theme repo
+- a toolkit lessons audit workflow for turning real chat lessons into approval-gated toolkit improvements
 
 ## Quick Start
 
@@ -50,6 +51,8 @@ Add this repository and your target site project to the same IDE workspace.
 4. Continue with build, review, or pre-launch prompts
 
 When you want to pause and continue the same work in a fresh chat, run `@SESSION_HANDOFF_PROMPT.md run` before switching.
+
+Use `@TOOLKIT_LESSONS_AUDIT_PROMPT.md run` only for reusable toolkit lessons, not for one-off site issues or normal project follow-up.
 
 ### 4. Pre-Launch Review Order
 
@@ -126,8 +129,11 @@ wp-theme-toolkit/
 |   |-- ds5-deploy/
 |   |   `-- GRIDPANE_DEPLOYMENT_PROMPT.md
 |   |
-|   `-- ds6-git/
-|       `-- GIT_OPERATIONS_PROMPT.md
+|   |-- ds6-git/
+|   |   `-- GIT_OPERATIONS_PROMPT.md
+|   |
+|   `-- ds7-maintenance/
+|       `-- TOOLKIT_LESSONS_AUDIT_PROMPT.md
 |
 `-- d5-examples/
     |-- example-landing-page-build.md
@@ -156,12 +162,13 @@ Included in v1:
 - deployment checklist and GridPane deployment workflow
 - Git workflow guidance for scaffold timing and code updates
 - Git operations prompt for toolkit and child-theme repositories
+- toolkit lessons audit workflow for approval-gated maintenance of the toolkit itself
 
 Deferred from v1:
 - generic WordPress theme-authoring guidance outside the Meta Views Stack
 - theme.json strategy
 - WP.org theme-review compliance workflows
-- maintenance prompt families
+- broader maintenance audit families beyond the toolkit lessons retrospective
 
 ## Using With AI IDEs
 
@@ -190,5 +197,11 @@ Reference prompts directly in chat:
 ```text
 @GIT_OPERATIONS_PROMPT.md run
 ```
+
+```text
+@TOOLKIT_LESSONS_AUDIT_PROMPT.md run
+```
+
+Do not use `@TOOLKIT_LESSONS_AUDIT_PROMPT.md run` for project-specific styling, content-entry, or deployment issues unless they exposed a reusable toolkit gap.
 
 See `d1-setup/IDE_SETUP_GUIDE.md` and `d3-guides/WORKFLOW_QUICK_REFERENCE.md` for the operating sequence.

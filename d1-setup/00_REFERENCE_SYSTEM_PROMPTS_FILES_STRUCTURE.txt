@@ -34,7 +34,13 @@ wp-theme-toolkit/
 │   │   └── SESSION_BOOTSTRAP_PROMPT.md
 │   ├── ds2-build/
 │   ├── ds3-review/
-│   └── ds4-pre-launch/
+│   ├── ds4-pre-launch/
+│   ├── ds5-deploy/
+│   │   └── GRIDPANE_DEPLOYMENT_PROMPT.md
+│   ├── ds6-git/
+│   │   └── GIT_OPERATIONS_PROMPT.md
+│   └── ds7-maintenance/
+│       └── TOOLKIT_LESSONS_AUDIT_PROMPT.md
 │
 └── d5-examples/
     ├── example-project-context.md

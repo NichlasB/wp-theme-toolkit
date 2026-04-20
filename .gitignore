@@ -11,6 +11,7 @@
 *.sln.docstates
 session-context.tmp.md
 session-handoff.tmp.md
+toolkit-lessons.tmp.md
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs

@@ -1,7 +1,7 @@
 =======================================================================
 WP THEME TOOLKIT - PROJECT CONTEXT REFERENCE
 =======================================================================
-Generated: April 9, 2026
+Generated: April 20, 2026
 Purpose: Compact repository map and context-transfer reference for AI
 assistants working with the Meta Views Stack toolkit.
 
@@ -18,7 +18,8 @@ Description: A documentation-first toolkit of prompts, guides, examples,
 Purpose: Provide structured workflow documents for project bootstrap,
          session bootstrap, session handoff, restore points, design-token
          generation, new page and CPT creation, view review, launch-readiness
-         QA, deployment, Git operations, and post-launch Git guidance.
+         QA, deployment, Git operations, post-launch Git guidance, and
+         toolkit retrospective learning.
 
 Target Audience: WordPress developers building sites with the Meta Views
                  Stack in VS Code, Cursor, Windsurf, Copilot, or Codex-like
@@ -29,6 +30,7 @@ CURRENT SHAPE
 =======================================================================
 
 - Repository type: Toolkit / documentation-first repo
+- Approximate tracked file count: 45
 - Dominant file types: Markdown, text references, helper scripts
 - Runtime code surface: Minimal; operational logic mainly lives in
   d2-scripts/restore-point.ps1 and d2-scripts/restore-point.sh
@@ -46,6 +48,10 @@ Core workflow order:
 6. Pre-launch prompts 01-06 in ds4-pre-launch/
 7. GRIDPANE_DEPLOYMENT_PROMPT.md in ds5-deploy/
 8. GIT_OPERATIONS_PROMPT.md in ds6-git/
+
+Optional toolkit-retrospective workflow:
+- TOOLKIT_LESSONS_AUDIT_PROMPT.md in ds7-maintenance/ when a working chat
+  exposes toolkit-wide lessons worth folding back into the toolkit itself
 
 Cross-chat continuation workflow:
 - SESSION_HANDOFF_PROMPT.md near the end of a working chat when work will continue in a fresh session
@@ -93,8 +99,10 @@ wp-theme-toolkit/
 |   |-- ds4-pre-launch/
 |   |-- ds5-deploy/
 |   |   `-- GRIDPANE_DEPLOYMENT_PROMPT.md
-|   `-- ds6-git/
-|       `-- GIT_OPERATIONS_PROMPT.md
+|   |-- ds6-git/
+|   |   `-- GIT_OPERATIONS_PROMPT.md
+|   `-- ds7-maintenance/
+|       `-- TOOLKIT_LESSONS_AUDIT_PROMPT.md
 |
 `-- d5-examples/
     |-- example-project-context.md
@@ -103,6 +111,7 @@ wp-theme-toolkit/
 Temporary local workflow artifact that may appear in the repo root:
 - session-context.tmp.md
 - session-handoff.tmp.md
+- toolkit-lessons.tmp.md
 
 =======================================================================
 HIGH-VALUE FILES
@@ -155,12 +164,17 @@ GIT_OPERATIONS_PROMPT.md
   - Git commit, push, tag, dry-run, and release workflow for either the
     toolkit repo or a child-theme/site repository
 
+TOOLKIT_LESSONS_AUDIT_PROMPT.md
+  - End-of-chat retrospective workflow for turning toolkit-worthy lessons
+    into approval-gated proposal and apply passes against the toolkit repo
+
 =======================================================================
 WORKING ASSUMPTIONS
 =======================================================================
 
 - The toolkit itself is not normally the target of its own prompts, except
-  when GIT_OPERATIONS_PROMPT.md is used intentionally against this repo.
+  when GIT_OPERATIONS_PROMPT.md or
+  `TOOLKIT_LESSONS_AUDIT_PROMPT.md` is used intentionally against this repo.
 - The preferred target is a site repository or Blocksy child-theme root that
   contains style.css, functions.php, _project-context.md, mb-json/, or views/.
 - Local copies of MB View Twig and CSS should be kept in the target repo even
@@ -171,6 +185,9 @@ WORKING ASSUMPTIONS
   real code generation begins.
 - Code moves through Git; content and settings move through a database
   migration workflow.
+- `TOOLKIT_LESSONS_AUDIT_PROMPT.md` is intentionally excluded from
+  `PRE_LAUNCH_CHECKLIST.md` and `DEPLOYMENT_CHECKLIST.md` because it targets
+  the toolkit itself rather than a site project.
 
 =======================================================================
 DOCUMENTATION RISKS TO WATCH

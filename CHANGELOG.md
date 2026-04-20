@@ -6,6 +6,9 @@ The format is based on Keep a Changelog.
 
 ## [Unreleased]
 
+### Added
+- Added `d4-prompts/ds7-maintenance/TOOLKIT_LESSONS_AUDIT_PROMPT.md` for end-of-chat, approval-gated toolkit retrospectives based on real site-building sessions
+
 ### Changed
 - Added the missing Meta Box local-file compatibility guidance so `.mbjson`-only projects also register `mbb_json_files` in `functions.php`; this prevents `File not found` and `No JSON available` field-group failures in future scaffolds
 - Added a dedicated Meta Box local-file mode troubleshooting note to the toolkit Q&A reference, including the `.mbjson`-only failure mode, the `mbb_json_files` fix, and the meaning of `Sync available`
@@ -18,6 +21,7 @@ The format is based on Keep a Changelog.
 - Added CPT build guardrails around canonical registration source, migration flags, wp-admin visibility, and permalink flushing
 - Added a runtime-validation note to the session bootstrap flow so expected CPT visibility, registration source, and permalink-flush risk are checked earlier in new sessions
 - Declared `.mbjson` as the canonical tracked Meta Box schema format and added guidance to ignore duplicate `.json` export copies to prevent repo drift
+- Extended `_TASK_RUNNER.md`, the workflow quick reference, structure reference, ignore rules, and repository docs to support the new toolkit-self lessons audit workflow and the new `ds7-maintenance/` prompt family
 
 ### Added
 - Initial repository structure for `wp-theme-toolkit`

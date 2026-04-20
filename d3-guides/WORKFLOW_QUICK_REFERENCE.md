@@ -31,8 +31,24 @@ This is the fast route map for operating `wp-theme-toolkit` day to day.
 ```text
 1.  @SESSION_HANDOFF_PROMPT.md run
 2.  Save the code-block Context Transfer Prompt for the next chat
-3.  In the next chat, review session-handoff.tmp.md and session-context.tmp.md when present
+3.  If the chat exposed toolkit-worthy lessons, run @TOOLKIT_LESSONS_AUDIT_PROMPT.md run against wp-theme-toolkit
+4.  In the next chat, review session-handoff.tmp.md and session-context.tmp.md when present
 ```
+
+Use `@TOOLKIT_LESSONS_AUDIT_PROMPT.md run` only when the lesson would improve the toolkit for future site projects.
+Do not use it for one-off project bugs, normal build/review work that went fine, or preferences that only apply to the current site.
+
+## Improve The Toolkit
+
+```text
+1.  Finish the working chat or review pass
+2.  Run @TOOLKIT_LESSONS_AUDIT_PROMPT.md run against wp-theme-toolkit
+3.  Review toolkit-lessons.tmp.md and mark approve / reject / defer
+4.  Run @TOOLKIT_LESSONS_AUDIT_PROMPT.md run phase 2 when you want approved lessons applied
+```
+
+Do not use this workflow as a substitute for project review, pre-launch QA, or session handoff.
+If the issue belongs only to the current site project, fix it in the project and keep the toolkit unchanged.
 
 ## Git Operations
 
@@ -99,7 +115,10 @@ Strict-order variant:
 | Restore point | GPT-5.4 Mini or GPT-5.4 | Preview before rollback |
 | Project bootstrap | GPT-5.4 | Best when planning and file generation happen together |
 | New page / new CPT | GPT-5.4 then GPT-5.3 Codex | Explore first, then implement |
+| Toolkit lessons audit | GPT-5.4 then GPT-5.3 Codex | Use when a working chat exposed reusable toolkit lessons or repeated mistakes |
 | Launch reviews | GPT-5.4, Sonnet, or stronger judgment model as needed | Use deeper review for accessibility and final launch judgment |
+
+Do not run the toolkit lessons audit for project-specific styling issues, content-entry mistakes, or isolated deployment problems unless they exposed a reusable gap in the toolkit itself.
 
 ## Copy-Paste Prompts
 
@@ -143,4 +162,10 @@ Git operations:
 
 ```text
 @GIT_OPERATIONS_PROMPT.md run
+```
+
+Toolkit lessons audit:
+
+```text
+@TOOLKIT_LESSONS_AUDIT_PROMPT.md run
 ```
