@@ -70,6 +70,7 @@ These tasks run to completion in one pass.
 - SESSION_HANDOFF_PROMPT.md
 - RESTORE_POINT_PROMPT.md
 - DESIGN_TOKENS_PROMPT.md
+- PAGE_SCOPING_CHECKLIST_PROMPT.md
 - NEW_PAGE_PROMPT.md
 - NEW_CPT_PROMPT.md
 - VIEW_REVIEW_PROMPT.md
@@ -131,6 +132,7 @@ Prompt-to-checklist mapping:
 - `PROJECT_BOOTSTRAP_PROMPT.md` -> `Setup & Build` -> `Project Bootstrap`
 - `SESSION_BOOTSTRAP_PROMPT.md` -> `Setup & Build` -> `Session Bootstrap`
 - `DESIGN_TOKENS_PROMPT.md` -> `Setup & Build` -> `Design Tokens`
+- `PAGE_SCOPING_CHECKLIST_PROMPT.md` does not update `PRE_LAUNCH_CHECKLIST.md` because it is a planning-only scoping workflow
 - `NEW_PAGE_PROMPT.md` -> `Setup & Build` -> `New Page Build`
 - `NEW_CPT_PROMPT.md` -> `Setup & Build` -> `New CPT Build`
 - `VIEW_REVIEW_PROMPT.md` -> `Review Workflows` -> `View Review`

@@ -36,9 +36,9 @@ Add this repository and your target site project to the same IDE workspace.
 
 ### 2. Starting A New Site Project
 
-1. Read `d1-setup/STACK_REFERENCE.md`, `d1-setup/LOCALWP_BLUEPRINT_SETUP.md`, `d3-guides/DESIGN_SYSTEM_GUIDE.md`, and `d1-setup/PROJECT_CONTEXT_TEMPLATE.md`
+1. Read `d1-setup/STACK_REFERENCE.md`, `d1-setup/LOCALWP_BLUEPRINT_SETUP.md`, `d3-guides/DESIGN_SYSTEM_GUIDE.md`, `d3-guides/PAGE_DECISION_TREE_CHEAT_SHEET.md`, `d3-guides/PAGE_BUILDING_WORKFLOW.md`, and `d1-setup/PROJECT_CONTEXT_TEMPLATE.md`
 2. Run `@PROJECT_BOOTSTRAP_PROMPT.md run`
-3. Continue with `@DESIGN_TOKENS_PROMPT.md run`, `@NEW_PAGE_PROMPT.md run`, or `@NEW_CPT_PROMPT.md run`
+3. Continue with `@DESIGN_TOKENS_PROMPT.md run`, `@PAGE_SCOPING_CHECKLIST_PROMPT.md run`, `@NEW_PAGE_PROMPT.md run`, or `@NEW_CPT_PROMPT.md run`
 4. Run the review prompts and the pre-launch sequence `@01-RESPONSIVE_QA_PROMPT.md run` through `@06-FINAL_CHECKLIST_PROMPT.md run`
 5. Run `@GRIDPANE_DEPLOYMENT_PROMPT.md run`
 6. Run `@GIT_OPERATIONS_PROMPT.md run` when you want assisted commit, push, or release help for either the toolkit repo or the child theme repo
@@ -98,6 +98,8 @@ wp-theme-toolkit/
 |   |-- GIT_WORKFLOW_GUIDE.md
 |   |-- IMAGE_ASSET_WORKFLOW.md
 |   |-- MODEL_DELEGATION_GUIDE.txt
+|   |-- PAGE_DECISION_TREE_CHEAT_SHEET.md
+|   |-- PAGE_BUILDING_WORKFLOW.md
 |   |-- TWIG_PATTERNS_GUIDE.md
 |   `-- WORKFLOW_QUICK_REFERENCE.md
 |
@@ -111,6 +113,7 @@ wp-theme-toolkit/
 |   |-- ds2-build/
 |   |   |-- DESIGN_TOKENS_PROMPT.md
 |   |   |-- NEW_CPT_PROMPT.md
+|   |   |-- PAGE_SCOPING_CHECKLIST_PROMPT.md
 |   |   `-- NEW_PAGE_PROMPT.md
 |   |
 |   |-- ds3-review/
@@ -180,6 +183,10 @@ Reference prompts directly in chat:
 
 ```text
 @SESSION_HANDOFF_PROMPT.md run
+```
+
+```text
+@PAGE_SCOPING_CHECKLIST_PROMPT.md run
 ```
 
 ```text

@@ -10,6 +10,7 @@ The format is based on Keep a Changelog.
 - Added `d4-prompts/ds7-maintenance/TOOLKIT_LESSONS_AUDIT_PROMPT.md` for end-of-chat, approval-gated toolkit retrospectives based on real site-building sessions
 
 ### Changed
+- Added child-theme bootstrap guidance that keeps `functions.php` as a lean loader and routes feature helpers into focused `inc/` files as projects grow
 - Added the missing Meta Box local-file compatibility guidance so `.mbjson`-only projects also register `mbb_json_files` in `functions.php`; this prevents `File not found` and `No JSON available` field-group failures in future scaffolds
 - Added a dedicated Meta Box local-file mode troubleshooting note to the toolkit Q&A reference, including the `.mbjson`-only failure mode, the `mbb_json_files` fix, and the meaning of `Sync available`
 - Clarified MB Views Twig data-access rules across the Twig guide, stack reference, page-build prompt, and view-review prompt so normal custom fields are read from `post.*` or explicit `mb.rwmb_meta()` lookups instead of `mb.field_id`

@@ -159,6 +159,13 @@ Reason:
 
 Keep the `inc/cpt.php` include conditional. A fresh blueprint or early project scaffold may not have real CPT registrations yet.
 
+Keep `functions.php` lean as the project grows.
+
+- Leave asset versioning, core theme hooks, and a small `require_once` loader in `functions.php`
+- Move page-, feature-, and domain-specific helpers into focused files under `inc/`
+- Load PHP helper files with `require_once`; only CSS and JS assets are enqueued
+- If a helper supports one feature area, add it to that feature's include file instead of appending more functions to `functions.php`
+
 ### inc/cpt.php
 
 ```php

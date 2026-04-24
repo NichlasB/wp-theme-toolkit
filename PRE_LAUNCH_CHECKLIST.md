@@ -120,7 +120,7 @@ Track bootstrap workflows, build workflows, review workflows, and pre-launch rev
 | Project Bootstrap | [x] | 2026-04-09 | Existing child theme normalized; canonical token block, context file, scaffold folders, and checklist entry created/updated. |
 | Session Bootstrap | [x] | 2026-04-12 | `session-context.tmp.md` written to child theme root; active build state, homepage focus, partial placement map. |
 | Design Tokens | [ ] | | |
-| New Page Build | [ ] | | |
+| New Page Build | [x] | 2026-04-24 | About page build added as a static page-level MB View with file-backed Twig/CSS, no new fields, and placement/context records updated. |
 | New CPT Build | [ ] | | |
 
 ### Review Workflows

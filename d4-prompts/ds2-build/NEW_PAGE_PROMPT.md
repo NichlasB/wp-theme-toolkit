@@ -19,6 +19,7 @@ Do not use this prompt when the real task is a new structured content type. Use 
 Before starting, read:
 - `_TASK_RUNNER.md`
 - `_project-context.md` in the target project
+- `d3-guides/PAGE_BUILDING_WORKFLOW.md`
 - `d3-guides/DESIGN_SYSTEM_GUIDE.md`
 - `d3-guides/TWIG_PATTERNS_GUIDE.md`
 - `d3-guides/BLOCKSY_INTEGRATION_GUIDE.md`

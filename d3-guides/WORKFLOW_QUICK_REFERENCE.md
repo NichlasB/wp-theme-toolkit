@@ -70,10 +70,54 @@ Strict-order variant:
 
 ```text
 1.  Confirm _project-context.md is current
-2.  @NEW_PAGE_PROMPT.md run
-3.  Paste Twig and CSS into MB Views
-4.  Record the assignment in the placement map
-5.  @VIEW_REVIEW_PROMPT.md run
+2.  Run the page decision tree below
+3.  @PAGE_SCOPING_CHECKLIST_PROMPT.md run when the page shape is not obvious
+4.  @NEW_PAGE_PROMPT.md run
+5.  Paste Twig and CSS into MB Views
+6.  Record the assignment in the placement map
+7.  @VIEW_REVIEW_PROMPT.md run
+```
+
+## Page Decision Tree
+
+```text
+Start
+|
++-- Many entries, own URLs, archives, or taxonomies?
+|   |
+|   +-- Yes -> CPT -> @NEW_CPT_PROMPT.md run
+|   |
+|   +-- No -> Normal page
+|
++-- Mostly one URL with page-unique sections?
+|   |
+|   +-- Yes -> One page-level MB View
+|   |
+|   +-- No -> Split reusable parts into section views
+|
++-- Editor needs to change it in wp-admin?
+|   |
+|   +-- Yes -> Add page-targeted fields only for those parts
+|   |
+|   +-- No -> Keep it static in Twig
+|
++-- Reused across pages or placement-driven?
+	|
+	+-- Yes -> views/sections/ plus Blocksy Content Block when needed
+	|
+	+-- No -> Keep it in the main page Twig file
+```
+
+Practical default:
+
+```text
+one page
+one field group
+one MB View
+one Twig file with all page-unique sections
+one CSS file
+split only reused sections
+promote to CPT only when the content wants its own lifecycle
 ```
 
 ## Add A New CPT
@@ -147,6 +191,12 @@ Bootstrap new project:
 ```
 
 Build a page:
+
+```text
+@PAGE_SCOPING_CHECKLIST_PROMPT.md run
+```
+
+Build a page after scoping:
 
 ```text
 @NEW_PAGE_PROMPT.md run
