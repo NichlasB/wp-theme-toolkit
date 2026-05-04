@@ -39,6 +39,36 @@ Rules:
 - View CSS must not introduce raw spacing values for component padding, gaps, margins, or section rhythm
 - View CSS must not introduce raw font-size values outside the documented token set unless there is an explicit project decision recorded in `_project-context.md`
 
+When the same responsive typography role appears across multiple pages, add semantic tokens above the raw type scale instead of hardcoding `--text-*` swaps in each file.
+
+Example:
+
+```css
+:root {
+  --page-title-size-desktop: var(--text-4xl);
+  --page-title-size-tablet: var(--text-3xl);
+  --page-title-size-mobile: var(--text-2xl);
+}
+
+.mv-page-example--title {
+  font-size: var(--page-title-size-desktop);
+}
+
+@media (max-width: 900px) {
+  .mv-page-example--title {
+    font-size: var(--page-title-size-tablet);
+  }
+}
+
+@media (max-width: 600px) {
+  .mv-page-example--title {
+    font-size: var(--page-title-size-mobile);
+  }
+}
+```
+
+If one page needs a different mobile or tablet title size, override the semantic token in that page scope instead of falling back to raw `--text-*` values throughout the component CSS.
+
 ## Color Rules
 
 Use only Blocksy palette variables in view CSS:
