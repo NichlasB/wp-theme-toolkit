@@ -21,11 +21,12 @@ Primary workflow:
 2. Create or update _project-context.md from d1-setup/PROJECT_CONTEXT_TEMPLATE.md
 3. Run d4-prompts/ds1-setup/PROJECT_BOOTSTRAP_PROMPT.md for new projects
 4. Run d4-prompts/ds1-setup/SESSION_BOOTSTRAP_PROMPT.md for new chats
-5. Run d4-prompts/ds1-setup/SESSION_HANDOFF_PROMPT.md before switching to a fresh chat
-6. Run d4-prompts/ds7-maintenance/TOOLKIT_LESSONS_AUDIT_PROMPT.md against wp-theme-toolkit when a working chat reveals reusable toolkit lessons
-7. Build with d4-prompts/ds2-build/
-8. Review with d4-prompts/ds3-review/
-9. Launch-check with d4-prompts/ds4-pre-launch/01 through 06
+5. Run d4-prompts/ds1-setup/GUIDED_EXECUTION_PROMPT.md after bootstrap when you want slower pacing or explicit progress tracking
+6. Run d4-prompts/ds1-setup/SESSION_HANDOFF_PROMPT.md before switching to a fresh chat
+7. Run d4-prompts/ds7-maintenance/TOOLKIT_LESSONS_AUDIT_PROMPT.md against wp-theme-toolkit when a working chat reveals reusable toolkit lessons
+8. Build with d4-prompts/ds2-build/
+9. Review with d4-prompts/ds3-review/
+10. Launch-check with d4-prompts/ds4-pre-launch/01 through 06
 
 Repository structure:
 - d1-setup/      setup references and project schema

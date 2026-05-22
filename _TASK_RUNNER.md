@@ -67,6 +67,7 @@ These tasks run to completion in one pass.
 
 - PROJECT_BOOTSTRAP_PROMPT.md
 - SESSION_BOOTSTRAP_PROMPT.md
+- GUIDED_EXECUTION_PROMPT.md
 - SESSION_HANDOFF_PROMPT.md
 - RESTORE_POINT_PROMPT.md
 - DESIGN_TOKENS_PROMPT.md
@@ -126,6 +127,7 @@ Rules:
 - Preserve older completion dates unless the user explicitly wants to overwrite them
 - If a task is blocked, do not mark it complete
 - `SESSION_HANDOFF_PROMPT.md` is a session-level operational workflow and does not update `PRE_LAUNCH_CHECKLIST.md`
+- `GUIDED_EXECUTION_PROMPT.md` is an orchestration workflow and does not update `PRE_LAUNCH_CHECKLIST.md`
 - `TOOLKIT_LESSONS_AUDIT_PROMPT.md` targets the toolkit itself and does not update `PRE_LAUNCH_CHECKLIST.md` or `DEPLOYMENT_CHECKLIST.md`
 
 Prompt-to-checklist mapping:
@@ -178,7 +180,8 @@ wp-theme-toolkit/   <- normally not the target
 ├── d2-scripts/     <- restore-point helpers
 ├── d3-guides/      <- design, Twig, Blocksy, workflow, and model guides
 ├── d4-prompts/
-│   ├── ds1-setup/      <- project bootstrap, session bootstrap, session handoff, restore point
+│   ├── ds1-setup/      <- project bootstrap, session bootstrap, guided execution, session handoff, restore point
+│   │   ├── GUIDED_EXECUTION_PROMPT.md
 │   ├── ds2-build/      <- page, CPT, and token generation
 │   ├── ds3-review/     <- view and CSS audits
 │   ├── ds4-pre-launch/ <- launch-readiness sequence

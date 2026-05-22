@@ -21,10 +21,13 @@ This is the fast route map for operating `wp-theme-toolkit` day to day.
 
 ```text
 1.  @SESSION_BOOTSTRAP_PROMPT.md run
-2.  @RESTORE_POINT_PROMPT.md run
-3.  Review session-context.tmp.md and session-handoff.tmp.md when present
-4.  Continue with build, review, or pre-launch workflows
+2.  @GUIDED_EXECUTION_PROMPT.md run
+3.  @RESTORE_POINT_PROMPT.md run
+4.  Review session-context.tmp.md and session-handoff.tmp.md when present
+5.  Continue with build, review, or pre-launch workflows
 ```
+
+Use `@GUIDED_EXECUTION_PROMPT.md run` after session bootstrap when the user wants lower-overwhelm pacing, explicit progress tracking, or one approved task slice at a time. If the next specialized workflow is already obvious and the user wants a faster pass, you can skip it.
 
 ## End A Working Chat
 
@@ -64,6 +67,7 @@ Strict-order variant:
 ```text
 1.  @RESTORE_POINT_PROMPT.md run
 2.  @SESSION_BOOTSTRAP_PROMPT.md run
+3.  @GUIDED_EXECUTION_PROMPT.md run
 ```
 
 ## Add A New Page
@@ -155,6 +159,7 @@ promote to CPT only when the content wants its own lifecycle
 | Workflow | Default Model | Notes |
 |----------|---------------|-------|
 | Session bootstrap | GPT-5.4 Mini or GPT-5.4 | Use the larger model for older or larger projects |
+| Guided execution | GPT-5.4 Mini or GPT-5.4 | Best after session bootstrap when the user wants structured pacing, explicit progress tracking, and one approved task slice at a time |
 | Session handoff | GPT-5.4 Mini or GPT-5.4 | Use when pausing work or switching to a fresh chat |
 | Restore point | GPT-5.4 Mini or GPT-5.4 | Preview before rollback |
 | Project bootstrap | GPT-5.4 | Best when planning and file generation happen together |
@@ -170,6 +175,12 @@ Session bootstrap:
 
 ```text
 @SESSION_BOOTSTRAP_PROMPT.md run
+```
+
+Guided execution:
+
+```text
+@GUIDED_EXECUTION_PROMPT.md run
 ```
 
 Session handoff:

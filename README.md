@@ -46,9 +46,10 @@ Add this repository and your target site project to the same IDE workspace.
 ### 3. Starting A New Chat On An Existing Site
 
 1. Run `@SESSION_BOOTSTRAP_PROMPT.md run`
-2. Run `@RESTORE_POINT_PROMPT.md run`
-3. Review `session-context.tmp.md` and `session-handoff.tmp.md` when present in the target root
-4. Continue with build, review, or pre-launch prompts
+2. Run `@GUIDED_EXECUTION_PROMPT.md run` when you want slower pacing, explicit progress tracking, or one approved task slice at a time
+3. Run `@RESTORE_POINT_PROMPT.md run`
+4. Review `session-context.tmp.md` and `session-handoff.tmp.md` when present in the target root
+5. Continue with build, review, or pre-launch prompts
 
 When you want to pause and continue the same work in a fresh chat, run `@SESSION_HANDOFF_PROMPT.md run` before switching.
 
@@ -106,6 +107,7 @@ wp-theme-toolkit/
 |-- d4-prompts/
 |   |-- ds1-setup/
 |   |   |-- PROJECT_BOOTSTRAP_PROMPT.md
+|   |   |-- GUIDED_EXECUTION_PROMPT.md
 |   |   |-- RESTORE_POINT_PROMPT.md
 |   |   |-- SESSION_HANDOFF_PROMPT.md
 |   |   `-- SESSION_BOOTSTRAP_PROMPT.md
@@ -179,6 +181,10 @@ Reference prompts directly in chat:
 
 ```text
 @SESSION_BOOTSTRAP_PROMPT.md run
+```
+
+```text
+@GUIDED_EXECUTION_PROMPT.md run
 ```
 
 ```text

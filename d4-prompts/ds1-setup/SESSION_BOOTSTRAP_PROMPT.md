@@ -19,6 +19,8 @@ This is an orientation workflow, not an implementation workflow.
 
 If the likely next step will modify files, recommend `RESTORE_POINT_PROMPT.md` before the first edit-heavy workflow unless the user already created a restore point for the session.
 
+If the user wants slower pacing, explicit progress tracking, or one approved task slice at a time after bootstrap, recommend `GUIDED_EXECUTION_PROMPT.md` before the first specialized workflow.
+
 If `session-handoff.tmp.md` already exists in the target root, use it as helper context for recent chat decisions and open threads, but verify current filesystem and git state directly before carrying those details forward.
 
 ---
@@ -198,7 +200,7 @@ After writing `session-context.tmp.md`, also report in chat:
 - the target project identified
 - the top 3-5 important paths
 - the most relevant next workflows
-- whether the normal order should be session bootstrap then restore point, or the strict reverse order
+- whether the normal order should be session bootstrap, guided execution when useful, then restore point, or the strict reverse order
 
 If the likely next step is implementation or other file edits, note the recommended order explicitly.
 
