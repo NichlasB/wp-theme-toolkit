@@ -38,6 +38,11 @@ CURRENT SHAPE
   MB Views, and Git-backed child-theme code deployment
 - Deployment coverage: documented GridPane deployment workflow plus a
   per-project deployment checklist
+- Shared workflow sourcing: `SESSION_BOOTSTRAP_PROMPT.md` is a local adapter
+  around the shared bootstrap core in sibling repo `wp-workflow-toolkit/`.
+  `GUIDED_EXECUTION_PROMPT.md`, `SESSION_HANDOFF_PROMPT.md`,
+  `RESTORE_POINT_PROMPT.md`, and `TOOLKIT_LESSONS_AUDIT_PROMPT.md` remain
+  local entry points but are backed by canonical shared prompt bodies there.
 
 Core workflow order:
 1. PROJECT_BOOTSTRAP_PROMPT.md for new projects
@@ -113,6 +118,12 @@ Temporary local workflow artifact that may appear in the repo root:
 - session-handoff.tmp.md
 - toolkit-lessons.tmp.md
 
+Related shared workflow repo that may appear beside this toolkit in the workspace:
+- wp-workflow-toolkit/
+  - stores canonical shared prompt bodies
+  - provides `SESSION_BOOTSTRAP_CORE_PROMPT.md` used by this toolkit's local
+    `SESSION_BOOTSTRAP_PROMPT.md` adapter
+
 =======================================================================
 HIGH-VALUE FILES
 =======================================================================
@@ -125,6 +136,16 @@ _TASK_RUNNER.md
 README.md
   - Main overview, quick start, repository structure, V1 scope, and prompt
     entry points
+
+SESSION_BOOTSTRAP_PROMPT.md
+  - Local site-project adapter around the shared bootstrap core in
+    `wp-workflow-toolkit/`
+  - Defines the theme-specific scan surface and session-context output shape
+
+GUIDED_EXECUTION_PROMPT.md / SESSION_HANDOFF_PROMPT.md / RESTORE_POINT_PROMPT.md /
+TOOLKIT_LESSONS_AUDIT_PROMPT.md
+  - Local execution entry points backed by canonical shared prompt bodies in
+    `wp-workflow-toolkit/`
 
 STACK_REFERENCE.md
   - Single source of truth for the Meta Views Stack workflow, child-theme

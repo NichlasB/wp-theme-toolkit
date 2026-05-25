@@ -2,32 +2,20 @@
 
 # Session Bootstrap & Context Map
 
+This file is a toolkit-specific adapter around the shared bootstrap core.
+
+Shared core source:
+- `wp-workflow-toolkit/d4-prompts/ds1-session/SESSION_BOOTSTRAP_CORE_PROMPT.md`
+
 Use this prompt at the start of a new chat when you are about to work on an existing Meta Views Stack site project.
 
-Its job is to create a compact, session-specific context map so the assistant can spend less time rediscovering the project structure in later turns.
+Before applying the site-specific scan and output rules below, read and apply the shared bootstrap core.
 
 ---
 
-## Purpose
+## Theme-Specific Primary References
 
-Run this before feature work, new page work, CPT work, design-system review, or pre-launch review when:
-- the chat is new
-- the project has not been discussed yet in the current thread
-- you want a reusable map of the site project before asking for concrete changes
-
-This is an orientation workflow, not an implementation workflow.
-
-If the likely next step will modify files, recommend `RESTORE_POINT_PROMPT.md` before the first edit-heavy workflow unless the user already created a restore point for the session.
-
-If the user wants slower pacing, explicit progress tracking, or one approved task slice at a time after bootstrap, recommend `GUIDED_EXECUTION_PROMPT.md` before the first specialized workflow.
-
-If `session-handoff.tmp.md` already exists in the target root, use it as helper context for recent chat decisions and open threads, but verify current filesystem and git state directly before carrying those details forward.
-
----
-
-## Primary References
-
-Before starting, read:
+Before scanning, read:
 - `_TASK_RUNNER.md`
 - `d3-guides/WORKFLOW_QUICK_REFERENCE.md`
 - `d1-setup/STACK_REFERENCE.md`
@@ -40,31 +28,11 @@ Use those files to understand:
 
 ---
 
-## Required Output File
+## Theme-Specific Target Notes
 
-Create a temporary Markdown file in the target project root using this filename:
-
-```text
-session-context.tmp.md
-```
-
-If a file with that name already exists, overwrite it.
-
-Do not create this file inside the toolkit itself unless the user explicitly asks you to run the workflow on the toolkit.
-
-Treat this file as temporary local workflow context. It should not be committed.
-
----
-
-## Atypical Target Fallback
-
-Most uses of this prompt should target a site project or Blocksy child theme, but occasionally the user may explicitly point it at an atypical folder.
-
-If that happens:
-- honor the explicit target choice
-- infer the best available identity from `style.css`, `_project-context.md`, or folder naming
-- mark inferred values clearly in the output
-- prioritize operational files and project context over forcing a normal child-theme map
+- The normal target is a Meta Views Stack site project or Blocksy child theme.
+- Prefer identity clues from `style.css`, `functions.php`, `_project-context.md`, folder naming, and the presence of `mb-json/`, `views/`, or `inc/cpt.php`.
+- If the target is atypical, prioritize operational files and project context over forcing a normal child-theme map.
 
 ---
 
@@ -203,5 +171,3 @@ After writing `session-context.tmp.md`, also report in chat:
 - whether the normal order should be session bootstrap, guided execution when useful, then restore point, or the strict reverse order
 
 If the likely next step is implementation or other file edits, note the recommended order explicitly.
-
-Proceed with session bootstrap now.

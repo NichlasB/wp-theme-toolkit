@@ -29,6 +29,15 @@ Primary workflow:
 10. Review with d4-prompts/ds3-review/
 11. Launch-check with d4-prompts/ds4-pre-launch/01 through 06
 
+Shared workflow note:
+- d4-prompts/ds1-setup/SESSION_BOOTSTRAP_PROMPT.md is a local adapter around wp-workflow-toolkit/d4-prompts/ds1-session/SESSION_BOOTSTRAP_CORE_PROMPT.md
+- d4-prompts/ds1-setup/GUIDED_EXECUTION_PROMPT.md, d4-prompts/ds1-setup/SESSION_HANDOFF_PROMPT.md, d4-prompts/ds1-setup/RESTORE_POINT_PROMPT.md, and d4-prompts/ds7-maintenance/TOOLKIT_LESSONS_AUDIT_PROMPT.md remain local entry points but are backed by canonical shared prompt bodies in wp-workflow-toolkit/
+
+Shared workflow boundary:
+- move a prompt into wp-workflow-toolkit only when the workflow intent, execution contract, and safety assumptions stay materially the same across both toolkits
+- keep a prompt local when theme-specific targets, scan surfaces, release rules, or output formats would otherwise dominate the file
+- update the shared canonical source first; update the local theme wrapper or adapter only when the theme-specific supplement changes
+
 Repository structure:
 - d1-setup/      setup references and project schema
 - d2-scripts/    restore-point helpers

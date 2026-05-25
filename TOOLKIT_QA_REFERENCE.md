@@ -54,3 +54,6 @@ A: Check three things in order:
 1. Inspect computed styles in DevTools. Blocksy or WordPress may be driving the surface through a shared variable or a stronger selector such as `body ::selection` or `#reply-title`.
 2. If the parent theme is styling through variables, override those variables in the shared child-theme layer such as `style.css` or another globally loaded stylesheet. If the parent theme is using a more specific selector, match or exceed that specificity in the child theme.
 3. Confirm child CSS and JS assets are versioned by file modification time instead of only the static theme version header, otherwise the browser can keep serving stale files during local iteration.
+
+### Q: How do the shared workflow prompts work after consolidation?
+A: Keep using the local prompt filenames in `wp-theme-toolkit`. `SESSION_BOOTSTRAP_PROMPT.md` is now a local adapter around the shared bootstrap core in `wp-workflow-toolkit/d4-prompts/ds1-session/SESSION_BOOTSTRAP_CORE_PROMPT.md`. `GUIDED_EXECUTION_PROMPT.md`, `SESSION_HANDOFF_PROMPT.md`, `RESTORE_POINT_PROMPT.md`, and `TOOLKIT_LESSONS_AUDIT_PROMPT.md` are local wrappers backed by canonical shared prompt bodies there. Update the shared source first; touch the local theme file only when the theme-specific notes, scan surface, output format, or safety rules change.

@@ -23,6 +23,14 @@ The goal: build launch-ready WordPress sites with a repeatable AI workflow, whil
 - consistent Twig patterns for Meta Box fields and archive loops
 - a clear boundary between MB Views template logic and Blocksy Content Block placement
 - reusable session bootstrap, session handoff, and restore-point workflows
+- a local session-bootstrap adapter plus compatibility wrappers for shared workflow prompts sourced from `wp-workflow-toolkit`, while keeping local `@filename` usage unchanged
+
+Shared workflow note: `SESSION_BOOTSTRAP_PROMPT.md` now combines theme-specific scan/output rules with the shared bootstrap core in `wp-workflow-toolkit`. `GUIDED_EXECUTION_PROMPT.md`, `SESSION_HANDOFF_PROMPT.md`, `RESTORE_POINT_PROMPT.md`, and `TOOLKIT_LESSONS_AUDIT_PROMPT.md` remain local prompt names but are thin wrappers around canonical shared sources there.
+
+Shared workflow boundary:
+- a prompt belongs in `wp-workflow-toolkit` only when the workflow intent, execution contract, and safety assumptions stay materially the same across both toolkits
+- a prompt stays local when theme-specific targets, scan surfaces, release rules, or output formats would otherwise dominate the file
+- update the shared canonical source first; update the local theme wrapper or adapter only when the theme-specific supplement changes
 - ordered review and pre-launch quality gates before a site goes live
 - a documented GridPane deployment flow and Git timing guidance for the child theme lifecycle
 - a Git operations workflow for committing, pushing, and releasing either the toolkit repo or a target child-theme repo

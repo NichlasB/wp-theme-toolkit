@@ -12,6 +12,8 @@ Important: the `wp-theme-toolkit/` folder is normally not the target of these ta
 
 Exceptions: `d4-prompts/ds6-git/GIT_OPERATIONS_PROMPT.md` and toolkit-self workflows such as `d4-prompts/ds7-maintenance/TOOLKIT_LESSONS_AUDIT_PROMPT.md` may target `wp-theme-toolkit/` itself when the prompt explicitly allows it. `TOOLKIT_LESSONS_AUDIT_PROMPT.md` is for toolkit-wide lessons, not one-off project issues.
 
+Shared workflow note: `SESSION_BOOTSTRAP_PROMPT.md` is a local adapter around the shared bootstrap core in `wp-workflow-toolkit/d4-prompts/ds1-session/SESSION_BOOTSTRAP_CORE_PROMPT.md`. `GUIDED_EXECUTION_PROMPT.md`, `SESSION_HANDOFF_PROMPT.md`, `RESTORE_POINT_PROMPT.md`, and `TOOLKIT_LESSONS_AUDIT_PROMPT.md` remain local execution entry points but are backed by canonical shared sources in `wp-workflow-toolkit/`.
+
 LocalWP database rule: if the task involves LocalWP SQL, migration, import reconciliation, or direct database inspection on Windows, read `d1-setup/LOCALWP_DATABASE_ACCESS_WORKFLOW.md` before attempting DB access. Use LocalWP's bundled `mysql.exe` for initial SQL access instead of starting with `wp-load.php` or generic PHP MySQL access.
 
 ---
@@ -184,12 +186,18 @@ wp-theme-toolkit/   <- normally not the target
 ├── d3-guides/      <- design, Twig, Blocksy, workflow, and model guides
 ├── d4-prompts/
 │   ├── ds1-setup/      <- project bootstrap, session bootstrap, guided execution, session handoff, restore point
-│   │   ├── GUIDED_EXECUTION_PROMPT.md
+│   │   ├── SESSION_BOOTSTRAP_PROMPT.md <- local adapter around shared bootstrap core
+│   │   ├── GUIDED_EXECUTION_PROMPT.md <- local wrapper around shared prompt
+│   │   ├── SESSION_HANDOFF_PROMPT.md <- local wrapper around shared prompt
+│   │   ├── RESTORE_POINT_PROMPT.md <- local wrapper around shared prompt
 │   ├── ds2-build/      <- page, CPT, and token generation
 │   ├── ds3-review/     <- view and CSS audits
 │   ├── ds4-pre-launch/ <- launch-readiness sequence
 │   ├── ds5-deploy/     <- deployment workflow prompts
 │   ├── ds6-git/        <- git operations and release workflow prompt
 │   └── ds7-maintenance/ <- toolkit-self retrospective workflows
+│       └── TOOLKIT_LESSONS_AUDIT_PROMPT.md <- local wrapper around shared prompt
+├── ../wp-workflow-toolkit/ <- sibling shared workflow source repo when present
+│   └── d4-prompts/     <- canonical shared prompt bodies and shared bootstrap core
 └── other-folders/  <- target site projects or child themes
 ```
