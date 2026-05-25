@@ -36,7 +36,7 @@ Add this repository and your target site project to the same IDE workspace.
 
 ### 2. Starting A New Site Project
 
-1. Read `d1-setup/STACK_REFERENCE.md`, `d1-setup/LOCALWP_BLUEPRINT_SETUP.md`, `d3-guides/DESIGN_SYSTEM_GUIDE.md`, `d3-guides/PAGE_DECISION_TREE_CHEAT_SHEET.md`, `d3-guides/PAGE_BUILDING_WORKFLOW.md`, and `d1-setup/PROJECT_CONTEXT_TEMPLATE.md`
+1. Read `d1-setup/STACK_REFERENCE.md`, `d1-setup/LOCALWP_BLUEPRINT_SETUP.md`, `d1-setup/LOCALWP_DATABASE_ACCESS_WORKFLOW.md`, `d3-guides/DESIGN_SYSTEM_GUIDE.md`, `d3-guides/PAGE_DECISION_TREE_CHEAT_SHEET.md`, `d3-guides/PAGE_BUILDING_WORKFLOW.md`, and `d1-setup/PROJECT_CONTEXT_TEMPLATE.md`
 2. Run `@PROJECT_BOOTSTRAP_PROMPT.md run`
 3. Continue with `@DESIGN_TOKENS_PROMPT.md run`, `@PAGE_SCOPING_CHECKLIST_PROMPT.md run`, `@NEW_PAGE_PROMPT.md run`, or `@NEW_CPT_PROMPT.md run`
 4. Run the review prompts and the pre-launch sequence `@01-RESPONSIVE_QA_PROMPT.md run` through `@06-FINAL_CHECKLIST_PROMPT.md run`
@@ -46,10 +46,11 @@ Add this repository and your target site project to the same IDE workspace.
 ### 3. Starting A New Chat On An Existing Site
 
 1. Run `@SESSION_BOOTSTRAP_PROMPT.md run`
-2. Run `@GUIDED_EXECUTION_PROMPT.md run` when you want slower pacing, explicit progress tracking, or one approved task slice at a time
-3. Run `@RESTORE_POINT_PROMPT.md run`
-4. Review `session-context.tmp.md` and `session-handoff.tmp.md` when present in the target root
-5. Continue with build, review, or pre-launch prompts
+2. Read `d1-setup/LOCALWP_DATABASE_ACCESS_WORKFLOW.md` before any LocalWP SQL or migration work
+3. Run `@GUIDED_EXECUTION_PROMPT.md run` when you want slower pacing, explicit progress tracking, or one approved task slice at a time
+4. Run `@RESTORE_POINT_PROMPT.md run`
+5. Review `session-context.tmp.md` and `session-handoff.tmp.md` when present in the target root
+6. Continue with build, review, or pre-launch prompts
 
 When you want to pause and continue the same work in a fresh chat, run `@SESSION_HANDOFF_PROMPT.md run` before switching.
 
@@ -84,6 +85,7 @@ wp-theme-toolkit/
 |-- d1-setup/
 |   |-- 00_REFERENCE_SYSTEM_PROMPTS_FILES_STRUCTURE.txt
 |   |-- IDE_SETUP_GUIDE.md
+|   |-- LOCALWP_DATABASE_ACCESS_WORKFLOW.md
 |   |-- LOCALWP_BLUEPRINT_SETUP.md
 |   |-- PROJECT_CONTEXT_TEMPLATE.md
 |   `-- STACK_REFERENCE.md
@@ -218,3 +220,5 @@ Reference prompts directly in chat:
 Do not use `@TOOLKIT_LESSONS_AUDIT_PROMPT.md run` for project-specific styling, content-entry, or deployment issues unless they exposed a reusable toolkit gap.
 
 See `d1-setup/IDE_SETUP_GUIDE.md` and `d3-guides/WORKFLOW_QUICK_REFERENCE.md` for the operating sequence.
+
+For LocalWP database inspection, reconciliation, and migration work, read `d1-setup/LOCALWP_DATABASE_ACCESS_WORKFLOW.md` first so the chat uses LocalWP's bundled `mysql.exe` instead of trying `wp-load.php` or generic PHP MySQL access.

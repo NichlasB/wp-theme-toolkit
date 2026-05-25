@@ -11,6 +11,7 @@ wp-theme-toolkit/
 ├── d1-setup/
 │   ├── STACK_REFERENCE.md
 │   ├── IDE_SETUP_GUIDE.md
+│   ├── LOCALWP_DATABASE_ACCESS_WORKFLOW.md
 │   ├── PROJECT_CONTEXT_TEMPLATE.md
 │   └── 00_REFERENCE_SYSTEM_PROMPTS_FILES_STRUCTURE.txt
 │

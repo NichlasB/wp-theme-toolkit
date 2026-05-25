@@ -18,15 +18,16 @@ Core stack:
 
 Primary workflow:
 1. Read d1-setup/STACK_REFERENCE.md
-2. Create or update _project-context.md from d1-setup/PROJECT_CONTEXT_TEMPLATE.md
-3. Run d4-prompts/ds1-setup/PROJECT_BOOTSTRAP_PROMPT.md for new projects
-4. Run d4-prompts/ds1-setup/SESSION_BOOTSTRAP_PROMPT.md for new chats
-5. Run d4-prompts/ds1-setup/GUIDED_EXECUTION_PROMPT.md after bootstrap when you want slower pacing or explicit progress tracking
-6. Run d4-prompts/ds1-setup/SESSION_HANDOFF_PROMPT.md before switching to a fresh chat
-7. Run d4-prompts/ds7-maintenance/TOOLKIT_LESSONS_AUDIT_PROMPT.md against wp-theme-toolkit when a working chat reveals reusable toolkit lessons
-8. Build with d4-prompts/ds2-build/
-9. Review with d4-prompts/ds3-review/
-10. Launch-check with d4-prompts/ds4-pre-launch/01 through 06
+2. Read d1-setup/LOCALWP_DATABASE_ACCESS_WORKFLOW.md before any LocalWP SQL or migration work
+3. Create or update _project-context.md from d1-setup/PROJECT_CONTEXT_TEMPLATE.md
+4. Run d4-prompts/ds1-setup/PROJECT_BOOTSTRAP_PROMPT.md for new projects
+5. Run d4-prompts/ds1-setup/SESSION_BOOTSTRAP_PROMPT.md for new chats
+6. Run d4-prompts/ds1-setup/GUIDED_EXECUTION_PROMPT.md after bootstrap when you want slower pacing or explicit progress tracking
+7. Run d4-prompts/ds1-setup/SESSION_HANDOFF_PROMPT.md before switching to a fresh chat
+8. Run d4-prompts/ds7-maintenance/TOOLKIT_LESSONS_AUDIT_PROMPT.md against wp-theme-toolkit when a working chat reveals reusable toolkit lessons
+9. Build with d4-prompts/ds2-build/
+10. Review with d4-prompts/ds3-review/
+11. Launch-check with d4-prompts/ds4-pre-launch/01 through 06
 
 Repository structure:
 - d1-setup/      setup references and project schema
@@ -34,3 +35,6 @@ Repository structure:
 - d3-guides/     design, Twig, Blocksy, workflow, and model guides
 - d4-prompts/    setup, build, review, pre-launch, git, and maintenance prompts
 - d5-examples/   example project context and build walkthrough
+
+Important setup note:
+- d1-setup/LOCALWP_DATABASE_ACCESS_WORKFLOW.md is the canonical LocalWP SQL access guide for fresh chats and migration work on Windows

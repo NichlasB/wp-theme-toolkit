@@ -10,6 +10,8 @@ Standardize the LocalWP starting state so each project begins with the same plug
 
 This removes repetitive setup work and makes `PROJECT_BOOTSTRAP_PROMPT.md` start from a known structure.
 
+For direct LocalWP database inspection, reconciliation, or migration work after the site exists, use `LOCALWP_DATABASE_ACCESS_WORKFLOW.md`. The blueprint setup file defines the starting site state; the database access workflow defines how fresh AI chats should talk to the LocalWP MySQL database safely on Windows.
+
 ## Required Plugins
 
 - Meta Box AIO - core field, relationship, and MB Views surface

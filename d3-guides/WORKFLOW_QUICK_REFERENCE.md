@@ -6,28 +6,40 @@ This is the fast route map for operating `wp-theme-toolkit` day to day.
 
 ```text
 1.  Read d1-setup/STACK_REFERENCE.md
-2.  Read d1-setup/PROJECT_CONTEXT_TEMPLATE.md
-3.  @PROJECT_BOOTSTRAP_PROMPT.md run
-4.  @RESTORE_POINT_PROMPT.md run
-5.  @DESIGN_TOKENS_PROMPT.md run
-6.  @NEW_PAGE_PROMPT.md run and/or @NEW_CPT_PROMPT.md run
-7.  @VIEW_REVIEW_PROMPT.md run
-8.  @CSS_CONSISTENCY_AUDIT_PROMPT.md run
-9.  @DESIGN_SYSTEM_COMPLIANCE_PROMPT.md run
-10. Pre-launch: run 01 through 06 in order
+2.  Read d1-setup/LOCALWP_DATABASE_ACCESS_WORKFLOW.md when LocalWP SQL or migration work is likely
+3.  Read d1-setup/PROJECT_CONTEXT_TEMPLATE.md
+4.  @PROJECT_BOOTSTRAP_PROMPT.md run
+5.  @RESTORE_POINT_PROMPT.md run
+6.  @DESIGN_TOKENS_PROMPT.md run
+7.  @NEW_PAGE_PROMPT.md run and/or @NEW_CPT_PROMPT.md run
+8.  @VIEW_REVIEW_PROMPT.md run
+9.  @CSS_CONSISTENCY_AUDIT_PROMPT.md run
+10. @DESIGN_SYSTEM_COMPLIANCE_PROMPT.md run
+11. Pre-launch: run 01 through 06 in order
 ```
 
 ## New Chat On Existing Project
 
 ```text
 1.  @SESSION_BOOTSTRAP_PROMPT.md run
-2.  @GUIDED_EXECUTION_PROMPT.md run
-3.  @RESTORE_POINT_PROMPT.md run
-4.  Review session-context.tmp.md and session-handoff.tmp.md when present
-5.  Continue with build, review, or pre-launch workflows
+2.  Read d1-setup/LOCALWP_DATABASE_ACCESS_WORKFLOW.md before LocalWP SQL, migration, or reconciliation work
+3.  @GUIDED_EXECUTION_PROMPT.md run
+4.  @RESTORE_POINT_PROMPT.md run
+5.  Review session-context.tmp.md and session-handoff.tmp.md when present
+6.  Continue with build, review, or pre-launch workflows
 ```
 
 Use `@GUIDED_EXECUTION_PROMPT.md run` after session bootstrap when the user wants lower-overwhelm pacing, explicit progress tracking, or one approved task slice at a time. If the next specialized workflow is already obvious and the user wants a faster pass, you can skip it.
+
+## LocalWP Database Work
+
+```text
+1.  Read d1-setup/LOCALWP_DATABASE_ACCESS_WORKFLOW.md
+2.  Resolve LocalWP metadata from sites.json when needed
+3.  Use LocalWP's bundled mysql.exe, not wp-load.php, for initial SQL access
+4.  Run baseline SELECT counts before destructive changes
+5.  Re-run reconciliation queries immediately after changes
+```
 
 ## End A Working Chat
 

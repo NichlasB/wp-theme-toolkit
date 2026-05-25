@@ -12,6 +12,8 @@ Important: the `wp-theme-toolkit/` folder is normally not the target of these ta
 
 Exceptions: `d4-prompts/ds6-git/GIT_OPERATIONS_PROMPT.md` and toolkit-self workflows such as `d4-prompts/ds7-maintenance/TOOLKIT_LESSONS_AUDIT_PROMPT.md` may target `wp-theme-toolkit/` itself when the prompt explicitly allows it. `TOOLKIT_LESSONS_AUDIT_PROMPT.md` is for toolkit-wide lessons, not one-off project issues.
 
+LocalWP database rule: if the task involves LocalWP SQL, migration, import reconciliation, or direct database inspection on Windows, read `d1-setup/LOCALWP_DATABASE_ACCESS_WORKFLOW.md` before attempting DB access. Use LocalWP's bundled `mysql.exe` for initial SQL access instead of starting with `wp-load.php` or generic PHP MySQL access.
+
 ---
 
 ## Command Syntax
@@ -177,6 +179,7 @@ Deployment workflows:
 ```text
 wp-theme-toolkit/   <- normally not the target
 ├── d1-setup/       <- setup references and project schema
+│   └── LOCALWP_DATABASE_ACCESS_WORKFLOW.md <- read first for LocalWP SQL and migration work
 ├── d2-scripts/     <- restore-point helpers
 ├── d3-guides/      <- design, Twig, Blocksy, workflow, and model guides
 ├── d4-prompts/
