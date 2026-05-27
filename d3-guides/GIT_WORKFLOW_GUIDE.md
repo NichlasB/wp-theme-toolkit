@@ -1,10 +1,16 @@
 # Git Workflow Guide
 
-This guide documents when Git enters the project lifecycle, what it tracks, what it does not track, and how code stays separate from database-backed content.
+This guide documents when Git enters the project lifecycle, what it tracks, what it does not track, how deployment differs from repository scope, and how code stays separate from database-backed content.
 
 ## Purpose
 
-Treat Git as the source of truth for the child theme code surface, not for WordPress content or settings stored in the database.
+Treat Git as the source of truth for the approved child-theme repository surface, not for WordPress content or settings stored in the database.
+
+Git scope and deployment scope are related, but they are not identical:
+
+- Git can track runtime code plus selected project knowledge files
+- the GridPane deployment payload should contain runtime assets by default
+- local-only operator files should stay out of both Git and deployment unless there is a deliberate reason to keep them
 
 ## When Git Enters The Project
 
@@ -12,7 +18,7 @@ Git enters after the child-theme scaffold exists and before any real code is wri
 
 1. Create the site in LocalWP - no Git yet
 2. Install Blocksy, Blocksy Pro, and Meta Box AIO - no Git yet
-3. Create the `blocksy-child/` scaffold with `style.css`, `functions.php`, `inc/`, `mb-json/`, `views/`, `_project-context.md`, and `.gitignore` - Git enters here
+3. Create the `blocksy-child/` scaffold with `style.css`, `functions.php`, `inc/`, `mb-json/`, `views/`, `.gitignore`, and any approved project files such as `_project-context.md` - Git enters here
 4. Open `blocksy-child/` in the IDE
 5. Run `git init` and create the first commit with the scaffold
 6. Create a private GitHub repository
@@ -22,14 +28,35 @@ All real code generation and refinement should happen after this point so every 
 
 ## What Git Tracks
 
-- the entire `blocksy-child/` folder
+Git should track the approved repository surface, not automatically every file that happens to exist inside `blocksy-child/`.
+
+### Usually track and deploy
+
 - `style.css`
 - `functions.php`
 - `inc/`
+- `assets/`
 - tracked `.mbjson` files under `mb-json/`
 - `views/` local reference copies
+- page template PHP files
+- `screenshot.jpg`
+
+### May track in Git, but do not deploy by default
+
 - `_project-context.md`
-- `.gitignore`
+- approved planning notes, migration references, or operator documentation the team wants preserved in GitHub
+- repository metadata such as `.gitignore`
+
+These files can be useful in the repository without belonging on GridPane.
+
+### Keep local only unless there is a deliberate exception
+
+- `session-context.tmp.md`
+- `session-handoff.tmp.md`
+- other `*.tmp.md` workflow files
+- ad hoc maintenance helpers that are only for one-time local or operator use
+
+If a file is not runtime-relevant and is not valuable as shared project knowledge, do not track it.
 
 ## What Git Does Not Track
 
@@ -39,16 +66,20 @@ All real code generation and refinement should happen after this point so every 
 - the uploads folder
 - the WordPress database, including posts, pages, MB Views stored in the database, and Blocksy Customizer settings
 
+Do not use Git as a dumping ground for temporary migration packages, SQL exports, or local-only operator artifacts.
+
 ## The Two-Channel Rule
 
 The Meta Views Stack uses two separate channels.
 
 | Channel | What It Carries | How It Moves |
 |---------|-----------------|--------------|
-| Code | `.mbjson`, `.php`, Twig files, CSS, `_project-context.md` | Git -> GitHub -> `git pull` on production |
+| Code and shared project knowledge | `.mbjson`, `.php`, Twig files, CSS, selected project docs such as `_project-context.md` | Git -> GitHub -> `git pull` on production for runtime assets; non-runtime tracked docs stay in the repo but are excluded from clean deployment payloads |
 | Content and settings | posts, pages, field values, MB Views templates, Blocksy settings, uploads | database migration plugin such as WP Migrate, All-in-One WP Migration, or Duplicator |
 
 Code lives in version control. Content lives in the database. They meet at deploy time.
+
+Deployment should use the runtime subset of the repository, not blindly mirror the entire working tree to GridPane.
 
 ## Daily Commit Rhythm
 
@@ -67,13 +98,15 @@ Once the site is live on GridPane:
 - code updates: edit locally -> commit -> push -> SSH into GridPane -> `git pull`
 - content updates: edit directly on production through WordPress admin
 
+If the repository contains tracked non-runtime files that the user does not want on the server, do not treat `git pull` as the only acceptable deployment path. Use a clean deployment copy when needed so the GridPane payload stays production-ready.
+
 Never edit code directly on production.
 
 Never commit content to Git.
 
 ## `.gitignore` Recommendations
 
-Use a standard child-theme `.gitignore`.
+Use a child-theme `.gitignore` that keeps local-only workflow clutter out of the repository.
 
 ```text
 # OS
@@ -91,9 +124,12 @@ mb-json/*.json
 # Session context files
 session-context.tmp.md
 session-handoff.tmp.md
+*.tmp.md
 ```
 
 Track `.mbjson` files as the canonical Meta Box schema source and ignore duplicate `.json` export copies to prevent drift.
+
+If the team decides certain tracked project docs should live in GitHub but never ship to GridPane, handle that in the deployment workflow or deployment packaging rules, not in `.gitignore`.
 
 Important: Meta Box Builder local-file mode scans `*.json` by default. If the project intentionally keeps only tracked `.mbjson` files, add this bridge to `functions.php` so field groups still load in wp-admin:
 

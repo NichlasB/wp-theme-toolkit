@@ -181,6 +181,11 @@ GRIDPANE_DEPLOYMENT_PROMPT.md
   - Eight-phase deployment workflow covering Git deploy, DB migration,
     search-replace, go-live, and post-launch update rhythm
 
+POST_LAUNCH_GRIDPANE_UPDATE_PROMPT.md
+  - Incremental post-launch GridPane update workflow covering change
+    classification, clean deployment copies, code deploy, optional uploads or
+    DB-content steps, and post-update validation
+
 GIT_OPERATIONS_PROMPT.md
   - Git commit, push, tag, dry-run, and release workflow for either the
     toolkit repo or a child-theme/site repository

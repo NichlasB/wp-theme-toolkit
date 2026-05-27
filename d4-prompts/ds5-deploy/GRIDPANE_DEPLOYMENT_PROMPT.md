@@ -16,10 +16,14 @@ Run this after build work, reviews, and the 01-06 pre-launch sequence are comple
 
 Use it to:
 - confirm the local site is ready to ship
-- deploy the child theme through Git
+- deploy the child theme through Git or a clean deployment copy when needed
 - migrate database content and uploads safely
 - verify production behavior before DNS cutover and after go-live
 - record the deployment in `DEPLOYMENT_CHECKLIST.md`
+
+Default stance:
+- treat the GridPane target as production-ready from the first deployment onward
+- prefer a production-ready child-theme payload over mirroring the full LocalWP working tree
 
 ---
 
@@ -49,6 +53,8 @@ Helpful optional inputs:
 - whether DNS is already pointed at GridPane
 - whether production already has the paid plugin zip files available
 - whether a reverse migration back to local is expected immediately after launch
+- whether the child-theme deploy surface has already been cleaned of non-runtime files the user does not want on the server
+- whether a child-theme `.distignore` file exists and should define the clean deployment payload
 
 ---
 
@@ -67,11 +73,15 @@ During this workflow, create or update:
 ### Phase 1: Prepare the local site
 
 - confirm all child-theme code is committed and pushed to GitHub
+- confirm the child-theme deploy surface is production-ready and does not include tracked non-runtime files the user does not want on GridPane
+- if a child-theme `.distignore` file exists, use it as the baseline exclusion rule for any clean deployment copy
 - run final functional QA in LocalWP
 - export the local database with a migration plugin
 - confirm the uploads library is included in the migration package when needed
 
 Do not continue if the child-theme repo has unreviewed local changes.
+
+Do not continue if the child-theme deploy surface still includes local-only planning notes, temporary workflow files, migration runbooks, or maintenance utilities the user does not want on the server.
 
 ### Phase 2: Set up the GridPane server
 
@@ -95,13 +105,14 @@ cd /var/www/example.com/htdocs
 
 The child theme should be activated only after the Git clone step completes.
 
-### Phase 4: Deploy the child theme via Git
+### Phase 4: Deploy the child theme
 
-- SSH into the server
-- navigate to `wp-content/themes/`
-- clone the child-theme repo into `blocksy-child/`
-- handle authentication through a PAT or SSH key
-- activate the child theme in WordPress admin after the clone completes
+Choose one path:
+
+- Git path: SSH into the server, navigate to `wp-content/themes/`, clone the child-theme repo into `blocksy-child/`, handle authentication through a PAT or SSH key, then activate the child theme in WordPress admin after the clone completes
+- clean archive path: package only the approved runtime deploy surface, using `.distignore` as the baseline exclusion list when present, upload the archive, extract it into `blocksy-child/`, then normalize ownership and permissions before activation
+
+The deployed theme should represent the production-ready deploy surface, not the full LocalWP working tree.
 
 Example:
 
@@ -166,6 +177,8 @@ When local needs the latest production content, perform a reverse migration from
 ## Common Pitfalls
 
 - SSL certificate delay after DNS changes - wait for DNS to resolve before treating certificate issuance as broken
+- pushing docs, temp notes, migration runbooks, or maintenance-only helper files to GridPane just because they were present locally
+- assuming the first launch must be a raw Git clone even when `.distignore` or other tracked non-runtime files make a clean deployment copy safer
 - file permission issues on GridPane - use the GridPane permissions fix command when ownership looks wrong
 
 ```bash

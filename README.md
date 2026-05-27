@@ -142,7 +142,8 @@ wp-theme-toolkit/
 |   |   `-- 06-FINAL_CHECKLIST_PROMPT.md
 |   |
 |   |-- ds5-deploy/
-|   |   `-- GRIDPANE_DEPLOYMENT_PROMPT.md
+|   |   |-- GRIDPANE_DEPLOYMENT_PROMPT.md
+|   |   `-- POST_LAUNCH_GRIDPANE_UPDATE_PROMPT.md
 |   |
 |   |-- ds6-git/
 |   |   `-- GIT_OPERATIONS_PROMPT.md
@@ -163,8 +164,9 @@ wp-theme-toolkit/
 4. Record placement decisions in the assignment map
 5. Refine the live result with Element to LLM
 6. Run review prompts before launch
-7. Deploy with the GridPane workflow and track rollout in `DEPLOYMENT_CHECKLIST.md`
-8. Use the Git operations prompt when you want assisted commit, push, tag, or release work for the toolkit repo or a child-theme repo
+7. Deploy the first launch with the GridPane workflow and track rollout in `DEPLOYMENT_CHECKLIST.md`
+8. Use the post-launch GridPane update workflow for smaller follow-up staging or production pushes after launch
+9. Use the Git operations prompt when you want assisted commit, push, tag, or release work for the toolkit repo or a child-theme repo
 
 ## V1 Scope
 
@@ -175,6 +177,7 @@ Included in v1:
 - design tokens, page creation, CPT creation, view reviews, and pre-launch QA
 - restore-point safety workflow
 - deployment checklist and GridPane deployment workflow
+- post-launch GridPane update workflow for incremental code, uploads, and selected DB-content pushes
 - Git workflow guidance for scaffold timing and code updates
 - Git operations prompt for toolkit and child-theme repositories
 - toolkit lessons audit workflow for approval-gated maintenance of the toolkit itself

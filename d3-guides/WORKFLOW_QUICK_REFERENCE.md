@@ -74,6 +74,16 @@ If the issue belongs only to the current site project, fix it in the project and
 4.  For child-theme repos, keep database-only content out of the Git summary
 ```
 
+## Post-Launch Update
+
+```text
+1.  Confirm whether the target is staging or production
+2.  Classify the change as code only, code + uploads, code + selected DB-content, or full refresh
+3.  @POST_LAUNCH_GRIDPANE_UPDATE_PROMPT.md run
+4.  Use clean deployment mode when the child-theme repo contains non-runtime notes or migration artifacts you do not want on the server
+5.  Keep production DB overwrite approval explicit
+```
+
 Strict-order variant:
 
 ```text

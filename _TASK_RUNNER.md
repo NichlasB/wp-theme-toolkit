@@ -88,6 +88,7 @@ These tasks run to completion in one pass.
 - 05-CROSS_BROWSER_QA_PROMPT.md
 - 06-FINAL_CHECKLIST_PROMPT.md
 - GRIDPANE_DEPLOYMENT_PROMPT.md
+- POST_LAUNCH_GRIDPANE_UPDATE_PROMPT.md
 - GIT_OPERATIONS_PROMPT.md
 
 ### Two-Phase Tasks
@@ -153,6 +154,7 @@ Prompt-to-checklist mapping:
 
 Deployment workflows:
 - `GRIDPANE_DEPLOYMENT_PROMPT.md` updates `DEPLOYMENT_CHECKLIST.md`, not `PRE_LAUNCH_CHECKLIST.md`
+- `POST_LAUNCH_GRIDPANE_UPDATE_PROMPT.md` is for incremental staging or production updates after launch and does not update `DEPLOYMENT_CHECKLIST.md` by default
 
 ---
 
