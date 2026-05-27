@@ -37,11 +37,19 @@ Before starting, read:
 
 Treat `GIT_WORKFLOW_GUIDE.md` as the source of truth for the code-versus-content split.
 
+Shared default for LocalWP to GridPane database export:
+- use LocalWP's bundled `mysqldump`
+- use `--result-file`
+- do not use PowerShell `>` redirection
+- do not use `--databases local` when the dump is intended for GridPane import
+
+Treat that export pattern as the default unless the project-specific deployment context file documents an explicit override.
+
 ---
 
 ## Required Inputs
 
-If the user has not already provided them, gather these inputs first:
+If the user has not already provided them, gather these inputs first from the project-specific deployment context file or from the user:
 - target site project or child-theme path
 - production domain
 - GridPane server IP or hostname
@@ -55,6 +63,7 @@ Helpful optional inputs:
 - whether a reverse migration back to local is expected immediately after launch
 - whether the child-theme deploy surface has already been cleaned of non-runtime files the user does not want on the server
 - whether a child-theme `.distignore` file exists and should define the clean deployment payload
+- a project-specific DB export override, only when the default LocalWP to GridPane export method does not apply
 
 ---
 
@@ -66,9 +75,93 @@ During this workflow, create or update:
 2. a concise deployment log entry in chat
 3. a short list of blockers or manual follow-up items when needed
 
+## Command Formatting Rule
+
+When providing user-facing commands to run:
+
+- use single-line commands only
+- wrap commands in fenced code blocks
+- do not split a single command across multiple lines with continuation characters
+- if a step requires multiple commands, present them as separate single-line commands in execution order
+
+Prioritize copy-paste reliability for PowerShell and SSH sessions over visual formatting.
+
+---
+
+## Site Context Bootstrap
+
+Before asking broad deployment questions, check for a project-specific deployment context file.
+
+Canonical path for Meta Views Stack child-theme projects:
+- `[child-theme-root]/gridpane-deploy-context.md`
+
+Bootstrap behavior:
+- if the file exists, read it first and use it as the primary source for site-specific deployment facts
+- if the file is missing, ask the user only for the site-specific fields listed below, then create it before continuing
+- if the file exists but is incomplete, ask only for the missing site-specific fields, update it, then continue
+- do not ask for the shared LocalWP to GridPane DB export method unless this project needs an override
+
+Required site-specific fields:
+- project name
+- LocalWP site name
+- local child-theme path
+- production domain
+- GridPane SSH alias
+- GridPane site root
+- server child-theme path
+- whether staging exists and, if so, its domain and site root
+- required post-deploy check pages
+- project-specific deployment gotchas or validation notes
+
+Optional site-specific fields:
+- DB export override, only if this project cannot use the shared default LocalWP to GridPane export method
+- preferred rollback naming convention if the project uses a special pattern
+- plugin or feature dependencies that must be checked after deploy
+
+When asking the user for missing site-specific fields, include a filled sample template so they can see the expected format immediately.
+
+Sample filled template:
+
+```text
+Project Name: Example Wellness TV
+LocalWP Site Name: example-wellness-tv
+Local Child Theme Path: C:\Users\Captain\Local Sites\example-wellness-tv\app\public\wp-content\themes\blocksy-child
+Production Domain: https://examplewellness.com
+GridPane SSH Alias: example-1
+GridPane Site Root: /var/www/examplewellness.com/htdocs
+Server Child Theme Path: /var/www/examplewellness.com/htdocs/wp-content/themes/blocksy-child
+Staging Exists: yes
+Staging Domain: https://staging.examplewellness.com
+Staging Site Root: /var/www/staging.examplewellness.com/htdocs
+Required Post-Deploy Check Pages:
+- /
+- /library/
+- /video/sample-video/
+- /my-account/
+Project-Specific Deployment Gotchas or Validation Notes:
+- Check that the Blocksy parent theme remains installed and active as the template
+- Validate one representative video page and one account page after every DB import
+DB Export Override: none
+Preferred Rollback Naming Convention: blocksy-child-before-refresh-YYYYMMDD-HHMM
+Plugin or Feature Dependencies to Check:
+- Presto Player
+- Meta Box AIO
+- SureForms
+```
+
+When creating or updating `gridpane-deploy-context.md`, keep it concise and operational.
+
 ---
 
 ## Deployment Phases
+
+### Phase 0: Load or bootstrap site context
+
+- resolve the target child-theme path first
+- check for `[child-theme-root]/gridpane-deploy-context.md`
+- read it before proposing commands when it exists
+- if it is missing or incomplete, collect only the missing site-specific fields, show the filled sample template, then create or update the file before continuing
+- treat the LocalWP to GridPane DB export method as a shared default unless the context file explicitly overrides it
 
 ### Phase 1: Prepare the local site
 
