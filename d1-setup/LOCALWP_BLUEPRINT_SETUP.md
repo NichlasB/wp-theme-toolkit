@@ -45,12 +45,16 @@ If the scaffold keeps Meta Box schemas as tracked `.mbjson` files without duplic
 ```text
 blocksy-child/
 ├── .gitignore
+├── .distignore
+├── README.md
 ├── style.css
 ├── functions.php
 ├── inc/
 │   └── cpt.php
 ├── mb-json/
 │   └── .gitkeep
+├── tools/
+│   └── build-deploy-archive.ps1
 ├── views/
 │   └── .gitkeep
 └── _project-context.md
@@ -60,6 +64,8 @@ Notes:
 - `mb-json/` and `views/` need `.gitkeep` so Git tracks the empty folders in a fresh scaffold
 - `inc/cpt.php` can remain a placeholder file with only the opening PHP tag and docblock until real CPT registrations exist
 - if the project tracks `.mbjson` only, add the `mbb_json_files` bridge to `functions.php` from the start instead of waiting for the first field-group sync issue
+- `.distignore` defines the default clean deployment payload so runtime files can ship without mirroring the full working tree
+- `tools/build-deploy-archive.ps1` builds a GridPane-ready zip from `.distignore` on Windows PowerShell
 - keep the scaffold aligned with `STACK_REFERENCE.md`
 
 ### Minimum `functions.php` pattern
@@ -134,10 +140,39 @@ Thumbs.db
 .vscode/
 .idea/
 
-# Temporary context files
+# Local-only workflow files
+*.tmp.md
 session-context.tmp.md
 session-handoff.tmp.md
 ```
+
+### Suggested `.distignore`
+
+```text
+# Version control and editor metadata
+.git/
+.github/
+.cursor/
+.vscode/
+.idea/
+.distignore
+.gitignore
+.gitattributes
+README.md
+
+# Local-only workflow artifacts
+*.tmp.md
+
+# Project knowledge kept in Git but not deployed by default
+_project-context.md
+*-checklist.md
+*-plan.md
+
+# Deployment helpers are tracked but not deployed
+tools/
+```
+
+Keep `.distignore` generic in the blueprint. Add project-specific exclusions such as migration-runbook folders only after a real site creates them.
 
 ## WordPress Settings To Pre-Configure
 

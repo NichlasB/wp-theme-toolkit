@@ -22,6 +22,8 @@ The defining rule: do not rely on a visual page builder as the primary template 
 ```text
 blocksy-child/
 ├── .gitignore
+├── .distignore
+├── README.md
 ├── style.css
 ├── functions.php
 ├── _project-context.md
@@ -30,6 +32,8 @@ blocksy-child/
 ├── mb-json/
 │   ├── .gitkeep
 │   └── [name].mbjson
+├── tools/
+│   └── build-deploy-archive.ps1
 └── views/
     ├── .gitkeep
     ├── single/
@@ -41,11 +45,13 @@ blocksy-child/
 Rules:
 - `style.css` contains the child-theme header and the canonical token block
 - `functions.php` loads the parent stylesheet, conditionally loads child includes, and exposes tracked `.mbjson` field-group files to Meta Box Builder through `mbb_json_files` when the project does not keep duplicate `.json` twins
-- `_project-context.md` is the operational context file for AI and humans
+- `_project-context.md` is the operational context file for AI and humans and can stay tracked without being deployed
 - `inc/cpt.php` stores CPT registration snippets
 - `mb-json/` stores reusable field schemas as tracked `.mbjson` files and should contain a `.gitkeep` file until real files exist
+- `tools/build-deploy-archive.ps1` builds a clean theme archive from `.distignore` for GridPane-ready deployment
 - `views/` stores local reference copies of all Twig and CSS pasted into MB Views and should contain a `.gitkeep` file until real files exist
-- `.gitignore` excludes editor folders and temporary session files from the child-theme repository
+- `.gitignore` excludes editor folders and local-only workflow files from the child-theme repository
+- `.distignore` excludes tracked non-runtime files from clean deployment archives by default
 
 ## Required Project Artifacts
 
