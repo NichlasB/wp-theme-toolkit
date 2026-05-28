@@ -165,6 +165,7 @@ README.md
 
 # Project knowledge kept in Git but not deployed by default
 _project-context.md
+gridpane-deploy-context.md
 *-checklist.md
 *-plan.md
 

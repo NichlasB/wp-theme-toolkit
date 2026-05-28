@@ -46,6 +46,7 @@ Rules:
 - `style.css` contains the child-theme header and the canonical token block
 - `functions.php` loads the parent stylesheet, conditionally loads child includes, and exposes tracked `.mbjson` field-group files to Meta Box Builder through `mbb_json_files` when the project does not keep duplicate `.json` twins
 - `_project-context.md` is the operational context file for AI and humans and can stay tracked without being deployed
+- `gridpane-deploy-context.md` is the site-specific deployment context file and should stay tracked without being deployed
 - `inc/cpt.php` stores CPT registration snippets
 - `mb-json/` stores reusable field schemas as tracked `.mbjson` files and should contain a `.gitkeep` file until real files exist
 - `tools/build-deploy-archive.ps1` builds a clean theme archive from `.distignore` for GridPane-ready deployment

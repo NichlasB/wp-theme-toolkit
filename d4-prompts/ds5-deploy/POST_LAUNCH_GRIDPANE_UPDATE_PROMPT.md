@@ -111,6 +111,11 @@ Bootstrap behavior:
 - if the file exists but is incomplete, ask only for the missing site-specific fields, update it, then continue
 - do not ask for the shared LocalWP to GridPane DB export method unless this project needs an override
 
+Interaction rule for missing site-context fields:
+- when several fields are missing or the answer benefits from a multi-line template, do not collect the whole template through a narrow VS Code question-card text input
+- instead, show the filled sample template in normal chat and ask the user to paste back the completed or corrected version in normal chat
+- use question cards only for short yes-no, one-line scalar, or fixed-choice follow-ups
+
 Required site-specific fields:
 - project name
 - LocalWP site name
@@ -267,6 +272,7 @@ If there is uncertainty about whether a file is runtime-relevant, keep it and re
 - read it before proposing commands when it exists
 - if it is missing or incomplete, collect only the missing site-specific fields, show the filled sample template, then create or update the file before continuing
 - treat the LocalWP to GridPane DB export method as a shared default unless the context file explicitly overrides it
+- prefer normal chat replies over question-card text boxes when the missing site context is multi-line or template-shaped
 
 ### Phase 1: Confirm target risk
 

@@ -20,6 +20,7 @@ Update the matching row as each deployment phase completes.
 | Project | Theme Root | Deployment Date | P1 | P2 | P3 | P4 | P5 | P6 | P7 | P8 | Notes |
 |---------|------------|-----------------|----|----|----|----|----|----|----|----|-------|
 | Example Site | /path/to/blocksy-child | YYYY-MM-DD | [ ] | [ ] | [ ] | [ ] | [ ] | [ ] | [ ] | [ ] | |
+| Dr. Morse's TV | C:\Users\Captain\Local Sites\drmorses-tv\app\public\wp-content\themes\blocksy-child | 2026-05-28 | [ ] | [ ] | [ ] | [ ] | [ ] | [ ] | [ ] | [ ] | Blocked at P1: pending review or commit for functions.php, inc/bootstrap/blocksy-local-fonts.php, and inc/bootstrap/speculative-loading.php before archive build or Git deploy. |
 
 ## Template Row
 

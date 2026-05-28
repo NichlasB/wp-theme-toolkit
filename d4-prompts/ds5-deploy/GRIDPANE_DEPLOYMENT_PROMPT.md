@@ -55,7 +55,7 @@ If the user has not already provided them, gather these inputs first from the pr
 - GridPane server IP or hostname
 - GridPane SSH user and site path
 - Git repository URL for the child theme
-- preferred migration method: All-in-One WP Migration, WP Migrate, or Duplicator
+- preferred migration method: guided manual server workflow (non-plugin), All-in-One WP Migration, WPVivid, or Duplicator
 
 Helpful optional inputs:
 - whether DNS is already pointed at GridPane
@@ -100,6 +100,11 @@ Bootstrap behavior:
 - if the file is missing, ask the user only for the site-specific fields listed below, then create it before continuing
 - if the file exists but is incomplete, ask only for the missing site-specific fields, update it, then continue
 - do not ask for the shared LocalWP to GridPane DB export method unless this project needs an override
+
+Interaction rule for missing site-context fields:
+- when several fields are missing or the answer benefits from a multi-line template, do not collect the whole template through a narrow VS Code question-card text input
+- instead, show the filled sample template in normal chat and ask the user to paste back the completed or corrected version in normal chat
+- use question cards only for short yes-no, one-line scalar, or fixed-choice follow-ups
 
 Required site-specific fields:
 - project name
@@ -162,6 +167,7 @@ When creating or updating `gridpane-deploy-context.md`, keep it concise and oper
 - read it before proposing commands when it exists
 - if it is missing or incomplete, collect only the missing site-specific fields, show the filled sample template, then create or update the file before continuing
 - treat the LocalWP to GridPane DB export method as a shared default unless the context file explicitly overrides it
+- prefer normal chat replies over question-card text boxes when the missing site context is multi-line or template-shaped
 
 ### Phase 1: Prepare the local site
 
@@ -222,8 +228,9 @@ See `d3-guides/GIT_WORKFLOW_GUIDE.md` for the post-launch `git pull` rhythm.
 ### Phase 5: Migrate the database and uploads
 
 Document and choose one of these options:
+- guided manual server workflow - preferred when the user wants a non-plugin path and direct control over each step
 - All-in-One WP Migration - easiest path
-- WP Migrate - cleanest path for pro workflows
+- WPVivid - familiar plugin workflow when the user wants plugin-based migration
 - Duplicator - more manual, but reliable when needed
 
 After migration, run WP-CLI search-replace if local URLs remain:
