@@ -57,6 +57,11 @@ If the user has not already provided them, gather these inputs first from the pr
 - Git repository URL for the child theme
 - preferred migration method: guided manual server workflow (non-plugin), All-in-One WP Migration, WPVivid, or Duplicator
 
+Method-lock rule:
+- once the migration method is chosen, stay inside that path unless the user explicitly changes methods
+- do not install a migration plugin during a guided manual server workflow unless the user approves that change of method
+- if a temporary migration helper was installed during troubleshooting, remove it before final reporting unless the user asked to keep it
+
 Helpful optional inputs:
 - whether DNS is already pointed at GridPane
 - whether production already has the paid plugin zip files available
@@ -199,8 +204,13 @@ cd /var/www/example.com/htdocs
 ### Phase 3: Install plugins and theme
 
 - install the free Blocksy parent theme from the WordPress theme repository
+- build a concrete plugin inventory from the source site before touching production: at minimum list the plugins that are active locally and any additional runtime plugins that must exist on GridPane even if they remain inactive there
 - upload and activate Blocksy Pro, Meta Box AIO, and project-specific plugins
+- when the target is a fresh GridPane install, do not treat a short curated plugin subset as sufficient unless the user explicitly confirmed a trimmed production plugin set; otherwise aim for parity with the source site's runtime plugin payload
+- verify plugin parity before the database import by checking both plugin directories present on GridPane and the plugins that should be active after the import
 - do not activate the child theme yet
+
+If the imported database's `active_plugins` option will expect plugins that are not yet present on GridPane, treat Phase 3 as blocked until those plugin files are in place or the user approves a deliberate production-only trim.
 
 The child theme should be activated only after the Git clone step completes.
 
@@ -232,6 +242,17 @@ Document and choose one of these options:
 - All-in-One WP Migration - easiest path
 - WPVivid - familiar plugin workflow when the user wants plugin-based migration
 - Duplicator - more manual, but reliable when needed
+
+For large plugin or uploads payloads on Windows, prefer a local archive plus `scp` and remote extract over fragile ad hoc copy patterns.
+
+Default bulk-transfer rule for Windows LocalWP -> GridPane work:
+- package the full payload into one archive locally when the payload is large or contains many directories
+- transfer that archive to `/tmp/` on GridPane
+- extract it into the correct production path
+- normalize ownership and run `gp fix perms [domain]`
+- verify the resulting remote file count or footprint before treating the transfer as complete
+
+Do not assume multi-source `scp` or a streamed `tar | ssh` pass is the safest default for large payloads on Windows.
 
 After migration, run WP-CLI search-replace if local URLs remain:
 

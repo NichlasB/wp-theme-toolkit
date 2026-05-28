@@ -28,6 +28,8 @@ Primary workflow:
 9. Build with d4-prompts/ds2-build/
 10. Review with d4-prompts/ds3-review/
 11. Launch-check with d4-prompts/ds4-pre-launch/01 through 06
+12. Run d4-prompts/ds5-deploy/GRIDPANE_DEPLOYMENT_PROMPT.md for the first LocalWP-to-GridPane launch
+13. Run d4-prompts/ds5-deploy/POST_LAUNCH_GRIDPANE_UPDATE_PROMPT.md for incremental staging or production updates after launch
 
 Shared workflow note:
 - d4-prompts/ds1-setup/SESSION_BOOTSTRAP_PROMPT.md is a local adapter around wp-workflow-toolkit/d4-prompts/ds1-session/SESSION_BOOTSTRAP_CORE_PROMPT.md
@@ -42,7 +44,7 @@ Repository structure:
 - d1-setup/      setup references and project schema
 - d2-scripts/    restore-point helpers
 - d3-guides/     design, Twig, Blocksy, workflow, and model guides
-- d4-prompts/    setup, build, review, pre-launch, git, and maintenance prompts
+- d4-prompts/    setup, build, review, pre-launch, deploy, git, and maintenance prompts
 - d5-examples/   example project context and build walkthrough
 
 Important setup note:

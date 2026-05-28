@@ -66,6 +66,11 @@ If the user has not already provided them, gather these inputs first from the pr
 - whether a clean deployment copy is desired
 - access availability: SSH, WordPress admin, Git access, database access
 
+Deploy-path lock rule:
+- once the deploy path is chosen, stay inside that path unless the user explicitly changes methods
+- do not install a migration plugin during a manual server workflow unless the user approves that change of method
+- if a temporary migration helper was installed during troubleshooting, remove it before final reporting unless the user asked to keep it
+
 Helpful optional inputs:
 - whether a restore point already exists for the target
 - whether the update should sync uploads fully or only for a narrow scope
@@ -203,6 +208,7 @@ Preferred path:
 - deploy code first
 - then migrate only the required DB or content slice when possible
 - avoid full production DB replacement unless explicitly approved
+- if the DB or content step may depend on plugin files or an imported `active_plugins` expectation, verify those plugin files are already present on GridPane before the DB or content mutation runs
 
 ### 4. Full refresh
 
@@ -211,6 +217,7 @@ Use this only when the target is disposable staging or the user explicitly appro
 Preferred path:
 - restore point first
 - full database and uploads replacement only after the user confirms the overwrite risk
+- when the refresh will import a LocalWP database that expects specific plugins, verify plugin directories and any intentionally active plugin set before the refresh is treated as complete
 
 ---
 
@@ -304,13 +311,15 @@ Do not describe database-only changes as Git-tracked deployment work.
 ### Phase 5: Optional uploads sync
 
 - run this only when uploads are part of the approved change class
-- prefer one archive plus server-side extract for larger transfer sets
+- for large Windows-to-GridPane transfer sets, prefer one local archive plus `scp` and server-side extract over ad hoc multi-source copy patterns
 - prefer narrow sync when only a subset of uploads changed
+- after extraction, normalize ownership, run `gp fix perms [domain]`, and verify the resulting remote file count or footprint before treating the transfer as complete
 
 ### Phase 6: Optional DB or content step
 
 - run this only when the approved change class includes DB or content work
 - use the smallest safe migration path that fits the request
+- if the imported DB or content slice depends on plugin files that are not yet present on GridPane, block this phase until the needed plugin payload is in place or the user approves a deliberate trim
 - run URL search-replace when the source and target domains differ
 
 ### Phase 7: Normalize server state

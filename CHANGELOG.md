@@ -10,6 +10,8 @@ The format is based on Keep a Changelog.
 - Added `d4-prompts/ds7-maintenance/TOOLKIT_LESSONS_AUDIT_PROMPT.md` for end-of-chat, approval-gated toolkit retrospectives based on real site-building sessions
 
 ### Changed
+- Tightened the GridPane deployment workflow to lock the chosen migration method, require source-to-production plugin parity checks before DB import, and prefer archive-based Windows bulk transfers for large plugin and uploads payloads
+- Tightened the post-launch GridPane update workflow to lock the chosen deploy path, require conditional plugin prechecks for DB/content refresh work, and make Windows archive-based bulk transfer validation more explicit
 - Added child-theme bootstrap guidance that keeps `functions.php` as a lean loader and routes feature helpers into focused `inc/` files as projects grow
 - Added the missing Meta Box local-file compatibility guidance so `.mbjson`-only projects also register `mbb_json_files` in `functions.php`; this prevents `File not found` and `No JSON available` field-group failures in future scaffolds
 - Added a dedicated Meta Box local-file mode troubleshooting note to the toolkit Q&A reference, including the `.mbjson`-only failure mode, the `mbb_json_files` fix, and the meaning of `Sync available`
