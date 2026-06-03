@@ -99,7 +99,9 @@ If the context file exists, read it first and use it as the primary source for s
 - Never mutate the GridPane source.
 - Never import into production from this workflow.
 - Never run a full LocalWP database replacement without first creating a local DB dump.
+- Never import a WordPress database through a MySQL session that has not explicitly selected `utf8mb4`.
 - Never use PowerShell `>` for database dumps; use `--result-file`.
+- Never rewrite a SQL dump as text to remove compatibility lines; if a dump must be sanitized, remove only the offending bytes/line with a byte-preserving method.
 - Never use `--delete` for uploads sync by default.
 - Never delete local uploads from this workflow.
 - Never sync themes, plugins, WordPress core, workflow notes, migration notes, or code files.
@@ -138,6 +140,7 @@ Prioritize copy-paste reliability for PowerShell and SSH sessions over visual fo
 - when resolving LocalWP metadata from `sites.json`, inspect the actual service object instead of assuming one fixed shape
 - support both `services.mysql` and `services.mariadb` records, and read the port from the service's `ports.MYSQL` array when present
 - confirm the LocalWP database name, user, password, host, port, web root, and available LocalWP MySQL client before database work
+- inspect the LocalWP `wp-config.php` `DB_HOST` value and confirm it points at the resolved LocalWP TCP endpoint, such as `127.0.0.1:{MYSQL_PORT}`, when plugins may open their own PDO or database connections
 
 ### Phase 1: Classify refresh mode
 
@@ -217,7 +220,9 @@ Run this only when database refresh is active.
 - prefer WP-CLI export when available
 - keep the export file in a temporary or backup-safe remote location
 - do not run search-replace on the remote source
+- request or preserve a dump that includes `SET NAMES utf8mb4`
 - if WP-CLI refuses because the SSH session is root, rerun the export with `--allow-root` rather than changing server users blindly
+- if the GridPane dump starts with a MariaDB sandbox compatibility line such as `/*M!999999\- enable the sandbox mode */` and LocalWP's older client rejects it, create a byte-preserving sanitized copy that removes only that first line
 
 Example command shape:
 
@@ -239,8 +244,15 @@ Run this only when database refresh is active.
 
 - use LocalWP's bundled `mysql.exe`
 - import into the LocalWP database resolved in Phase 3
+- pass `--default-character-set=utf8mb4` to the LocalWP MySQL client
+- confirm the dump contains `SET NAMES utf8mb4`, or prepend an equivalent statement without rewriting the dump body
+- prefer client file input for full imports; do not rely on `source` through `mysql -e` unless that exact client has been tested to support it
 - do not use generic PHP, `wp-load.php`, or an unrelated MySQL client as the first path
 - run a quick post-import query to confirm the database responds
+- query the current session character set after import validation with `SET NAMES utf8mb4; SHOW VARIABLES LIKE 'character_set%';` when encoding-sensitive content exists
+- after import, confirm local `wp-config.php` still points `DB_HOST` at the actual LocalWP DB endpoint
+- if `DB_HOST` is `localhost` and the resolved LocalWP database uses a non-default TCP port, update the local-only `wp-config.php` value to `127.0.0.1:{MYSQL_PORT}` before browser validation
+- treat this as LocalWP environment repair, not a deployable code change
 
 ### Phase 8: Run local URL search-replace
 
@@ -253,7 +265,7 @@ Use this fallback ladder:
 
 1. Prefer local WP-CLI when available, using serialized-data-safe search-replace options.
 2. If local `wp` is not on PATH, search for a project-local or user-local WP-CLI executable or `wp-cli.phar`.
-3. If WP-CLI is unavailable but the LocalWP web PHP runtime can load WordPress, create a temporary token-protected helper in the LocalWP web root that bootstraps `wp-load.php`, uses `$wpdb`, handles serialized values safely, and reports changed cell counts.
+3. If WP-CLI is unavailable but the LocalWP web PHP runtime can load WordPress, create a temporary token-protected helper in the LocalWP web root that bootstraps `wp-load.php`, runs `$wpdb->query('SET NAMES utf8mb4')`, handles serialized values safely, and reports changed cell counts.
 4. Delete the helper immediately after it runs, whether it succeeds or fails.
 5. If no serialized-safe path is available, block and report the missing tooling.
 
@@ -300,8 +312,10 @@ At minimum, validate:
 - representative post/page counts
 - active theme name
 - active plugin list or obvious plugin mismatch warnings
+- `wp-config.php` `DB_HOST` includes the LocalWP host and port when needed for plugin-owned PDO/database layers
 - representative pages listed in context
 - a representative media URL or file path
+- representative emoji or four-byte UTF-8 content when the source site contains comments, reviews, user content, or other fields that may include emoji
 - absence of obvious source-domain leftovers in primary WordPress tables when practical
 - HTTP status for `/`
 - HTTP status for at least one key route such as `/library/` when the project has one
@@ -333,11 +347,15 @@ Report completed, skipped, blocked, and manually verified steps using the output
 
 - importing into the wrong LocalWP site because two local site names are similar
 - assuming one fixed LocalWP `sites.json` shape and missing MariaDB service ports
+- leaving LocalWP `DB_HOST` as `localhost` when a plugin-owned PDO connection needs `127.0.0.1:{MYSQL_PORT}`
 - ignoring local/source comparison findings and accidentally replacing local-only content
 - assuming the local/source comparison can detect every local-only edit
 - skipping the local database backup because LocalWP feels disposable
 - trying to merge selected local database rows into the pulled-down GridPane database
 - forgetting `--allow-root` when GridPane WP-CLI is run from a root SSH session
+- importing with a `latin1` client/session even though WordPress tables are `utf8mb4`; this can turn emoji into literal `?` bytes
+- removing a MariaDB dump compatibility line by rewriting the whole SQL dump as text, which can damage binary or escaped payloads
+- assuming `mysql -e "source file.sql"` works in every LocalWP MySQL/MariaDB client
 - using this workflow to pull production code instead of using Git
 - using destructive upload sync flags that delete local files
 - overwriting local media when missing-only sync was enough
@@ -382,6 +400,7 @@ After the reverse refresh work is complete, report:
 - which mode was selected
 - whether source/local database comparison found likely local-only or local-newer changes
 - where the local database backup was created when applicable
+- whether the import and search-replace ran through an explicit `utf8mb4` database session
 - the search-replace method used and whether serialized values were handled safely
 - whether uploads were missing-only or overwrite-approved
 - whether temporary source dumps and helper files were cleaned up
