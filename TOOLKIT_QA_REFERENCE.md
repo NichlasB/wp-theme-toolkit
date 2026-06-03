@@ -62,8 +62,11 @@ A: Keep using the local prompt filenames in `wp-theme-toolkit`. `SESSION_BOOTSTR
 A: Run `@LOCALWP_REVERSE_REFRESH_PROMPT.md` when an existing LocalWP site needs current GridPane staging or production database content, settings, or media before new development, QA, troubleshooting, or post-launch refinement.
 
 The workflow is intentionally content-facing:
+- it reviews likely local-only database changes before replacing the LocalWP database
 - it can replace the LocalWP database after creating a local DB backup
 - it copies missing files from remote `wp-content/uploads/` by default
 - it does not sync themes, plugins, WordPress core, workflow notes, or code files
 
 Uploads are additive by default because local media may include temporary test files, local-only QA artifacts, or work-in-progress assets that should not be deleted or overwritten during a content refresh. Overwriting uploads requires explicit approval, and deletion is still outside the default workflow.
+
+The local database review is a warning layer, not a merge layer. It can surface recent posts, pages, attachments, content blocks, MB Views, counts, and key options before import, but it cannot prove that every local-only edit was found. If the review finds local work that matters, stop and preserve it manually before pulling the GridPane database down.

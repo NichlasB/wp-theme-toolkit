@@ -11,6 +11,7 @@ The format is based on Keep a Changelog.
 - Added `d4-prompts/ds7-maintenance/TOOLKIT_LESSONS_AUDIT_PROMPT.md` for end-of-chat, approval-gated toolkit retrospectives based on real site-building sessions
 
 ### Changed
+- Enhanced the LocalWP reverse refresh workflow with a read-only local database change review before replacement, plus a review-only mode for checking likely local-only content before pulling GridPane data down
 - Updated README, readme.txt, task runner, IDE setup guide, workflow quick reference, project context reference, LocalWP database guide, Git workflow guide, structure reference, and Q&A docs for the LocalWP reverse refresh workflow
 - Tightened the GridPane deployment workflow to lock the chosen migration method, require source-to-production plugin parity checks before DB import, and prefer archive-based Windows bulk transfers for large plugin and uploads payloads
 - Tightened the post-launch GridPane update workflow to lock the chosen deploy path, require conditional plugin prechecks for DB/content refresh work, and make Windows archive-based bulk transfer validation more explicit

@@ -90,12 +90,14 @@ If the issue belongs only to the current site project, fix it in the project and
 1.  Confirm the source is GridPane staging or production
 2.  Confirm the target is the matching LocalWP site
 3.  @LOCALWP_REVERSE_REFRESH_PROMPT.md run
-4.  Keep the LocalWP database backup requirement in place before import
-5.  Keep uploads missing-only unless overwrite is explicitly approved
-6.  Keep code movement in Git and out of this workflow
+4.  Review likely local-only database changes before replacing the LocalWP DB
+5.  Keep the LocalWP database backup requirement in place before import
+6.  Keep uploads missing-only unless overwrite is explicitly approved
+7.  Keep code movement in Git and out of this workflow
 ```
 
 Use this when local needs current production or staging content before new development, QA, troubleshooting, or post-launch refinement.
+If the local database may contain work worth preserving, run `@LOCALWP_REVERSE_REFRESH_PROMPT.md review local changes only` first.
 
 Strict-order variant:
 
@@ -265,6 +267,12 @@ Refresh LocalWP from GridPane:
 
 ```text
 @LOCALWP_REVERSE_REFRESH_PROMPT.md run
+```
+
+Review local DB changes only:
+
+```text
+@LOCALWP_REVERSE_REFRESH_PROMPT.md review local changes only
 ```
 
 Toolkit lessons audit:

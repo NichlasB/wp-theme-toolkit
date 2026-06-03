@@ -14,6 +14,7 @@ Run this when local development needs to match current GridPane content before n
 
 Use it to:
 - pull a GridPane staging or production database into the matching LocalWP site
+- review likely local-only database changes before replacing the LocalWP database
 - run source-domain to LocalWP-domain search-replace after import
 - copy missing remote uploads into the local uploads folder
 - validate the refreshed LocalWP state before continuing site work
@@ -24,6 +25,7 @@ Default mode:
 Default stance:
 - GridPane is the read-only source
 - LocalWP is the only target
+- local database change review is read-only and does not merge data
 - existing local uploads are preserved
 - code still moves through Git and the existing deployment workflows
 
@@ -54,10 +56,13 @@ The user may add these modifiers:
 - `database and missing uploads`
 - `preview only`
 - `allow overwrite uploads`
+- `review local changes only`
 
 If no mode is specified, use `database and missing uploads`.
 
 `allow overwrite uploads` changes only the uploads step. It does not permit deleting local uploads or syncing code.
+
+`review local changes only` runs the local pre-refresh database review and stops before backup, import, search-replace, or uploads transfer.
 
 ---
 
@@ -74,6 +79,7 @@ If the user has not already provided them, gather these inputs first from `gridp
 - LocalWP web root
 - whether database, uploads, or both should be refreshed
 - whether this is preview only
+- whether local database change review should stop on likely local-only changes
 
 Optional inputs:
 - project-specific remote DB export override
@@ -98,6 +104,8 @@ If the context file exists, read it first and use it as the primary source for s
 - Never delete local uploads from this workflow.
 - Never sync themes, plugins, WordPress core, workflow notes, migration notes, or code files.
 - Never treat reverse refresh as code deployment.
+- Never auto-merge LocalWP database changes with GridPane database changes.
+- Never treat local change review as proof that no local-only database edits exist.
 - Block if the LocalWP target cannot be confidently matched to the source site.
 - Block if the source and target paths indicate the same environment.
 
@@ -133,6 +141,7 @@ Choose one primary mode:
 - database only
 - uploads only
 - preview only
+- review local changes only
 
 If the user requested uploads overwrite, record that approval explicitly.
 
@@ -142,13 +151,38 @@ If no mode is specified, use database and missing uploads.
 
 - show the selected source environment and LocalWP target
 - confirm the database import will replace the LocalWP database when database refresh is active
+- confirm the local database change review is read-only and cannot merge local edits
 - confirm uploads default to missing-only copy
 - confirm no code files will be synced
 - inspect or report the local and remote uploads paths
 
 If `preview only` is requested, stop after this phase and report the planned commands or steps without changing anything.
 
-### Phase 3: Create LocalWP database backup
+### Phase 3: Review likely local database changes
+
+Run this when database refresh is active or when `review local changes only` is requested.
+
+This phase is read-only. It helps avoid burying local database work under the live/staging import, but it is not a merge tool and cannot prove that every local-only change has been found.
+
+Use LocalWP's bundled `mysql.exe` and run a concise local review that includes:
+- current `siteurl` and `home`
+- recent posts and pages ordered by `post_modified`
+- recent `wp_posts` rows for likely database-backed builder or placement types, including `ct_content_block`, `mb-views`, and other project-relevant custom post types when detectable
+- recent attachments ordered by `post_date` or `post_modified`
+- counts for posts, pages, attachments, and relevant custom post types
+- active theme and active plugin option values when practical
+- recently updated options only when the project stores reliable timestamps; otherwise state that `wp_options` has no normal modified timestamp
+
+If the review shows likely local-only or recently changed content that may matter:
+- summarize the findings
+- explain that the upcoming database import will replace the LocalWP database
+- stop and ask for explicit approval before continuing
+
+If the user requested `review local changes only`, stop after reporting the review.
+
+Do not try to preserve selected rows, merge options, or reconcile serialized values automatically.
+
+### Phase 4: Create LocalWP database backup
 
 Run this only when database refresh is active.
 
@@ -160,7 +194,7 @@ Run this only when database refresh is active.
 
 Block the database import if backup creation fails.
 
-### Phase 4: Export remote GridPane database
+### Phase 5: Export remote GridPane database
 
 Run this only when database refresh is active.
 
@@ -176,7 +210,7 @@ Example command shape:
 cd /var/www/example.com/htdocs && wp db export /tmp/example-refresh-YYYYMMDD-HHMM.sql
 ```
 
-### Phase 5: Transfer remote database dump locally
+### Phase 6: Transfer remote database dump locally
 
 Run this only when database refresh is active.
 
@@ -184,7 +218,7 @@ Run this only when database refresh is active.
 - keep the source dump separate from the LocalWP backup dump
 - verify the transferred dump exists and is non-empty
 
-### Phase 6: Import into LocalWP
+### Phase 7: Import into LocalWP
 
 Run this only when database refresh is active.
 
@@ -193,7 +227,7 @@ Run this only when database refresh is active.
 - do not use generic PHP, `wp-load.php`, or an unrelated MySQL client as the first path
 - run a quick post-import query to confirm the database responds
 
-### Phase 7: Run local URL search-replace
+### Phase 8: Run local URL search-replace
 
 Run this when database refresh is active and source and local domains differ.
 
@@ -204,7 +238,7 @@ Run this when database refresh is active and source and local domains differ.
 
 If local WP-CLI is not available, block or document the safest project-approved fallback instead of running naive SQL against serialized data.
 
-### Phase 8: Sync missing uploads
+### Phase 9: Sync missing uploads
 
 Run this when uploads refresh is active.
 
@@ -217,7 +251,7 @@ Run this when uploads refresh is active.
 
 For Windows-to-GridPane work, prefer a clear file transfer method that can preserve nested upload paths and produce a count or dry-run summary before treating the sync as complete.
 
-### Phase 9: Validate LocalWP state
+### Phase 10: Validate LocalWP state
 
 At minimum, validate:
 - LocalWP database connection
@@ -231,7 +265,7 @@ At minimum, validate:
 
 Plugin or theme parity issues are warnings or blockers for local testing. Do not fix them by syncing code through this workflow.
 
-### Phase 10: Report result
+### Phase 11: Report result
 
 Report completed, skipped, blocked, and manually verified steps using the output format below.
 
@@ -240,7 +274,10 @@ Report completed, skipped, blocked, and manually verified steps using the output
 ## Common Pitfalls
 
 - importing into the wrong LocalWP site because two local site names are similar
+- ignoring local database review findings and accidentally replacing local-only content
+- assuming the local database review can detect every local-only edit
 - skipping the local database backup because LocalWP feels disposable
+- trying to merge selected local database rows into the pulled-down GridPane database
 - using this workflow to pull production code instead of using Git
 - using destructive upload sync flags that delete local files
 - overwriting local media when missing-only sync was enough
@@ -259,6 +296,7 @@ Source environment: [staging / production]
 Source domain: [domain]
 LocalWP site: [site name]
 Local domain: [domain]
+Local DB change review: [done / blocked for approval / skipped with reason]
 Database backup: [created / blocked / skipped with reason]
 Database import: [done / blocked / not requested]
 Search-replace: [done / blocked / not needed]
@@ -279,6 +317,7 @@ Keep the output concise and operational.
 After the reverse refresh work is complete, report:
 - the exact source environment and LocalWP target used
 - which mode was selected
+- whether local database review found likely local-only changes
 - where the local database backup was created when applicable
 - whether uploads were missing-only or overwrite-approved
 - which validations passed
