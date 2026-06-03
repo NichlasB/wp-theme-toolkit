@@ -89,6 +89,7 @@ These tasks run to completion in one pass.
 - 06-FINAL_CHECKLIST_PROMPT.md
 - GRIDPANE_DEPLOYMENT_PROMPT.md
 - POST_LAUNCH_GRIDPANE_UPDATE_PROMPT.md
+- LOCALWP_REVERSE_REFRESH_PROMPT.md
 - GIT_OPERATIONS_PROMPT.md
 
 ### Two-Phase Tasks
@@ -155,6 +156,7 @@ Prompt-to-checklist mapping:
 Deployment workflows:
 - `GRIDPANE_DEPLOYMENT_PROMPT.md` updates `DEPLOYMENT_CHECKLIST.md`, not `PRE_LAUNCH_CHECKLIST.md`
 - `POST_LAUNCH_GRIDPANE_UPDATE_PROMPT.md` is for incremental staging or production updates after launch and does not update `DEPLOYMENT_CHECKLIST.md` by default
+- `LOCALWP_REVERSE_REFRESH_PROMPT.md` refreshes the matching LocalWP site from GridPane and does not update `PRE_LAUNCH_CHECKLIST.md` or `DEPLOYMENT_CHECKLIST.md` by default
 
 ---
 
@@ -195,7 +197,7 @@ wp-theme-toolkit/   <- normally not the target
 │   ├── ds2-build/      <- page, CPT, and token generation
 │   ├── ds3-review/     <- view and CSS audits
 │   ├── ds4-pre-launch/ <- launch-readiness sequence
-│   ├── ds5-deploy/     <- deployment workflow prompts
+│   ├── ds5-deploy/     <- deployment workflow prompts, including LocalWP reverse refresh
 │   ├── ds6-git/        <- git operations and release workflow prompt
 │   └── ds7-maintenance/ <- toolkit-self retrospective workflows
 │       └── TOOLKIT_LESSONS_AUDIT_PROMPT.md <- local wrapper around shared prompt

@@ -84,6 +84,19 @@ If the issue belongs only to the current site project, fix it in the project and
 5.  Keep production DB overwrite approval explicit
 ```
 
+## Refresh LocalWP From GridPane
+
+```text
+1.  Confirm the source is GridPane staging or production
+2.  Confirm the target is the matching LocalWP site
+3.  @LOCALWP_REVERSE_REFRESH_PROMPT.md run
+4.  Keep the LocalWP database backup requirement in place before import
+5.  Keep uploads missing-only unless overwrite is explicitly approved
+6.  Keep code movement in Git and out of this workflow
+```
+
+Use this when local needs current production or staging content before new development, QA, troubleshooting, or post-launch refinement.
+
 Strict-order variant:
 
 ```text
@@ -188,6 +201,7 @@ promote to CPT only when the content wants its own lifecycle
 | New page / new CPT | GPT-5.4 then GPT-5.3 Codex | Explore first, then implement |
 | Toolkit lessons audit | GPT-5.4 then GPT-5.3 Codex | Use when a working chat exposed reusable toolkit lessons or repeated mistakes |
 | Launch reviews | GPT-5.4, Sonnet, or stronger judgment model as needed | Use deeper review for accessibility and final launch judgment |
+| LocalWP reverse refresh | GPT-5.4 or GPT-5.4 Mini | Use the larger model when source/target context is incomplete or the refresh has unusual DB/upload risks |
 
 Do not run the toolkit lessons audit for project-specific styling issues, content-entry mistakes, or isolated deployment problems unless they exposed a reusable gap in the toolkit itself.
 
@@ -245,6 +259,12 @@ Git operations:
 
 ```text
 @GIT_OPERATIONS_PROMPT.md run
+```
+
+Refresh LocalWP from GridPane:
+
+```text
+@LOCALWP_REVERSE_REFRESH_PROMPT.md run
 ```
 
 Toolkit lessons audit:

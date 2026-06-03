@@ -30,6 +30,7 @@ Primary workflow:
 11. Launch-check with d4-prompts/ds4-pre-launch/01 through 06
 12. Run d4-prompts/ds5-deploy/GRIDPANE_DEPLOYMENT_PROMPT.md for the first LocalWP-to-GridPane launch
 13. Run d4-prompts/ds5-deploy/POST_LAUNCH_GRIDPANE_UPDATE_PROMPT.md for incremental staging or production updates after launch
+14. Run d4-prompts/ds5-deploy/LOCALWP_REVERSE_REFRESH_PROMPT.md when LocalWP needs current GridPane database content or missing uploads
 
 Shared workflow note:
 - d4-prompts/ds1-setup/SESSION_BOOTSTRAP_PROMPT.md is a local adapter around wp-workflow-toolkit/d4-prompts/ds1-session/SESSION_BOOTSTRAP_CORE_PROMPT.md

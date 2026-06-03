@@ -38,7 +38,9 @@ wp-theme-toolkit/
 │   ├── ds3-review/
 │   ├── ds4-pre-launch/
 │   ├── ds5-deploy/
-│   │   └── GRIDPANE_DEPLOYMENT_PROMPT.md
+│   │   ├── GRIDPANE_DEPLOYMENT_PROMPT.md
+│   │   ├── LOCALWP_REVERSE_REFRESH_PROMPT.md
+│   │   └── POST_LAUNCH_GRIDPANE_UPDATE_PROMPT.md
 │   ├── ds6-git/
 │   │   └── GIT_OPERATIONS_PROMPT.md
 │   └── ds7-maintenance/

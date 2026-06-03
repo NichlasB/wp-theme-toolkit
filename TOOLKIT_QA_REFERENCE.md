@@ -57,3 +57,13 @@ A: Check three things in order:
 
 ### Q: How do the shared workflow prompts work after consolidation?
 A: Keep using the local prompt filenames in `wp-theme-toolkit`. `SESSION_BOOTSTRAP_PROMPT.md` is now a local adapter around the shared bootstrap core in `wp-workflow-toolkit/d4-prompts/ds1-session/SESSION_BOOTSTRAP_CORE_PROMPT.md`. `GUIDED_EXECUTION_PROMPT.md`, `SESSION_HANDOFF_PROMPT.md`, `RESTORE_POINT_PROMPT.md`, and `TOOLKIT_LESSONS_AUDIT_PROMPT.md` are local wrappers backed by canonical shared prompt bodies there. Update the shared source first; touch the local theme file only when the theme-specific notes, scan surface, output format, or safety rules change.
+
+### Q: When should I run the LocalWP reverse refresh workflow?
+A: Run `@LOCALWP_REVERSE_REFRESH_PROMPT.md` when an existing LocalWP site needs current GridPane staging or production database content, settings, or media before new development, QA, troubleshooting, or post-launch refinement.
+
+The workflow is intentionally content-facing:
+- it can replace the LocalWP database after creating a local DB backup
+- it copies missing files from remote `wp-content/uploads/` by default
+- it does not sync themes, plugins, WordPress core, workflow notes, or code files
+
+Uploads are additive by default because local media may include temporary test files, local-only QA artifacts, or work-in-progress assets that should not be deleted or overwritten during a content refresh. Overwriting uploads requires explicit approval, and deletion is still outside the default workflow.

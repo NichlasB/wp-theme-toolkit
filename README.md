@@ -33,6 +33,7 @@ Shared workflow boundary:
 - update the shared canonical source first; update the local theme wrapper or adapter only when the theme-specific supplement changes
 - ordered review and pre-launch quality gates before a site goes live
 - a documented GridPane deployment flow and Git timing guidance for the child theme lifecycle
+- a LocalWP reverse refresh workflow for pulling GridPane database content and missing uploads back to local safely
 - a Git operations workflow for committing, pushing, and releasing either the toolkit repo or a target child-theme repo
 - a toolkit lessons audit workflow for turning real chat lessons into approval-gated toolkit improvements
 
@@ -49,7 +50,8 @@ Add this repository and your target site project to the same IDE workspace.
 3. Continue with `@DESIGN_TOKENS_PROMPT.md run`, `@PAGE_SCOPING_CHECKLIST_PROMPT.md run`, `@NEW_PAGE_PROMPT.md run`, or `@NEW_CPT_PROMPT.md run`
 4. Run the review prompts and the pre-launch sequence `@01-RESPONSIVE_QA_PROMPT.md run` through `@06-FINAL_CHECKLIST_PROMPT.md run`
 5. Run `@GRIDPANE_DEPLOYMENT_PROMPT.md run`
-6. Run `@GIT_OPERATIONS_PROMPT.md run` when you want assisted commit, push, or release help for either the toolkit repo or the child theme repo
+6. Run `@LOCALWP_REVERSE_REFRESH_PROMPT.md run` after launch when LocalWP needs fresh GridPane content or missing uploads
+7. Run `@GIT_OPERATIONS_PROMPT.md run` when you want assisted commit, push, or release help for either the toolkit repo or the child theme repo
 
 ### 3. Starting A New Chat On An Existing Site
 
@@ -143,6 +145,7 @@ wp-theme-toolkit/
 |   |
 |   |-- ds5-deploy/
 |   |   |-- GRIDPANE_DEPLOYMENT_PROMPT.md
+|   |   |-- LOCALWP_REVERSE_REFRESH_PROMPT.md
 |   |   `-- POST_LAUNCH_GRIDPANE_UPDATE_PROMPT.md
 |   |
 |   |-- ds6-git/
@@ -166,7 +169,8 @@ wp-theme-toolkit/
 6. Run review prompts before launch
 7. Deploy the first launch with the GridPane workflow and track rollout in `DEPLOYMENT_CHECKLIST.md`
 8. Use the post-launch GridPane update workflow for smaller follow-up staging or production pushes after launch
-9. Use the Git operations prompt when you want assisted commit, push, tag, or release work for the toolkit repo or a child-theme repo
+9. Use the LocalWP reverse refresh workflow when local needs current GridPane database content or missing uploads
+10. Use the Git operations prompt when you want assisted commit, push, tag, or release work for the toolkit repo or a child-theme repo
 
 ## V1 Scope
 
@@ -178,6 +182,7 @@ Included in v1:
 - restore-point safety workflow
 - deployment checklist and GridPane deployment workflow
 - post-launch GridPane update workflow for incremental code, uploads, and selected DB-content pushes
+- LocalWP reverse refresh workflow for production or staging database pulls and additive uploads sync back to local
 - Git workflow guidance for scaffold timing and code updates
 - Git operations prompt for toolkit and child-theme repositories
 - toolkit lessons audit workflow for approval-gated maintenance of the toolkit itself
@@ -218,6 +223,10 @@ Reference prompts directly in chat:
 
 ```text
 @GRIDPANE_DEPLOYMENT_PROMPT.md run
+```
+
+```text
+@LOCALWP_REVERSE_REFRESH_PROMPT.md run
 ```
 
 ```text

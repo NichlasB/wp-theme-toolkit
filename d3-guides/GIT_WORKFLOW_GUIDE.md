@@ -98,6 +98,8 @@ Once the site is live on GridPane:
 - code updates: edit locally -> commit -> push -> SSH into GridPane -> `git pull`
 - content updates: edit directly on production through WordPress admin
 
+When LocalWP needs the latest production or staging content, run `@LOCALWP_REVERSE_REFRESH_PROMPT.md`. That workflow pulls database content and missing uploads back to LocalWP while keeping code movement in Git.
+
 If the repository contains tracked non-runtime files that the user does not want on the server, do not treat `git pull` as the only acceptable deployment path. Use a clean deployment copy when needed so the GridPane payload stays production-ready.
 
 Never edit code directly on production.
@@ -154,4 +156,5 @@ Keep `.gitkeep` in empty folders such as `mb-json/` and `views/` so a fresh scaf
 - `d1-setup/STACK_REFERENCE.md` defines the scaffold Git should track
 - `d1-setup/LOCALWP_BLUEPRINT_SETUP.md` defines the reusable LocalWP starter before Git begins
 - `d4-prompts/ds5-deploy/GRIDPANE_DEPLOYMENT_PROMPT.md` uses this guide for the production update rhythm and Git deploy step
+- `d4-prompts/ds5-deploy/LOCALWP_REVERSE_REFRESH_PROMPT.md` uses this guide to keep reverse content refreshes separate from code sync
 - `d4-prompts/ds6-git/GIT_OPERATIONS_PROMPT.md` uses this guide when the target is a child-theme or site repo

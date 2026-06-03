@@ -17,6 +17,7 @@ For most sessions, keep these files attached or easy to reference:
 
 - `_project-context.md`
 - `d1-setup/LOCALWP_DATABASE_ACCESS_WORKFLOW.md` when LocalWP SQL, migration, or reconciliation work is likely
+- `d4-prompts/ds5-deploy/LOCALWP_REVERSE_REFRESH_PROMPT.md` when LocalWP needs current GridPane content or missing uploads
 - the relevant `.mbjson` file
 - the relevant local Twig and CSS reference copy under `views/`
 - `d3-guides/DESIGN_SYSTEM_GUIDE.md`
@@ -35,8 +36,9 @@ For most sessions, keep these files attached or easy to reference:
 
 1. Run `@SESSION_BOOTSTRAP_PROMPT.md run`
 2. Read `d1-setup/LOCALWP_DATABASE_ACCESS_WORKFLOW.md` before any LocalWP SQL or migration work
-3. Run `@RESTORE_POINT_PROMPT.md run`
-4. Continue with build or review prompts
+3. Run `@LOCALWP_REVERSE_REFRESH_PROMPT.md run` when local needs current GridPane content before new work
+4. Run `@RESTORE_POINT_PROMPT.md run`
+5. Continue with build or review prompts
 
 ## Element To LLM Usage
 
@@ -63,4 +65,5 @@ See `d3-guides/MODEL_DELEGATION_GUIDE.txt` for the detailed routing.
 - Keep local reference copies of MB Views in files
 - Record placement decisions in the placement map
 - For LocalWP database work, use the direct `mysql.exe` workflow in `d1-setup/LOCALWP_DATABASE_ACCESS_WORKFLOW.md` rather than starting with `wp-load.php`
+- For full GridPane-to-LocalWP content refreshes, use `@LOCALWP_REVERSE_REFRESH_PROMPT.md` and keep code movement in Git
 - Run the pre-launch prompt sequence before go-live

@@ -11,6 +11,8 @@ The goal is to avoid the common failure mode where a fresh chat tries `wp-load.p
 - Use LocalWP's bundled `mysql.exe` client directly for initial inspection, reconciliation, and cleanup.
 - Treat the LocalWP database as distinct from production unless the user explicitly says otherwise.
 
+For a full GridPane-to-LocalWP content refresh, use `d4-prompts/ds5-deploy/LOCALWP_REVERSE_REFRESH_PROMPT.md`. This file remains the LocalWP SQL access reference that workflow should follow for local backup, import, and validation steps.
+
 ## Why This Exists
 
 On Windows, the default CLI PHP runtime in a fresh AI chat is often not the same PHP runtime LocalWP uses for the site, or it does not have MySQL access enabled.

@@ -18,8 +18,8 @@ Description: A documentation-first toolkit of prompts, guides, examples,
 Purpose: Provide structured workflow documents for project bootstrap,
          session bootstrap, session handoff, restore points, design-token
          generation, new page and CPT creation, view review, launch-readiness
-         QA, deployment, Git operations, post-launch Git guidance, and
-         toolkit retrospective learning.
+         QA, deployment, LocalWP reverse refresh, Git operations, post-launch
+         Git guidance, and toolkit retrospective learning.
 
 Target Audience: WordPress developers building sites with the Meta Views
                  Stack in VS Code, Cursor, Windsurf, Copilot, or Codex-like
@@ -30,14 +30,15 @@ CURRENT SHAPE
 =======================================================================
 
 - Repository type: Toolkit / documentation-first repo
-- Approximate tracked file count: 45
+- Approximate tracked file count: 46
 - Dominant file types: Markdown, text references, helper scripts
 - Runtime code surface: Minimal; operational logic mainly lives in
   d2-scripts/restore-point.ps1 and d2-scripts/restore-point.sh
 - Target domain: Blocksy child-theme site projects using Meta Box AIO,
   MB Views, and Git-backed child-theme code deployment
 - Deployment coverage: documented GridPane deployment workflow plus a
-  per-project deployment checklist
+  per-project deployment checklist and a LocalWP reverse refresh workflow for
+  pulling GridPane database content and missing uploads back to local
 - Shared workflow sourcing: `SESSION_BOOTSTRAP_PROMPT.md` is a local adapter
   around the shared bootstrap core in sibling repo `wp-workflow-toolkit/`.
   `GUIDED_EXECUTION_PROMPT.md`, `SESSION_HANDOFF_PROMPT.md`,
@@ -52,7 +53,9 @@ Core workflow order:
 5. Review prompts in ds3-review/
 6. Pre-launch prompts 01-06 in ds4-pre-launch/
 7. GRIDPANE_DEPLOYMENT_PROMPT.md in ds5-deploy/
-8. GIT_OPERATIONS_PROMPT.md in ds6-git/
+8. LOCALWP_REVERSE_REFRESH_PROMPT.md in ds5-deploy/ when local needs current
+   GridPane content or missing uploads
+9. GIT_OPERATIONS_PROMPT.md in ds6-git/
 
 Optional toolkit-retrospective workflow:
 - TOOLKIT_LESSONS_AUDIT_PROMPT.md in ds7-maintenance/ when a working chat
@@ -103,7 +106,9 @@ wp-theme-toolkit/
 |   |-- ds3-review/
 |   |-- ds4-pre-launch/
 |   |-- ds5-deploy/
-|   |   `-- GRIDPANE_DEPLOYMENT_PROMPT.md
+|   |   |-- GRIDPANE_DEPLOYMENT_PROMPT.md
+|   |   |-- LOCALWP_REVERSE_REFRESH_PROMPT.md
+|   |   `-- POST_LAUNCH_GRIDPANE_UPDATE_PROMPT.md
 |   |-- ds6-git/
 |   |   `-- GIT_OPERATIONS_PROMPT.md
 |   `-- ds7-maintenance/
@@ -186,6 +191,12 @@ POST_LAUNCH_GRIDPANE_UPDATE_PROMPT.md
     classification, clean deployment copies, code deploy, optional uploads or
     DB-content steps, and post-update validation
 
+LOCALWP_REVERSE_REFRESH_PROMPT.md
+  - Reverse refresh workflow for pulling GridPane staging or production
+    database content and missing uploads back into the matching LocalWP site
+  - Requires a local DB backup before import, keeps uploads additive by
+    default, and keeps code movement out of scope
+
 GIT_OPERATIONS_PROMPT.md
   - Git commit, push, tag, dry-run, and release workflow for either the
     toolkit repo or a child-theme/site repository
@@ -211,6 +222,9 @@ WORKING ASSUMPTIONS
   real code generation begins.
 - Code moves through Git; content and settings move through a database
   migration workflow.
+- When LocalWP needs current production or staging content, use the reverse
+  refresh workflow and keep uploads additive unless overwrite is explicitly
+  approved.
 - `TOOLKIT_LESSONS_AUDIT_PROMPT.md` is intentionally excluded from
   `PRE_LAUNCH_CHECKLIST.md` and `DEPLOYMENT_CHECKLIST.md` because it targets
   the toolkit itself rather than a site project.
@@ -226,5 +240,8 @@ DOCUMENTATION RISKS TO WATCH
   views and placement decisions.
 - Deployment guidance must stay honest about scope, and Git automation must
   stay scoped to repository-tracked assets rather than database-only content.
+- Reverse refresh guidance must stay explicit that GridPane is read-only,
+  LocalWP is the only target, uploads sync is missing-only by default, and code
+  files do not move through this workflow.
 - Database-resident MB Views, Blocksy assignments, and HTML widget content are
   easy to lose if placement decisions and deployment notes are not recorded.
