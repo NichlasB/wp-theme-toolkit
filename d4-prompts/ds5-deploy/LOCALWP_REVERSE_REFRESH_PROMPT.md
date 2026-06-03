@@ -14,7 +14,7 @@ Run this when local development needs to match current GridPane content before n
 
 Use it to:
 - pull a GridPane staging or production database into the matching LocalWP site
-- review likely local-only database changes before replacing the LocalWP database
+- compare live/staging and LocalWP database state before replacing the LocalWP database
 - run source-domain to LocalWP-domain search-replace after import
 - copy missing remote uploads into the local uploads folder
 - validate the refreshed LocalWP state before continuing site work
@@ -25,7 +25,7 @@ Default mode:
 Default stance:
 - GridPane is the read-only source
 - LocalWP is the only target
-- local database change review is read-only and does not merge data
+- local database comparison is read-only and does not merge data
 - existing local uploads are preserved
 - code still moves through Git and the existing deployment workflows
 
@@ -79,7 +79,7 @@ If the user has not already provided them, gather these inputs first from `gridp
 - LocalWP web root
 - whether database, uploads, or both should be refreshed
 - whether this is preview only
-- whether local database change review should stop on likely local-only changes
+- whether source/local database comparison should stop on likely local-only or local-newer changes
 
 Optional inputs:
 - project-specific remote DB export override
@@ -105,7 +105,9 @@ If the context file exists, read it first and use it as the primary source for s
 - Never sync themes, plugins, WordPress core, workflow notes, migration notes, or code files.
 - Never treat reverse refresh as code deployment.
 - Never auto-merge LocalWP database changes with GridPane database changes.
-- Never treat local change review as proof that no local-only database edits exist.
+- Never treat local comparison as proof that no local-only database edits exist.
+- Never use naive SQL search-replace for serialized WordPress data.
+- Never leave temporary SQL dumps or helper scripts behind except the required local pre-refresh backup.
 - Block if the LocalWP target cannot be confidently matched to the source site.
 - Block if the source and target paths indicate the same environment.
 
@@ -133,6 +135,9 @@ Prioritize copy-paste reliability for PowerShell and SSH sessions over visual fo
 - identify source environment, source domain, GridPane SSH alias, GridPane site root, LocalWP site name, LocalWP domain, and LocalWP web root
 - confirm the target is LocalWP and the source is GridPane
 - if the context is missing or incomplete, ask only for the missing site-specific fields
+- when resolving LocalWP metadata from `sites.json`, inspect the actual service object instead of assuming one fixed shape
+- support both `services.mysql` and `services.mariadb` records, and read the port from the service's `ports.MYSQL` array when present
+- confirm the LocalWP database name, user, password, host, port, web root, and available LocalWP MySQL client before database work
 
 ### Phase 1: Classify refresh mode
 
@@ -151,29 +156,37 @@ If no mode is specified, use database and missing uploads.
 
 - show the selected source environment and LocalWP target
 - confirm the database import will replace the LocalWP database when database refresh is active
-- confirm the local database change review is read-only and cannot merge local edits
+- confirm the local-vs-source database comparison is read-only and cannot merge local edits
 - confirm uploads default to missing-only copy
 - confirm no code files will be synced
 - inspect or report the local and remote uploads paths
 
 If `preview only` is requested, stop after this phase and report the planned commands or steps without changing anything.
 
-### Phase 3: Review likely local database changes
+### Phase 3: Compare source and local database state
 
 Run this when database refresh is active or when `review local changes only` is requested.
 
 This phase is read-only. It helps avoid burying local database work under the live/staging import, but it is not a merge tool and cannot prove that every local-only change has been found.
 
-Use LocalWP's bundled `mysql.exe` and run a concise local review that includes:
+Use LocalWP's bundled `mysql.exe` for local queries. Use remote WP-CLI over SSH for source queries when available. If the GridPane SSH session runs WP-CLI as root and WP-CLI refuses to run, add `--allow-root` for read-only and export commands only.
+
+Run a concise side-by-side comparison that includes:
 - current `siteurl` and `home`
-- recent posts and pages ordered by `post_modified`
+- counts for posts, pages, attachments, and relevant custom post types on both source and local
+- recent pages on both source and local, ordered by `post_modified`
+- recent attachments on both source and local, ordered by `post_date` or `post_modified`
 - recent `wp_posts` rows for likely database-backed builder or placement types, including `ct_content_block`, `mb-views`, and other project-relevant custom post types when detectable
-- recent attachments ordered by `post_date` or `post_modified`
-- counts for posts, pages, attachments, and relevant custom post types
-- active theme and active plugin option values when practical
+- active theme and active plugin option values on both source and local when practical
 - recently updated options only when the project stores reliable timestamps; otherwise state that `wp_options` has no normal modified timestamp
 
-If the review shows likely local-only or recently changed content that may matter:
+Report the comparison in terms of:
+- local-only or local-newer content
+- source-only or source-newer content
+- count differences that will be resolved by replacing the LocalWP database
+- plugin or theme count/parity warnings that may affect local testing
+
+If the comparison shows likely local-only, local-newer, or otherwise meaningful local database content:
 - summarize the findings
 - explain that the upcoming database import will replace the LocalWP database
 - stop and ask for explicit approval before continuing
@@ -191,6 +204,7 @@ Run this only when database refresh is active.
 - write the dump with `--result-file`
 - store the backup outside the imported dump path, using a timestamped filename
 - verify the backup file exists and is non-empty before continuing
+- record the exact backup path for the final report
 
 Block the database import if backup creation fails.
 
@@ -203,11 +217,12 @@ Run this only when database refresh is active.
 - prefer WP-CLI export when available
 - keep the export file in a temporary or backup-safe remote location
 - do not run search-replace on the remote source
+- if WP-CLI refuses because the SSH session is root, rerun the export with `--allow-root` rather than changing server users blindly
 
 Example command shape:
 
 ```bash
-cd /var/www/example.com/htdocs && wp db export /tmp/example-refresh-YYYYMMDD-HHMM.sql
+cd /var/www/example.com/htdocs && wp db export /tmp/example-refresh-YYYYMMDD-HHMM.sql --allow-root
 ```
 
 ### Phase 6: Transfer remote database dump locally
@@ -231,12 +246,25 @@ Run this only when database refresh is active.
 
 Run this when database refresh is active and source and local domains differ.
 
-- prefer local WP-CLI when available
-- use precise serialized-data-safe replacement
 - replace source domain with LocalWP domain
 - verify `siteurl` and `home` after the replacement
 
-If local WP-CLI is not available, block or document the safest project-approved fallback instead of running naive SQL against serialized data.
+Use this fallback ladder:
+
+1. Prefer local WP-CLI when available, using serialized-data-safe search-replace options.
+2. If local `wp` is not on PATH, search for a project-local or user-local WP-CLI executable or `wp-cli.phar`.
+3. If WP-CLI is unavailable but the LocalWP web PHP runtime can load WordPress, create a temporary token-protected helper in the LocalWP web root that bootstraps `wp-load.php`, uses `$wpdb`, handles serialized values safely, and reports changed cell counts.
+4. Delete the helper immediately after it runs, whether it succeeds or fails.
+5. If no serialized-safe path is available, block and report the missing tooling.
+
+Do not use naive SQL `REPLACE()` against serialized data.
+
+After search-replace, validate at least:
+- `siteurl` and `home`
+- obvious live-domain leftovers in `wp_options`
+- obvious live-domain leftovers in primary `wp_posts` fields such as `post_content` and `guid`
+
+Phrase this as a primary-table check, not proof that no plugin table contains any live URL. Some plugin tables may intentionally store external URLs or historical logs.
 
 ### Phase 9: Sync missing uploads
 
@@ -249,7 +277,20 @@ Run this when uploads refresh is active.
 - do not sync `themes/`, `plugins/`, WordPress core, workflow files, or project notes
 - if overwrite was explicitly approved, overwrite uploads only and report that approval
 
+Before copying, run a missing-only preview that reports:
+- total remote upload files
+- total missing local files
+- representative missing paths
+- rough categories, such as media library files, generated thumbnails, private uploads, plugin-generated assets, logs, temp files, email attachments, and PDF/form outputs
+
 For Windows-to-GridPane work, prefer a clear file transfer method that can preserve nested upload paths and produce a count or dry-run summary before treating the sync as complete.
+
+When copying:
+- create local directories as needed
+- re-check local existence immediately before each copy
+- copy only missing files by default
+- report copied, skipped-existing, and failed counts
+- run a final missing-file comparison after sync
 
 ### Phase 10: Validate LocalWP state
 
@@ -261,11 +302,28 @@ At minimum, validate:
 - active plugin list or obvious plugin mismatch warnings
 - representative pages listed in context
 - a representative media URL or file path
-- absence of obvious source-domain leftovers when practical
+- absence of obvious source-domain leftovers in primary WordPress tables when practical
+- HTTP status for `/`
+- HTTP status for at least one key route such as `/library/` when the project has one
+- browser-level check when Playwright or another approved browser tool is available
+- console-error summary that separates third-party telemetry/ad/video errors from app or page failures
 
 Plugin or theme parity issues are warnings or blockers for local testing. Do not fix them by syncing code through this workflow.
 
-### Phase 11: Report result
+Validation should be honest about scope. Do not claim every live URL is gone unless a full database-wide serialized-safe scan was actually performed.
+
+### Phase 11: Clean up temporary files
+
+After successful import, search-replace, and uploads sync:
+- keep the local pre-refresh DB backup
+- delete the remote source SQL dump from `/tmp/` or the chosen temporary remote location
+- delete the local copied source SQL dump unless the user explicitly asks to keep it
+- delete any temporary search-replace helper immediately after it runs
+- report what was kept and what was removed
+
+Do not delete the local pre-refresh backup automatically.
+
+### Phase 12: Report result
 
 Report completed, skipped, blocked, and manually verified steps using the output format below.
 
@@ -274,14 +332,18 @@ Report completed, skipped, blocked, and manually verified steps using the output
 ## Common Pitfalls
 
 - importing into the wrong LocalWP site because two local site names are similar
-- ignoring local database review findings and accidentally replacing local-only content
-- assuming the local database review can detect every local-only edit
+- assuming one fixed LocalWP `sites.json` shape and missing MariaDB service ports
+- ignoring local/source comparison findings and accidentally replacing local-only content
+- assuming the local/source comparison can detect every local-only edit
 - skipping the local database backup because LocalWP feels disposable
 - trying to merge selected local database rows into the pulled-down GridPane database
+- forgetting `--allow-root` when GridPane WP-CLI is run from a root SSH session
 - using this workflow to pull production code instead of using Git
 - using destructive upload sync flags that delete local files
 - overwriting local media when missing-only sync was enough
 - corrupting serialized data with naive SQL search-replace
+- leaving remote SQL dumps or temporary local helper scripts behind
+- treating third-party telemetry or video/ad console failures as proof that the local refresh failed
 - treating plugin parity warnings as permission to copy plugin folders from production
 
 ---
@@ -296,11 +358,12 @@ Source environment: [staging / production]
 Source domain: [domain]
 LocalWP site: [site name]
 Local domain: [domain]
-Local DB change review: [done / blocked for approval / skipped with reason]
+Source/local DB comparison: [done / blocked for approval / skipped with reason]
 Database backup: [created / blocked / skipped with reason]
 Database import: [done / blocked / not requested]
 Search-replace: [done / blocked / not needed]
 Uploads sync: [missing-only / overwrite-approved / blocked / not requested]
+Cleanup: [done / blocked / not needed]
 Validation:
 - [check result]
 Open issues:
@@ -317,9 +380,11 @@ Keep the output concise and operational.
 After the reverse refresh work is complete, report:
 - the exact source environment and LocalWP target used
 - which mode was selected
-- whether local database review found likely local-only changes
+- whether source/local database comparison found likely local-only or local-newer changes
 - where the local database backup was created when applicable
+- the search-replace method used and whether serialized values were handled safely
 - whether uploads were missing-only or overwrite-approved
+- whether temporary source dumps and helper files were cleaned up
 - which validations passed
 - any blockers or manual checks still needed
 
