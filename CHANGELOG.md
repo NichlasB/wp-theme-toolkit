@@ -11,6 +11,8 @@ The format is based on Keep a Changelog.
 - Added `d4-prompts/ds7-maintenance/TOOLKIT_LESSONS_AUDIT_PROMPT.md` for end-of-chat, approval-gated toolkit retrospectives based on real site-building sessions
 
 ### Changed
+- Added a LocalWP plugin activation reconciliation step to the reverse refresh workflow so GridPane-only infrastructure plugins such as GridPane Nginx Helper and Rhubarb Group Redis Object Cache can be installed locally for parity but forced inactive after database import
+- Added LocalWP-only tool preservation guidance to the reverse refresh workflow, including a Novamira/Novamira Pro allowlist for activation, settings, license state, user dismissals, and memory content
 - Hardened the LocalWP reverse refresh workflow against emoji/data-loss encoding issues by requiring explicit `utf8mb4` import and search-replace sessions, byte-preserved SQL dump compatibility cleanup, and representative emoji validation
 - Enhanced the LocalWP reverse refresh workflow with a read-only local database change review before replacement, plus a review-only mode for checking likely local-only content before pulling GridPane data down
 - Updated README, readme.txt, task runner, IDE setup guide, workflow quick reference, project context reference, LocalWP database guide, Git workflow guide, structure reference, and Q&A docs for the LocalWP reverse refresh workflow

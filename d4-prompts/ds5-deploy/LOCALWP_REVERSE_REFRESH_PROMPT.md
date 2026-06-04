@@ -57,12 +57,18 @@ The user may add these modifiers:
 - `preview only`
 - `allow overwrite uploads`
 - `review local changes only`
+- `preserve local-only tools`
+- `skip local-only tool preservation`
 
 If no mode is specified, use `database and missing uploads`.
 
 `allow overwrite uploads` changes only the uploads step. It does not permit deleting local uploads or syncing code.
 
 `review local changes only` runs the local pre-refresh database review and stops before backup, import, search-replace, or uploads transfer.
+
+`preserve local-only tools` snapshots and restores allowlisted LocalWP-only tool/plugin configuration around the database import. When the LocalWP site has Novamira/Novamira Pro installed locally, this preservation is enabled by default unless the user explicitly requests `skip local-only tool preservation`.
+
+Environment plugin activation is reconciled after database refresh even when local-only tool preservation is skipped.
 
 ---
 
@@ -80,12 +86,16 @@ If the user has not already provided them, gather these inputs first from `gridp
 - whether database, uploads, or both should be refreshed
 - whether this is preview only
 - whether source/local database comparison should stop on likely local-only or local-newer changes
+- whether local-only tool/plugin configuration should be preserved around the database import
+- local plugin activation policy for plugins that differ between GridPane and LocalWP
 
 Optional inputs:
 - project-specific remote DB export override
 - project-specific LocalWP DB import override
 - required post-refresh check pages
 - whether uploads overwrite is explicitly approved
+- local-only plugin preservation allowlist, if the project uses tools that should exist only in LocalWP
+- environment plugin policy allowlist, if the project installs live/staging infrastructure plugins locally only to avoid missing-file warnings
 
 Before asking broad questions, check for:
 - `[child-theme-root]/gridpane-deploy-context.md`
@@ -107,6 +117,8 @@ If the context file exists, read it first and use it as the primary source for s
 - Never sync themes, plugins, WordPress core, workflow notes, migration notes, or code files.
 - Never treat reverse refresh as code deployment.
 - Never auto-merge LocalWP database changes with GridPane database changes.
+- Never preserve local-only plugin data by broad guessing; use an explicit allowlist.
+- Never leave GridPane-only infrastructure plugins active in LocalWP just because they were active in the imported GridPane database.
 - Never treat local comparison as proof that no local-only database edits exist.
 - Never use naive SQL search-replace for serialized WordPress data.
 - Never leave temporary SQL dumps or helper scripts behind except the required local pre-refresh backup.
@@ -155,6 +167,8 @@ If the user requested uploads overwrite, record that approval explicitly.
 
 If no mode is specified, use database and missing uploads.
 
+If the LocalWP site has Novamira/Novamira Pro plugin files present and the user has not requested `skip local-only tool preservation`, enable Novamira local-only preservation for database refreshes.
+
 ### Phase 2: Preview and risk check
 
 - show the selected source environment and LocalWP target
@@ -181,6 +195,8 @@ Run a concise side-by-side comparison that includes:
 - recent attachments on both source and local, ordered by `post_date` or `post_modified`
 - recent `wp_posts` rows for likely database-backed builder or placement types, including `ct_content_block`, `mb-views`, and other project-relevant custom post types when detectable
 - active theme and active plugin option values on both source and local when practical
+- local-only active plugins that exist in LocalWP but not on GridPane, especially development tools such as Novamira or Novamira Pro
+- GridPane-only infrastructure plugins that should be inactive in LocalWP even if active on the source
 - recently updated options only when the project stores reliable timestamps; otherwise state that `wp_options` has no normal modified timestamp
 
 Report the comparison in terms of:
@@ -210,6 +226,48 @@ Run this only when database refresh is active.
 - record the exact backup path for the final report
 
 Block the database import if backup creation fails.
+
+### Phase 4.5: Snapshot local-only tool overlay
+
+Run this only when database refresh is active and local-only tool preservation is enabled.
+
+This phase snapshots a narrow allowlist of local-only tool state before the live/staging database replaces LocalWP. It is not a general database merge.
+
+For Novamira/Novamira Pro, detect local plugin files:
+- `wp-content/plugins/novamira/novamira.php`
+- `wp-content/plugins/novamira-pro/novamira-pro.php`
+
+If those files exist locally, snapshot:
+- activation state for `novamira/novamira.php` and `novamira-pro/novamira-pro.php` from the serialized `active_plugins` option
+- exact `wp_options` rows for:
+  - `novamira_ai_abilities_enabled`
+  - `novamira_ai_abilities_domain`
+  - `novamira_ability_rules`
+  - `novamira_pro_upsell_installed_at`
+  - `nvp_license_key`
+  - `nvp_license_status`
+  - `nvp_license_error`
+  - `nvp_license_domain`
+  - `nvp_memory_enabled`
+  - `nvp_instructions_enabled`
+  - `nvp_instructions_content`
+- `wp_usermeta` rows with these keys:
+  - `novamira_production_warning_dismissed`
+  - keys beginning with `novamira_pro_dismissed_`
+- Novamira memory content when present:
+  - `wp_posts` rows with `post_type = 'novamira_memory'`
+  - `wp_postmeta` rows attached to those posts, especially `_novamira_memory_type`
+  - revisions whose `post_parent` points to a preserved `novamira_memory` post, only when they can be safely remapped
+
+Do not preserve Novamira update/cache transients by default:
+- `_transient_novamira%`
+- `_transient_timeout_novamira%`
+- `_transient_novamira-pro%`
+- `_transient_timeout_novamira-pro%`
+
+Do not print license keys, tokens, application passwords, or instruction content in the assistant output. Report only option names, row counts, and whether the snapshot exists.
+
+If a local-only plugin has an unknown footprint, preserve only activation state and explicit user-provided allowlist rows. Otherwise block and ask for the missing allowlist.
 
 ### Phase 5: Export remote GridPane database
 
@@ -278,6 +336,49 @@ After search-replace, validate at least:
 
 Phrase this as a primary-table check, not proof that no plugin table contains any live URL. Some plugin tables may intentionally store external URLs or historical logs.
 
+### Phase 8.5: Restore local-only tool overlay
+
+Run this after the URL search-replace when database refresh is active and Phase 4.5 created a local-only tool snapshot.
+
+For Novamira/Novamira Pro:
+- restore only the allowlisted `wp_options` rows captured in Phase 4.5
+- re-add `novamira/novamira.php` and `novamira-pro/novamira-pro.php` to `active_plugins` only when the corresponding plugin file still exists locally
+- restore allowlisted `wp_usermeta` rows without printing values
+- restore `novamira_memory` posts only when present in the snapshot
+- when restoring `novamira_memory` posts, avoid overwriting live-imported `wp_posts` IDs; insert with new IDs and remap postmeta/revision parent IDs unless the original IDs are confirmed unused
+- do not restore Novamira update/checker transients
+- verify Novamira remains locked to the LocalWP domain when `novamira_ai_abilities_domain` is present
+
+If restoration fails, keep the full LocalWP database backup and the local-only tool snapshot, then report the exact blocked item.
+
+### Phase 8.6: Reconcile LocalWP plugin activation policy
+
+Run this after local-only tool restoration and before uploads sync when database refresh is active.
+
+The imported GridPane database may mark server-side infrastructure plugins as active. If those plugin files are missing locally, WordPress may show "plugin has been deactivated because the files do not exist." If those plugin files are installed locally for parity, they may run behavior that belongs only on GridPane.
+
+Use a serialized-safe WordPress/API method to reconcile `active_plugins`; do not edit the serialized option with naive string operations.
+
+For this project pattern, force these plugins inactive in LocalWP when present in `active_plugins`:
+- `nginx-helper/nginx-helper.php` for the GridPane Nginx Helper fork
+- `redis-cache/redis-cache.php` for the Rhubarb Group Redis Object Cache plugin
+
+If the plugin files exist locally:
+- remove them from `active_plugins`
+- keep the files installed
+- report them as "installed locally, forced inactive"
+
+If the plugin files do not exist locally:
+- remove them from `active_plugins`
+- report them as "missing locally, deactivated to prevent plugins.php warnings"
+- do not copy plugin files from GridPane during this workflow
+
+For Redis Object Cache:
+- do not enable or install the `wp-content/object-cache.php` drop-in on LocalWP unless the user explicitly says LocalWP Redis/object-cache testing is intended
+- if the drop-in exists locally and Redis should be inactive, report it as a validation warning rather than deleting it automatically
+
+Do not deactivate normal shared functional plugins through this policy. Only apply this to explicit environment-plugin allowlist entries.
+
 ### Phase 9: Sync missing uploads
 
 Run this when uploads refresh is active.
@@ -312,6 +413,10 @@ At minimum, validate:
 - representative post/page counts
 - active theme name
 - active plugin list or obvious plugin mismatch warnings
+- local-only preserved plugins are still active when requested, especially `novamira/novamira.php` and `novamira-pro/novamira-pro.php`
+- GridPane-only infrastructure plugins are inactive in LocalWP, especially `nginx-helper/nginx-helper.php` and `redis-cache/redis-cache.php`
+- no missing-plugin warnings remain for deactivated environment plugin entries when practical to verify
+- Novamira/Novamira Pro preserved options are present without exposing their values
 - `wp-config.php` `DB_HOST` includes the LocalWP host and port when needed for plugin-owned PDO/database layers
 - representative pages listed in context
 - a representative media URL or file path
@@ -352,6 +457,10 @@ Report completed, skipped, blocked, and manually verified steps using the output
 - assuming the local/source comparison can detect every local-only edit
 - skipping the local database backup because LocalWP feels disposable
 - trying to merge selected local database rows into the pulled-down GridPane database
+- losing LocalWP-only tool configuration by replacing the database without a local-only preservation overlay
+- restoring local-only CPT rows by fixed IDs and accidentally overwriting imported live content
+- leaving GridPane-only cache/server plugins active in LocalWP after importing the live database
+- confusing "installed locally for parity" with "active locally"; infrastructure plugins may need files present but activation forced off
 - forgetting `--allow-root` when GridPane WP-CLI is run from a root SSH session
 - importing with a `latin1` client/session even though WordPress tables are `utf8mb4`; this can turn emoji into literal `?` bytes
 - removing a MariaDB dump compatibility line by rewriting the whole SQL dump as text, which can damage binary or escaped payloads
@@ -380,6 +489,8 @@ Source/local DB comparison: [done / blocked for approval / skipped with reason]
 Database backup: [created / blocked / skipped with reason]
 Database import: [done / blocked / not requested]
 Search-replace: [done / blocked / not needed]
+Local-only tool preservation: [restored / blocked / skipped with reason]
+Plugin activation policy: [reconciled / blocked / skipped with reason]
 Uploads sync: [missing-only / overwrite-approved / blocked / not requested]
 Cleanup: [done / blocked / not needed]
 Validation:
@@ -402,6 +513,8 @@ After the reverse refresh work is complete, report:
 - where the local database backup was created when applicable
 - whether the import and search-replace ran through an explicit `utf8mb4` database session
 - the search-replace method used and whether serialized values were handled safely
+- whether local-only tool/plugin configuration was preserved and restored
+- which environment plugins were forced inactive locally
 - whether uploads were missing-only or overwrite-approved
 - whether temporary source dumps and helper files were cleaned up
 - which validations passed
