@@ -27,6 +27,7 @@ blocksy-child/
 ├── style.css
 ├── functions.php
 ├── _project-context.md
+├── mvs-project-status.md
 ├── inc/
 │   └── cpt.php
 ├── mb-json/
@@ -46,6 +47,7 @@ Rules:
 - `style.css` contains the child-theme header and the canonical token block
 - `functions.php` loads the parent stylesheet, conditionally loads child includes, and exposes tracked `.mbjson` field-group files to Meta Box Builder through `mbb_json_files` when the project does not keep duplicate `.json` twins
 - `_project-context.md` is the operational context file for AI and humans and can stay tracked without being deployed
+- `mvs-project-status.md` is the concise long-break recovery snapshot that records current phase, last completed workflow, next recommended workflow, design source, editability level, blockers, and deployment state
 - `gridpane-deploy-context.md` is the site-specific deployment context file and should stay tracked without being deployed
 - `inc/cpt.php` stores CPT registration snippets
 - `mb-json/` stores reusable field schemas as tracked `.mbjson` files and should contain a `.gitkeep` file until real files exist
@@ -59,10 +61,11 @@ Rules:
 Every project should maintain these artifacts:
 
 1. `_project-context.md`
-2. a placement map inside `_project-context.md`
-3. `mb-json/*.mbjson` files for field groups and repeaters
-4. local reference copies of view Twig and CSS under `views/`
-5. `inc/cpt.php` for CPT registration when CPTs are used
+2. `mvs-project-status.md`
+3. a placement map inside `_project-context.md`
+4. `mb-json/*.mbjson` files for field groups and repeaters
+5. local reference copies of view Twig and CSS under `views/`
+6. `inc/cpt.php` for CPT registration when CPTs are used
 
 For faster new project setup, build from the reusable LocalWP blueprint in `LOCALWP_BLUEPRINT_SETUP.md`.
 
@@ -188,15 +191,17 @@ For new projects, use `LOCALWP_BLUEPRINT_SETUP.md` to standardize the LocalWP st
 
 Use this sequence for all new work:
 
-1. Plan the page or data model in `_project-context.md`
-2. Generate or update `.mbjson` and `inc/cpt.php` artifacts from the plan, and keep the `mbb_json_files` bridge in `functions.php` when `.json` twins are intentionally not tracked
-3. Generate Twig markup for the MB View
-4. Generate CSS that only consumes the documented token system
-5. Paste the Twig and CSS into MB Views
-6. Record the live view name, slug, and placement rule in the placement map
-7. Capture the live result with Element to LLM
-8. Refine Twig and CSS against the real rendered output
-9. Update the local reference copy under `views/`
+1. Start with `START_HERE_MASTER_WORKFLOW.md` when the next workflow is not obvious
+2. Plan the page or data model in `_project-context.md`
+3. Track current phase, last completed workflow, and next workflow in `mvs-project-status.md`
+4. Generate or update `.mbjson` and `inc/cpt.php` artifacts from the plan, and keep the `mbb_json_files` bridge in `functions.php` when `.json` twins are intentionally not tracked
+5. Generate Twig markup for the MB View
+6. Generate CSS that only consumes the documented token system
+7. Paste the Twig and CSS into MB Views
+8. Record the live view name, slug, and placement rule in the placement map
+9. Capture the live result with Element to LLM
+10. Refine Twig and CSS against the real rendered output
+11. Update the local reference copy under `views/`
 
 During steps 3 and 8, confirm the MB Views data-access pattern is correct:
 - use `post.*` for main-query field output

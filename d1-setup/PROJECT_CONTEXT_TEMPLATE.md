@@ -12,6 +12,10 @@ Use this file as the canonical schema for each target project's `_project-contex
 - Local Environment: [LocalWP site name]
 - Production Host: [GridPane or other]
 - Date Started: [YYYY-MM-DD]
+- Current Phase: [0 Intake / 1 Design direction / 2 Design handoff / 3 Bootstrap / 4 Token setup / 5 Content model / 6 Page build / 7 Refinement / 8 QA / 9 Deploy / 10 Maintenance]
+- Design Source: [none / Claude Design / mockup / HTML export / existing site / other]
+- Design Approval Status: [not started / draft / approved / needs revision]
+- Client Editability: [Managed / Guided / Flexible / Builder]
 
 ## 1. Brand Direction
 - Vibe Words:
@@ -23,6 +27,16 @@ Use this file as the canonical schema for each target project's `_project-contex
 - Visual Notes:
   - [short point]
   - [short point]
+
+## 1a. Design Handoff
+- Source Location: [URL / file path / notes]
+- Claude Design Notes:
+  - [note or none]
+- Handoff Artifacts:
+  - [screenshot / HTML export / asset folder / notes]
+- Editable Surface Map:
+  - [area] - [locked / fields / Gutenberg / builder / undecided]
+  - [area] - [locked / fields / Gutenberg / builder / undecided]
 
 ## 2. Design Tokens
 ```css
@@ -101,7 +115,9 @@ Use this file as the canonical schema for each target project's `_project-contex
 ## Required Rules
 
 - Keep this file in the target project root
+- Keep `mvs-project-status.md` beside this file when long-break recovery or active project tracking is useful
 - Update the placement map after every live assignment change
 - Treat the token block as the canonical source for spacing and type scale
+- Record the design source, design approval status, client editability level, and editable surface map before converting a visual design into MVS artifacts
 - If the project tracks `.mbjson` without duplicate `.json` export twins, note the `mbb_json_files` bridge in `functions.php` so future sessions know how Meta Box local-file mode is being satisfied
 - Do not let the only source of truth live in the WordPress admin

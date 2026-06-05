@@ -1,64 +1,94 @@
 wp-theme-toolkit/
-├── _TASK_RUNNER.md
-├── README.md
-├── readme.txt
-├── CHANGELOG.md
-├── LICENSE
-├── PROJECT_CONTEXT_REFERENCE.txt
-├── PRE_LAUNCH_CHECKLIST.md
-├── TOOLKIT_QA_REFERENCE.md
-│
-├── d1-setup/
-│   ├── STACK_REFERENCE.md
-│   ├── IDE_SETUP_GUIDE.md
-│   ├── LOCALWP_DATABASE_ACCESS_WORKFLOW.md
-│   ├── PROJECT_CONTEXT_TEMPLATE.md
-│   └── 00_REFERENCE_SYSTEM_PROMPTS_FILES_STRUCTURE.txt
-│
-├── d2-scripts/
-│   ├── restore-point.ps1
-│   └── restore-point.sh
-│
-├── d3-guides/
-│   ├── DESIGN_SYSTEM_GUIDE.md
-│   ├── TWIG_PATTERNS_GUIDE.md
-│   ├── BLOCKSY_INTEGRATION_GUIDE.md
-│   ├── ELEMENT_TO_LLM_WORKFLOW.md
-│   ├── WORKFLOW_QUICK_REFERENCE.md
-│   └── MODEL_DELEGATION_GUIDE.txt
-│
-├── d4-prompts/
-│   ├── ds1-setup/
-│   │   ├── PROJECT_BOOTSTRAP_PROMPT.md
-│   │   ├── GUIDED_EXECUTION_PROMPT.md
-│   │   ├── RESTORE_POINT_PROMPT.md
-│   │   ├── SESSION_HANDOFF_PROMPT.md
-│   │   └── SESSION_BOOTSTRAP_PROMPT.md
-│   ├── ds2-build/
-│   ├── ds3-review/
-│   ├── ds4-pre-launch/
-│   ├── ds5-deploy/
-│   │   ├── GRIDPANE_DEPLOYMENT_PROMPT.md
-│   │   ├── LOCALWP_REVERSE_REFRESH_PROMPT.md
-│   │   └── POST_LAUNCH_GRIDPANE_UPDATE_PROMPT.md
-│   ├── ds6-git/
-│   │   └── GIT_OPERATIONS_PROMPT.md
-│   └── ds7-maintenance/
-│       └── TOOLKIT_LESSONS_AUDIT_PROMPT.md
-│
-└── d5-examples/
-    ├── example-project-context.md
-    └── example-landing-page-build.md
+|-- _TASK_RUNNER.md
+|-- START_HERE_MASTER_WORKFLOW.md
+|-- README.md
+|-- readme.txt
+|-- CHANGELOG.md
+|-- LICENSE
+|-- PROJECT_CONTEXT_REFERENCE.txt
+|-- PRE_LAUNCH_CHECKLIST.md
+|-- DEPLOYMENT_CHECKLIST.md
+|-- TOOLKIT_QA_REFERENCE.md
+|
+|-- d1-setup/
+|   |-- STACK_REFERENCE.md
+|   |-- IDE_SETUP_GUIDE.md
+|   |-- LOCALWP_DATABASE_ACCESS_WORKFLOW.md
+|   |-- LOCALWP_BLUEPRINT_SETUP.md
+|   |-- PROJECT_CONTEXT_TEMPLATE.md
+|   |-- PROJECT_STATUS_TEMPLATE.md
+|   `-- 00_REFERENCE_SYSTEM_PROMPTS_FILES_STRUCTURE.txt
+|
+|-- d2-scripts/
+|   |-- restore-point.ps1
+|   `-- restore-point.sh
+|
+|-- d3-guides/
+|   |-- CLAUDE_DESIGN_HANDOFF_WORKFLOW.md
+|   |-- DESIGN_SYSTEM_GUIDE.md
+|   |-- TWIG_PATTERNS_GUIDE.md
+|   |-- BLOCKSY_INTEGRATION_GUIDE.md
+|   |-- GIT_WORKFLOW_GUIDE.md
+|   |-- IMAGE_ASSET_WORKFLOW.md
+|   |-- ELEMENT_TO_LLM_WORKFLOW.md
+|   |-- PAGE_BUILDING_WORKFLOW.md
+|   |-- PAGE_DECISION_TREE_CHEAT_SHEET.md
+|   |-- WORKFLOW_QUICK_REFERENCE.md
+|   `-- MODEL_DELEGATION_GUIDE.txt
+|
+|-- d4-prompts/
+|   |-- ds1-setup/
+|   |   |-- PROJECT_BOOTSTRAP_PROMPT.md
+|   |   |-- GUIDED_EXECUTION_PROMPT.md
+|   |   |-- RESTORE_POINT_PROMPT.md
+|   |   |-- SESSION_HANDOFF_PROMPT.md
+|   |   `-- SESSION_BOOTSTRAP_PROMPT.md
+|   |
+|   |-- ds2-build/
+|   |   |-- DESIGN_HANDOFF_TO_MVS_PROMPT.md
+|   |   |-- DESIGN_TOKENS_PROMPT.md
+|   |   |-- NEW_CPT_PROMPT.md
+|   |   |-- PAGE_SCOPING_CHECKLIST_PROMPT.md
+|   |   `-- NEW_PAGE_PROMPT.md
+|   |
+|   |-- ds3-review/
+|   |   |-- CSS_CONSISTENCY_AUDIT_PROMPT.md
+|   |   |-- DESIGN_SYSTEM_COMPLIANCE_PROMPT.md
+|   |   `-- VIEW_REVIEW_PROMPT.md
+|   |
+|   |-- ds4-pre-launch/
+|   |   |-- 01-RESPONSIVE_QA_PROMPT.md
+|   |   |-- 02-ACCESSIBILITY_REVIEW_PROMPT.md
+|   |   |-- 03-SEO_REVIEW_PROMPT.md
+|   |   |-- 04-PERFORMANCE_REVIEW_PROMPT.md
+|   |   |-- 05-CROSS_BROWSER_QA_PROMPT.md
+|   |   `-- 06-FINAL_CHECKLIST_PROMPT.md
+|   |
+|   |-- ds5-deploy/
+|   |   |-- GRIDPANE_DEPLOYMENT_PROMPT.md
+|   |   |-- LOCALWP_REVERSE_REFRESH_PROMPT.md
+|   |   `-- POST_LAUNCH_GRIDPANE_UPDATE_PROMPT.md
+|   |
+|   |-- ds6-git/
+|   |   `-- GIT_OPERATIONS_PROMPT.md
+|   |
+|   `-- ds7-maintenance/
+|       `-- TOOLKIT_LESSONS_AUDIT_PROMPT.md
+|
+`-- d5-examples/
+    |-- example-project-context.md
+    |-- example-landing-page-build.md
+    `-- example-start-here-master-workflow.md
 
 Related shared workflow repo that may appear beside this toolkit in the workspace:
 - wp-workflow-toolkit/
     - d4-prompts/ds1-session/SESSION_BOOTSTRAP_CORE_PROMPT.md backs the local
-        SESSION_BOOTSTRAP_PROMPT.md adapter
+      SESSION_BOOTSTRAP_PROMPT.md adapter
     - d4-prompts/ds1-session/GUIDED_EXECUTION_PROMPT.md is the canonical source
-        behind the local guided-execution wrapper
+      behind the local guided-execution wrapper
     - d4-prompts/ds1-session/SESSION_HANDOFF_PROMPT.md is the canonical source
-        behind the local session-handoff wrapper
+      behind the local session-handoff wrapper
     - d4-prompts/ds2-safety/RESTORE_POINT_PROMPT.md is the canonical source
-        behind the local restore-point wrapper
+      behind the local restore-point wrapper
     - d4-prompts/ds3-maintenance/TOOLKIT_LESSONS_AUDIT_PROMPT.md is the
-        canonical source behind the local toolkit-lessons wrapper
+      canonical source behind the local toolkit-lessons wrapper

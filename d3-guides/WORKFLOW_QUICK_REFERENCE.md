@@ -5,28 +5,31 @@ This is the fast route map for operating `wp-theme-toolkit` day to day.
 ## New Site Project
 
 ```text
-1.  Read d1-setup/STACK_REFERENCE.md
-2.  Read d1-setup/LOCALWP_DATABASE_ACCESS_WORKFLOW.md when LocalWP SQL or migration work is likely
-3.  Read d1-setup/PROJECT_CONTEXT_TEMPLATE.md
-4.  @PROJECT_BOOTSTRAP_PROMPT.md run
-5.  @RESTORE_POINT_PROMPT.md run
-6.  @DESIGN_TOKENS_PROMPT.md run
-7.  @NEW_PAGE_PROMPT.md run and/or @NEW_CPT_PROMPT.md run
-8.  @VIEW_REVIEW_PROMPT.md run
-9.  @CSS_CONSISTENCY_AUDIT_PROMPT.md run
-10. @DESIGN_SYSTEM_COMPLIANCE_PROMPT.md run
-11. Pre-launch: run 01 through 06 in order
+1.  @START_HERE_MASTER_WORKFLOW.md run
+2.  Follow the detected route into intake, Claude Design handoff, bootstrap, build, review, deploy, or maintenance
+3.  Read d1-setup/STACK_REFERENCE.md when routed into setup or build work
+4.  Read d1-setup/LOCALWP_DATABASE_ACCESS_WORKFLOW.md when LocalWP SQL or migration work is likely
+5.  @PROJECT_BOOTSTRAP_PROMPT.md run
+6.  @RESTORE_POINT_PROMPT.md run
+7.  @DESIGN_TOKENS_PROMPT.md run
+8.  @DESIGN_HANDOFF_TO_MVS_PROMPT.md run when a Claude Design/mockup/HTML handoff exists
+9.  @NEW_PAGE_PROMPT.md run and/or @NEW_CPT_PROMPT.md run
+10. @VIEW_REVIEW_PROMPT.md run
+11. @CSS_CONSISTENCY_AUDIT_PROMPT.md run
+12. @DESIGN_SYSTEM_COMPLIANCE_PROMPT.md run
+13. Pre-launch: run 01 through 06 in order
 ```
 
 ## New Chat On Existing Project
 
 ```text
-1.  @SESSION_BOOTSTRAP_PROMPT.md run
-2.  Read d1-setup/LOCALWP_DATABASE_ACCESS_WORKFLOW.md before LocalWP SQL, migration, or reconciliation work
-3.  @GUIDED_EXECUTION_PROMPT.md run
-4.  @RESTORE_POINT_PROMPT.md run
-5.  Review session-context.tmp.md and session-handoff.tmp.md when present
-6.  Continue with build, review, or pre-launch workflows
+1.  @START_HERE_MASTER_WORKFLOW.md run
+2.  @SESSION_BOOTSTRAP_PROMPT.md run when routed into existing project resume
+3.  Read d1-setup/LOCALWP_DATABASE_ACCESS_WORKFLOW.md before LocalWP SQL, migration, or reconciliation work
+4.  @GUIDED_EXECUTION_PROMPT.md run
+5.  @RESTORE_POINT_PROMPT.md run
+6.  Review mvs-project-status.md, session-context.tmp.md, and session-handoff.tmp.md when present
+7.  Continue with build, review, or pre-launch workflows
 ```
 
 Use `@GUIDED_EXECUTION_PROMPT.md run` after session bootstrap when the user wants lower-overwhelm pacing, explicit progress tracking, or one approved task slice at a time. If the next specialized workflow is already obvious and the user wants a faster pass, you can skip it.
@@ -161,6 +164,17 @@ split only reused sections
 promote to CPT only when the content wants its own lifecycle
 ```
 
+## Claude Design Or Visual Handoff
+
+```text
+1.  @START_HERE_MASTER_WORKFLOW.md run
+2.  Read d3-guides/CLAUDE_DESIGN_HANDOFF_WORKFLOW.md
+3.  Generate or refine the Claude Design prompt when needed
+4.  Gather the screenshot, HTML export, handoff bundle, or design notes
+5.  @DESIGN_HANDOFF_TO_MVS_PROMPT.md run
+6.  Continue to @DESIGN_TOKENS_PROMPT.md run, @PAGE_SCOPING_CHECKLIST_PROMPT.md run, @NEW_PAGE_PROMPT.md run, or @NEW_CPT_PROMPT.md run
+```
+
 ## Add A New CPT
 
 ```text
@@ -209,6 +223,12 @@ Do not run the toolkit lessons audit for project-specific styling issues, conten
 
 ## Copy-Paste Prompts
 
+Start here:
+
+```text
+@START_HERE_MASTER_WORKFLOW.md run
+```
+
 Session bootstrap:
 
 ```text
@@ -249,6 +269,12 @@ Build a page after scoping:
 
 ```text
 @NEW_PAGE_PROMPT.md run
+```
+
+Convert a design handoff:
+
+```text
+@DESIGN_HANDOFF_TO_MVS_PROMPT.md run
 ```
 
 Run launch sequence starting at step 01:

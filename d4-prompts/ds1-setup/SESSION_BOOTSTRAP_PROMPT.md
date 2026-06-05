@@ -20,6 +20,7 @@ Before scanning, read:
 - `d3-guides/WORKFLOW_QUICK_REFERENCE.md`
 - `d1-setup/STACK_REFERENCE.md`
 - `d1-setup/PROJECT_CONTEXT_TEMPLATE.md`
+- `d1-setup/PROJECT_STATUS_TEMPLATE.md`
 
 Use those files to understand:
 - what counts as a normal target
@@ -47,6 +48,7 @@ Do not dump the full file tree unless the project is tiny. Prefer a trimmed path
 - target root path
 - whether the child theme root is the project root or nested inside it
 - whether `_project-context.md` exists
+- whether `mvs-project-status.md` exists
 - whether the project appears to be a normal Meta Views Stack target or an atypical folder
 
 ### 2. Shape and structure
@@ -60,6 +62,7 @@ Do not dump the full file tree unless the project is tiny. Prefer a trimmed path
 - `.mbjson` files
 - local Twig and CSS reference files
 - placement map status
+- project status snapshot status
 - obvious missing relationships between CPTs, fields, and views
 
 ### 3a. Runtime validation note
@@ -76,10 +79,12 @@ Do not dump the full file tree unless the project is tiny. Prefer a trimmed path
 ### 5. Workflow recommendation
 - recommend the most relevant next prompt
 - if edits are likely, recommend `RESTORE_POINT_PROMPT.md`
+- if the project status snapshot is missing or stale, recommend creating or updating `mvs-project-status.md` from `d1-setup/PROJECT_STATUS_TEMPLATE.md`
 
 ### 6. Risks and unknowns
 - identify the few uncertainties most likely to matter in later turns
 - flag missing `_project-context.md`, missing placement map, or no local view copies as operational risks
+- flag missing or stale `mvs-project-status.md` as a long-break recovery risk
 - include missing runtime confirmation for expected CPTs as a risk when relevant
 
 ---
@@ -96,9 +101,13 @@ Write the file in this structure:
 - Assessed from: [path]
 - Child theme root: [path]
 - Project context file: [present / missing]
+- Project status file: [present / missing]
 
 ## 1. Snapshot
 - Build state: [bootstrap / active build / review-ready / pre-launch]
+- Current phase: [0 Intake / 1 Design direction / 2 Design handoff / 3 Bootstrap / 4 Token setup / 5 Content model / 6 Page build / 7 Refinement / 8 QA / 9 Deploy / 10 Maintenance]
+- Last completed workflow: [summary]
+- Next recommended workflow: [summary]
 - Summary:
   - [short point]
   - [short point]
@@ -124,6 +133,9 @@ Write the file in this structure:
 ## 4. Design System Status
 - Token block: [present / missing]
 - Placement map: [present / missing / partial]
+- Project status snapshot: [present / missing / stale / unclear]
+- Design source: [none / Claude Design / mockup / HTML export / existing site / unknown]
+- Client editability: [Managed / Guided / Flexible / Builder / undecided]
 - Naming consistency: [good / mixed / unclear]
 - Responsive rule consistency: [good / mixed / unclear]
 

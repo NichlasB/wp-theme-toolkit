@@ -7,10 +7,15 @@ The format is based on Keep a Changelog.
 ## [Unreleased]
 
 ### Added
+- Added `START_HERE_MASTER_WORKFLOW.md` as the root front-door router for new projects, stale resumes, visual handoffs, build tasks, QA, deployment, and toolkit-improvement sessions
+- Added `d3-guides/CLAUDE_DESIGN_HANDOFF_WORKFLOW.md` and `d4-prompts/ds2-build/DESIGN_HANDOFF_TO_MVS_PROMPT.md` for Claude Design, mockup, screenshot, HTML export, and visual handoff conversion into MVS implementation decisions
+- Added `d1-setup/PROJECT_STATUS_TEMPLATE.md` for target-project `mvs-project-status.md` long-break recovery snapshots
+- Added `d5-examples/example-start-here-master-workflow.md` as a dry-run example for master workflow routing and Claude Design handoff
 - Added `d4-prompts/ds5-deploy/LOCALWP_REVERSE_REFRESH_PROMPT.md` for pulling GridPane staging or production database content and missing uploads back into the matching LocalWP site
 - Added `d4-prompts/ds7-maintenance/TOOLKIT_LESSONS_AUDIT_PROMPT.md` for end-of-chat, approval-gated toolkit retrospectives based on real site-building sessions
 
 ### Changed
+- Updated project bootstrap, session bootstrap, stack reference, project context template, README files, task runner, quick reference, and structure reference for the new master workflow, project status snapshot, client editability levels, and design handoff routing
 - Added a LocalWP plugin activation reconciliation step to the reverse refresh workflow so GridPane-only infrastructure plugins such as GridPane Nginx Helper and Rhubarb Group Redis Object Cache can be installed locally for parity but forced inactive after database import
 - Added LocalWP-only tool preservation guidance to the reverse refresh workflow, including a Novamira/Novamira Pro allowlist for activation, settings, license state, user dismissals, and memory content
 - Hardened the LocalWP reverse refresh workflow against emoji/data-loss encoding issues by requiring explicit `utf8mb4` import and search-replace sessions, byte-preserved SQL dump compatibility cleanup, and representative emoji validation

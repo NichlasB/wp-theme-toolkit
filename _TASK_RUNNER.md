@@ -10,6 +10,8 @@ This toolkit contains build, review, maintenance, launch-readiness, and deployme
 
 Important: the `wp-theme-toolkit/` folder is normally not the target of these tasks. It contains the instructions, not the site code.
 
+When the user is unsure where to begin, use the root `START_HERE_MASTER_WORKFLOW.md` first. It is a router and planning workflow that classifies the session, checks long-break recovery state, and recommends the next specialized prompt.
+
 Exceptions: `d4-prompts/ds6-git/GIT_OPERATIONS_PROMPT.md` and toolkit-self workflows such as `d4-prompts/ds7-maintenance/TOOLKIT_LESSONS_AUDIT_PROMPT.md` may target `wp-theme-toolkit/` itself when the prompt explicitly allows it. `TOOLKIT_LESSONS_AUDIT_PROMPT.md` is for toolkit-wide lessons, not one-off project issues.
 
 Shared workflow note: `SESSION_BOOTSTRAP_PROMPT.md` is a local adapter around the shared bootstrap core in `wp-workflow-toolkit/d4-prompts/ds1-session/SESSION_BOOTSTRAP_CORE_PROMPT.md`. `GUIDED_EXECUTION_PROMPT.md`, `SESSION_HANDOFF_PROMPT.md`, `RESTORE_POINT_PROMPT.md`, and `TOOLKIT_LESSONS_AUDIT_PROMPT.md` remain local execution entry points but are backed by canonical shared sources in `wp-workflow-toolkit/`.
@@ -59,6 +61,8 @@ For `GIT_OPERATIONS_PROMPT.md` and `TOOLKIT_LESSONS_AUDIT_PROMPT.md`, the valid 
 
 The preferred target root is the Blocksy child-theme root or the site project root that contains the child theme.
 
+If `mvs-project-status.md` exists in the target, read it with `_project-context.md` for resume context. If it is missing, stale, or contradicted by `_project-context.md`, recommend updating it from `d1-setup/PROJECT_STATUS_TEMPLATE.md`.
+
 ---
 
 ## Task Types
@@ -69,12 +73,14 @@ These tasks run to completion in one pass.
 
 ### Tasks in this category
 
+- START_HERE_MASTER_WORKFLOW.md
 - PROJECT_BOOTSTRAP_PROMPT.md
 - SESSION_BOOTSTRAP_PROMPT.md
 - GUIDED_EXECUTION_PROMPT.md
 - SESSION_HANDOFF_PROMPT.md
 - RESTORE_POINT_PROMPT.md
 - DESIGN_TOKENS_PROMPT.md
+- DESIGN_HANDOFF_TO_MVS_PROMPT.md
 - PAGE_SCOPING_CHECKLIST_PROMPT.md
 - NEW_PAGE_PROMPT.md
 - NEW_CPT_PROMPT.md
@@ -137,9 +143,11 @@ Rules:
 - `TOOLKIT_LESSONS_AUDIT_PROMPT.md` targets the toolkit itself and does not update `PRE_LAUNCH_CHECKLIST.md` or `DEPLOYMENT_CHECKLIST.md`
 
 Prompt-to-checklist mapping:
+- `START_HERE_MASTER_WORKFLOW.md` does not update `PRE_LAUNCH_CHECKLIST.md` because it is a routing and planning workflow
 - `PROJECT_BOOTSTRAP_PROMPT.md` -> `Setup & Build` -> `Project Bootstrap`
 - `SESSION_BOOTSTRAP_PROMPT.md` -> `Setup & Build` -> `Session Bootstrap`
 - `DESIGN_TOKENS_PROMPT.md` -> `Setup & Build` -> `Design Tokens`
+- `DESIGN_HANDOFF_TO_MVS_PROMPT.md` does not update `PRE_LAUNCH_CHECKLIST.md` because it is a design-to-build planning workflow
 - `PAGE_SCOPING_CHECKLIST_PROMPT.md` does not update `PRE_LAUNCH_CHECKLIST.md` because it is a planning-only scoping workflow
 - `NEW_PAGE_PROMPT.md` -> `Setup & Build` -> `New Page Build`
 - `NEW_CPT_PROMPT.md` -> `Setup & Build` -> `New CPT Build`
@@ -184,6 +192,7 @@ Deployment workflows:
 
 ```text
 wp-theme-toolkit/   <- normally not the target
+├── START_HERE_MASTER_WORKFLOW.md <- root router for new, stale, handoff, build, QA, deployment, and toolkit-improvement sessions
 ├── d1-setup/       <- setup references and project schema
 │   └── LOCALWP_DATABASE_ACCESS_WORKFLOW.md <- read first for LocalWP SQL and migration work
 ├── d2-scripts/     <- restore-point helpers
@@ -195,6 +204,7 @@ wp-theme-toolkit/   <- normally not the target
 │   │   ├── SESSION_HANDOFF_PROMPT.md <- local wrapper around shared prompt
 │   │   ├── RESTORE_POINT_PROMPT.md <- local wrapper around shared prompt
 │   ├── ds2-build/      <- page, CPT, and token generation
+│   │   └── DESIGN_HANDOFF_TO_MVS_PROMPT.md <- convert Claude Design/mockup/HTML handoffs into MVS implementation decisions
 │   ├── ds3-review/     <- view and CSS audits
 │   ├── ds4-pre-launch/ <- launch-readiness sequence
 │   ├── ds5-deploy/     <- deployment workflow prompts, including LocalWP reverse refresh

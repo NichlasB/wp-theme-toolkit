@@ -39,15 +39,23 @@ Shared workflow boundary:
 
 ## Quick Start
 
+When you are not sure where to begin, start here:
+
+```text
+@START_HERE_MASTER_WORKFLOW.md run
+```
+
+The master workflow classifies the session, checks project status, asks only the missing context questions, and routes to the exact next prompt.
+
 ### 1. Add The Toolkit Beside Your Site Project
 
 Add this repository and your target site project to the same IDE workspace.
 
 ### 2. Starting A New Site Project
 
-1. Read `d1-setup/STACK_REFERENCE.md`, `d1-setup/LOCALWP_BLUEPRINT_SETUP.md`, `d1-setup/LOCALWP_DATABASE_ACCESS_WORKFLOW.md`, `d3-guides/DESIGN_SYSTEM_GUIDE.md`, `d3-guides/PAGE_DECISION_TREE_CHEAT_SHEET.md`, `d3-guides/PAGE_BUILDING_WORKFLOW.md`, and `d1-setup/PROJECT_CONTEXT_TEMPLATE.md`
-2. Run `@PROJECT_BOOTSTRAP_PROMPT.md run`
-3. Continue with `@DESIGN_TOKENS_PROMPT.md run`, `@PAGE_SCOPING_CHECKLIST_PROMPT.md run`, `@NEW_PAGE_PROMPT.md run`, or `@NEW_CPT_PROMPT.md run`
+1. Run `@START_HERE_MASTER_WORKFLOW.md run`
+2. Follow the recommended route into project intake, Claude Design handoff, project bootstrap, token setup, page/CPT build, review, deployment, or maintenance
+3. Continue with `@DESIGN_TOKENS_PROMPT.md run`, `@DESIGN_HANDOFF_TO_MVS_PROMPT.md run`, `@PAGE_SCOPING_CHECKLIST_PROMPT.md run`, `@NEW_PAGE_PROMPT.md run`, or `@NEW_CPT_PROMPT.md run`
 4. Run the review prompts and the pre-launch sequence `@01-RESPONSIVE_QA_PROMPT.md run` through `@06-FINAL_CHECKLIST_PROMPT.md run`
 5. Run `@GRIDPANE_DEPLOYMENT_PROMPT.md run`
 6. Run `@LOCALWP_REVERSE_REFRESH_PROMPT.md run` after launch when LocalWP needs fresh GridPane content or missing uploads
@@ -55,12 +63,13 @@ Add this repository and your target site project to the same IDE workspace.
 
 ### 3. Starting A New Chat On An Existing Site
 
-1. Run `@SESSION_BOOTSTRAP_PROMPT.md run`
-2. Read `d1-setup/LOCALWP_DATABASE_ACCESS_WORKFLOW.md` before any LocalWP SQL or migration work
-3. Run `@GUIDED_EXECUTION_PROMPT.md run` when you want slower pacing, explicit progress tracking, or one approved task slice at a time
-4. Run `@RESTORE_POINT_PROMPT.md run`
-5. Review `session-context.tmp.md` and `session-handoff.tmp.md` when present in the target root
-6. Continue with build, review, or pre-launch prompts
+1. Run `@START_HERE_MASTER_WORKFLOW.md run`
+2. If the master workflow detects an existing project resume, follow its route into `@SESSION_BOOTSTRAP_PROMPT.md run`
+3. Read `d1-setup/LOCALWP_DATABASE_ACCESS_WORKFLOW.md` before any LocalWP SQL or migration work
+4. Run `@GUIDED_EXECUTION_PROMPT.md run` when you want slower pacing, explicit progress tracking, or one approved task slice at a time
+5. Run `@RESTORE_POINT_PROMPT.md run`
+6. Review `mvs-project-status.md`, `session-context.tmp.md`, and `session-handoff.tmp.md` when present in the target root
+7. Continue with build, review, or pre-launch prompts
 
 When you want to pause and continue the same work in a fresh chat, run `@SESSION_HANDOFF_PROMPT.md run` before switching.
 
@@ -88,6 +97,7 @@ wp-theme-toolkit/
 |-- PRE_LAUNCH_CHECKLIST.md
 |-- PROJECT_CONTEXT_REFERENCE.txt
 |-- README.md
+|-- START_HERE_MASTER_WORKFLOW.md
 |-- TOOLKIT_QA_REFERENCE.md
 |-- _TASK_RUNNER.md
 |-- readme.txt
@@ -98,6 +108,7 @@ wp-theme-toolkit/
 |   |-- LOCALWP_DATABASE_ACCESS_WORKFLOW.md
 |   |-- LOCALWP_BLUEPRINT_SETUP.md
 |   |-- PROJECT_CONTEXT_TEMPLATE.md
+|   |-- PROJECT_STATUS_TEMPLATE.md
 |   `-- STACK_REFERENCE.md
 |
 |-- d2-scripts/
@@ -106,6 +117,7 @@ wp-theme-toolkit/
 |
 |-- d3-guides/
 |   |-- BLOCKSY_INTEGRATION_GUIDE.md
+|   |-- CLAUDE_DESIGN_HANDOFF_WORKFLOW.md
 |   |-- DESIGN_SYSTEM_GUIDE.md
 |   |-- ELEMENT_TO_LLM_WORKFLOW.md
 |   |-- GIT_WORKFLOW_GUIDE.md
@@ -125,6 +137,7 @@ wp-theme-toolkit/
 |   |   `-- SESSION_BOOTSTRAP_PROMPT.md
 |   |
 |   |-- ds2-build/
+|   |   |-- DESIGN_HANDOFF_TO_MVS_PROMPT.md
 |   |   |-- DESIGN_TOKENS_PROMPT.md
 |   |   |-- NEW_CPT_PROMPT.md
 |   |   |-- PAGE_SCOPING_CHECKLIST_PROMPT.md
@@ -156,28 +169,33 @@ wp-theme-toolkit/
 |
 `-- d5-examples/
     |-- example-landing-page-build.md
-    `-- example-project-context.md
+    |-- example-project-context.md
+    `-- example-start-here-master-workflow.md
 ```
 
 ## Core Workflow
 
-1. Plan the project in `_project-context.md`
-2. Generate or update tokens and schema artifacts in the child theme
-3. Generate MB Views Twig and CSS from the field model
-4. Record placement decisions in the assignment map
-5. Refine the live result with Element to LLM
-6. Run review prompts before launch
-7. Deploy the first launch with the GridPane workflow and track rollout in `DEPLOYMENT_CHECKLIST.md`
-8. Use the post-launch GridPane update workflow for smaller follow-up staging or production pushes after launch
-9. Use the LocalWP reverse refresh workflow when local needs current GridPane database content or missing uploads
-10. Use the Git operations prompt when you want assisted commit, push, tag, or release work for the toolkit repo or a child-theme repo
+1. Start with `START_HERE_MASTER_WORKFLOW.md` when the next workflow is not obvious
+2. Plan the project in `_project-context.md` and track restart state in `mvs-project-status.md`
+3. Convert Claude Design, mockups, screenshots, or HTML exports into MVS decisions when a visual handoff exists
+4. Generate or update tokens and schema artifacts in the child theme
+5. Generate MB Views Twig and CSS from the field model
+6. Record placement decisions in the assignment map
+7. Refine the live result with Element to LLM
+8. Run review prompts before launch
+9. Deploy the first launch with the GridPane workflow and track rollout in `DEPLOYMENT_CHECKLIST.md`
+10. Use the post-launch GridPane update workflow for smaller follow-up staging or production pushes after launch
+11. Use the LocalWP reverse refresh workflow when local needs current GridPane database content or missing uploads
+12. Use the Git operations prompt when you want assisted commit, push, tag, or release work for the toolkit repo or a child-theme repo
 
 ## V1 Scope
 
 Included in v1:
+- Start Here master workflow routing for new, stale, visual handoff, build, QA, deployment, and toolkit-improvement sessions
+- Claude Design and visual handoff planning support
 - Blocksy child theme workflows
 - Meta Box AIO and MB Views usage
-- project bootstrap, session bootstrap, and session handoff
+- project bootstrap, project status snapshots, session bootstrap, and session handoff
 - design tokens, page creation, CPT creation, view reviews, and pre-launch QA
 - restore-point safety workflow
 - deployment checklist and GridPane deployment workflow
@@ -198,6 +216,10 @@ Deferred from v1:
 Reference prompts directly in chat:
 
 ```text
+@START_HERE_MASTER_WORKFLOW.md run
+```
+
+```text
 @SESSION_BOOTSTRAP_PROMPT.md run
 ```
 
@@ -211,6 +233,10 @@ Reference prompts directly in chat:
 
 ```text
 @PAGE_SCOPING_CHECKLIST_PROMPT.md run
+```
+
+```text
+@DESIGN_HANDOFF_TO_MVS_PROMPT.md run
 ```
 
 ```text

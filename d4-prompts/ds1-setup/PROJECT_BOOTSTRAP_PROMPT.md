@@ -28,6 +28,7 @@ Before starting, read:
 - `_TASK_RUNNER.md`
 - `d1-setup/STACK_REFERENCE.md`
 - `d1-setup/PROJECT_CONTEXT_TEMPLATE.md`
+- `d1-setup/PROJECT_STATUS_TEMPLATE.md`
 - `d3-guides/DESIGN_SYSTEM_GUIDE.md`
 - `d3-guides/BLOCKSY_INTEGRATION_GUIDE.md`
 - `d3-guides/WORKFLOW_QUICK_REFERENCE.md`
@@ -43,6 +44,8 @@ If the user has not already provided them, gather these inputs first:
 - primary site goal
 - vibe words
 - color direction: monochrome, one accent, or full palette
+- design source: none, Claude Design, mockup, HTML export, existing site, or other
+- client editability level: Managed, Guided, Flexible, or Builder
 - whether a CPT is needed immediately
 - whether the project root already exists
 - target path for the site project or child theme
@@ -59,12 +62,13 @@ Optional but helpful inputs:
 Create or update these artifacts in the target project:
 
 1. `_project-context.md`
-2. child theme directories: `inc/`, `mb-json/`, `views/`
-3. view subdirectories when practical: `views/sections/`, `views/single/`, `views/archive/`, `views/reference/`
-4. `style.css` token block when it does not exist yet
-5. `functions.php` child-theme bootstrap when it does not exist yet, including the `mbb_json_files` bridge when the project uses tracked `.mbjson` schemas without duplicate `.json` copies
-6. `inc/cpt.php` placeholder when it does not exist
-7. placement map section inside `_project-context.md`
+2. `mvs-project-status.md`
+3. child theme directories: `inc/`, `mb-json/`, `views/`
+4. view subdirectories when practical: `views/sections/`, `views/single/`, `views/archive/`, `views/reference/`
+5. `style.css` token block when it does not exist yet
+6. `functions.php` child-theme bootstrap when it does not exist yet, including the `mbb_json_files` bridge when the project uses tracked `.mbjson` schemas without duplicate `.json` copies
+7. `inc/cpt.php` placeholder when it does not exist
+8. placement map section inside `_project-context.md`
 
 If the user requested an initial content model, also create:
 - the first `.mbjson` file
@@ -103,26 +107,34 @@ If the child theme does not exist yet:
 
 ### 2. Create the project context
 - use `d1-setup/PROJECT_CONTEXT_TEMPLATE.md` as the schema
-- fill in the stack, brand direction, token block, naming conventions, content-model seed, and placement map skeleton
+- fill in the stack, phase, design source, client editability, brand direction, token block, naming conventions, content-model seed, and placement map skeleton
 - record any open decisions rather than guessing if the brief is incomplete
 
-### 3. Create the child theme scaffold
+### 3. Create the project status snapshot
+- use `d1-setup/PROJECT_STATUS_TEMPLATE.md` as the schema
+- set Current Phase to the most accurate phase from the master workflow phase model
+- record the last completed workflow as `PROJECT_BOOTSTRAP_PROMPT.md`
+- record the next recommended workflow based on the immediate build path
+- keep detailed schema and placement notes in `_project-context.md`, not in the status snapshot
+
+### 4. Create the child theme scaffold
 - ensure `style.css`, `functions.php`, `inc/cpt.php`, `mb-json/`, and `views/` exist
 - create the view subdirectories when useful for immediate work
 - keep boilerplate aligned with `d1-setup/STACK_REFERENCE.md`
 - if `mb-json/` is part of the scaffold and `.mbjson` is the canonical format, register those files through `mbb_json_files` in `functions.php`
 
-### 4. Add the first token block
+### 5. Add the first token block
 - add the canonical token block to `style.css`
 - map the Blocksy palette roles in `_project-context.md`
 - do not create a second design-token system in view-level files
 
-### 5. Seed the first build artifact when requested
+### 6. Seed the first build artifact when requested
 - if the brief already implies a homepage hero, reusable section, or first CPT, create the first `.mbjson` or local view reference file
 - keep the artifact scope narrow and aligned to the immediate next build step
 
-### 6. Validate the bootstrap result
+### 7. Validate the bootstrap result
 - confirm `_project-context.md` exists and contains the placement map section
+- confirm `mvs-project-status.md` exists and contains current phase, last workflow, next workflow, design source, and editability level
 - confirm the token block exists in `style.css`
 - confirm `functions.php` and `inc/cpt.php` are present when needed
 - confirm a `.mbjson`-only scaffold still loads field groups in Meta Box local-file mode because the `mbb_json_files` bridge exists
@@ -160,6 +172,7 @@ Immediate next step: [prompt name]
 
 Then report:
 - the token direction chosen
+- the design source and client editability level
 - the initial content-model decision
 - any deferred questions or unresolved assumptions
 - the next recommended prompt
@@ -172,6 +185,7 @@ After the work is complete, report:
 - the exact target root used
 - the exact files created or updated
 - any deferred decisions that still need user input
+- whether `mvs-project-status.md` was created or updated
 - whether the project is ready for `@DESIGN_TOKENS_PROMPT.md run`, `@NEW_PAGE_PROMPT.md run`, or `@NEW_CPT_PROMPT.md run`
 
 Proceed with project bootstrap now.
