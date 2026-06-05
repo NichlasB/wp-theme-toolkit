@@ -2,6 +2,19 @@
 
 This is the fast route map for operating `wp-theme-toolkit` day to day.
 
+## Context Refresh Rule
+
+Before a major phase transition, long-session continuation, context-compaction recovery, or deployment-risk task, refresh from:
+
+```text
+START_HERE_MASTER_WORKFLOW.md
+_project-context.md
+mvs-project-status.md
+the next routed prompt
+```
+
+Also read session handoff/context files, LocalWP database guidance, Claude Design handoff guidance, or deployment checklists when the task touches those areas.
+
 ## New Site Project
 
 ```text

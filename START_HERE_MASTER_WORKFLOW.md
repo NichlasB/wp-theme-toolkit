@@ -42,6 +42,28 @@ Ask only the minimum useful questions.
 
 ---
 
+## Context Refresh Rule
+
+Before any major phase transition, long-session continuation, context-compaction recovery, or deployment-risk task, refresh from the smallest useful anchor set before continuing.
+
+Default refresh set:
+
+- `START_HERE_MASTER_WORKFLOW.md`
+- `_project-context.md` in the target project when present
+- `mvs-project-status.md` in the target project when present
+- the next routed prompt
+
+Also read these when relevant:
+
+- `session-context.tmp.md` and `session-handoff.tmp.md` when resuming work
+- `d1-setup/LOCALWP_DATABASE_ACCESS_WORKFLOW.md` before LocalWP SQL, migration, import, export, or reconciliation work
+- `d3-guides/CLAUDE_DESIGN_HANDOFF_WORKFLOW.md` before Claude Design or visual handoff conversion
+- deployment checklists before GridPane launch, post-launch update, or reverse refresh work
+
+Use this rule proactively. The user should not have to ask for a memory refresh when the workflow is changing phases or the chat has become long.
+
+---
+
 ## Project Phase Model
 
 Classify every project or session into one current phase:
