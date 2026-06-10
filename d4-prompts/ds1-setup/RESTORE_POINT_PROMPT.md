@@ -16,7 +16,7 @@ Use this wrapper to keep `@RESTORE_POINT_PROMPT.md run` working inside `wp-theme
 Check these locations in order unless the user explicitly provides a different destination:
 
 ```text
-C:\Development\WordPress\toolkit-snapshots
+C:\Users\Captain\Documents\AI Workflows\Toolkits\toolkit-snapshots
 D:\toolkit-snapshots
 ~/toolkit-snapshots
 C:\Users\Captain\Documents\WP Theme Restore Points

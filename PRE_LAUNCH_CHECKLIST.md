@@ -64,7 +64,7 @@ Track bootstrap workflows, build workflows, review workflows, and pre-launch rev
 ---
 
 ## Project: WP Theme Toolkit
-**Primary Theme Root:** C:\Development\WordPress\Plugins\wp-theme-toolkit
+**Primary Theme Root:** C:\Users\Captain\Documents\AI Workflows\Toolkits\wp-theme-toolkit
 **Started:** 2026-04-06
 **Launch Date:** -
 
