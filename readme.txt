@@ -1,7 +1,8 @@
 WP Theme Toolkit
 ================
 
-Repository: local workspace repository
+Repository: https://github.com/NichlasB/wp-theme-toolkit
+Latest tagged release: v0.2.0
 License: GPLv2 or later
 
 Purpose:
@@ -54,3 +55,9 @@ Repository structure:
 
 Important setup note:
 - d1-setup/LOCALWP_DATABASE_ACCESS_WORKFLOW.md is the canonical LocalWP SQL access guide for fresh chats and migration work on Windows
+
+Current release highlights:
+- Add the start-here router, project-status recovery, guided execution, and toolkit lessons workflows
+- Add Claude Design-to-MVS handoff and responsive typography-control guidance
+- Add and harden LocalWP reverse refresh with local-data review, utf8mb4 protection, plugin reconciliation, and local-tool preservation
+- Strengthen GridPane deployment, Meta Box local-file compatibility, MB Views data access, and Blocksy implementation guidance

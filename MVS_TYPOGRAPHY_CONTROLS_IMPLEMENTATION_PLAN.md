@@ -3,8 +3,8 @@
 Status: Implementation in progress
 Created: 2026-07-09
 Owner: Meta Views Stack / wp-theme-toolkit
-Primary target: `C:\Users\Captain\Local Sites\meta-views-stack`
-Toolkit target: `C:\Users\Captain\Documents\AI Workflows\Toolkits\wp-theme-toolkit`
+Primary target: LocalWP `meta-views-stack` blueprint
+Toolkit target: `wp-theme-toolkit`
 
 ## Purpose
 

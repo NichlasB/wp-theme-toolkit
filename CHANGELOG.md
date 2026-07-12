@@ -6,6 +6,8 @@ The format is based on Keep a Changelog.
 
 ## [Unreleased]
 
+## [0.2.0] - 2026-07-12
+
 ### Added
 - Added planning and documentation for MVS Typography Controls, including semantic responsive `--mvs-type-*` roles and a focused `Appearance > MVS Typography` admin-control pattern
 - Added `START_HERE_MASTER_WORKFLOW.md` as the root front-door router for new projects, stale resumes, visual handoffs, build tasks, QA, deployment, and toolkit-improvement sessions
@@ -38,16 +40,10 @@ The format is based on Keep a Changelog.
 - Declared `.mbjson` as the canonical tracked Meta Box schema format and added guidance to ignore duplicate `.json` export copies to prevent repo drift
 - Extended `_TASK_RUNNER.md`, the workflow quick reference, structure reference, ignore rules, and repository docs to support the new toolkit-self lessons audit workflow and the new `ds7-maintenance/` prompt family
 
-### Added
-- Initial repository structure for `wp-theme-toolkit`
-- Root operating files: README, readme.txt, task runner, project context reference, pre-launch checklist, and toolkit Q&A reference
-- Core setup references for the Meta Views Stack, IDE setup, and `_project-context.md` schema
-- Core guides for the design system, Twig patterns, Blocksy integration, workflow sequencing, model delegation, and Element to LLM iteration
-- Initial prompt families for setup, build, review, and pre-launch workflows
-- Example project-context and landing-page walkthrough files
-- Restore-point helper scripts copied from the plugin toolkit and adapted for generic site or theme targets
-
 ## [0.1.0] - 2026-04-06
 
 ### Added
-- First working draft of `wp-theme-toolkit`
+- Initial repository structure for `wp-theme-toolkit`.
+- Root operating files, setup references, Meta Views Stack guidance, project-context schema, and pre-launch checklist.
+- Core design-system, Twig, Blocksy, workflow, and Element to LLM guides.
+- Initial setup, build, review, pre-launch, deployment, Git, and restore-point workflows.
