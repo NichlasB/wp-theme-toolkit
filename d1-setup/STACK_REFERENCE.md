@@ -29,7 +29,8 @@ blocksy-child/
 ├── _project-context.md
 ├── mvs-project-status.md
 ├── inc/
-│   └── cpt.php
+│   ├── cpt.php
+│   └── typography-controls.php
 ├── mb-json/
 │   ├── .gitkeep
 │   └── [name].mbjson
@@ -50,6 +51,7 @@ Rules:
 - `mvs-project-status.md` is the concise long-break recovery snapshot that records current phase, last completed workflow, next recommended workflow, design source, editability level, blockers, and deployment state
 - `gridpane-deploy-context.md` is the site-specific deployment context file and should stay tracked without being deployed
 - `inc/cpt.php` stores CPT registration snippets
+- `inc/typography-controls.php` may provide the `Appearance > MVS Typography` runtime control surface for semantic responsive font-size roles
 - `mb-json/` stores reusable field schemas as tracked `.mbjson` files and should contain a `.gitkeep` file until real files exist
 - `tools/build-deploy-archive.ps1` builds a clean theme archive from `.distignore` for GridPane-ready deployment
 - `views/` stores local reference copies of all Twig and CSS pasted into MB Views and should contain a `.gitkeep` file until real files exist
@@ -99,8 +101,19 @@ Text Domain: blocksy-child
   --text-2xl: 1.5rem;
   --text-3xl: 2rem;
   --text-4xl: clamp(2rem, 5vw, 3.2rem);
+  --mvs-type-body-desktop: var(--text-base);
+  --mvs-type-body-tablet: var(--text-base);
+  --mvs-type-body-mobile: var(--text-base);
+  --mvs-type-h1-desktop: var(--text-4xl);
+  --mvs-type-h1-tablet: var(--text-3xl);
+  --mvs-type-h1-mobile: var(--text-2xl);
+  --mvs-type-section-title-desktop: var(--text-3xl);
+  --mvs-type-section-title-tablet: var(--text-2xl);
+  --mvs-type-section-title-mobile: var(--text-xl);
 }
 ```
+
+Runtime typography controls, when enabled, must override these semantic `--mvs-type-*` variables through a sanitized WordPress option and inline CSS after the token layer. The static token values remain the source of truth for defaults and reset behavior.
 
 ### functions.php
 
@@ -153,7 +166,12 @@ add_filter( 'mbb_json_files', static function ( $files ) {
     return array_values( array_unique( array_merge( $files, $mbjson_files ) ) );
 } );
 
-$cpt_file = get_stylesheet_directory() . '/inc/cpt.php';
+$typography_controls_file = get_stylesheet_directory() . '/inc/typography-controls.php';
+$cpt_file                 = get_stylesheet_directory() . '/inc/cpt.php';
+
+if ( file_exists( $typography_controls_file ) ) {
+    require_once $typography_controls_file;
+}
 
 if ( file_exists( $cpt_file ) ) {
     require_once $cpt_file;
@@ -167,7 +185,7 @@ Reason:
 - browsers can keep serving stale child-theme CSS or JS even when the file changed
 - filemtime-based versions make local iteration and review much more reliable
 
-Keep the `inc/cpt.php` include conditional. A fresh blueprint or early project scaffold may not have real CPT registrations yet.
+Keep the `inc/cpt.php` and `inc/typography-controls.php` includes conditional. A fresh blueprint or early project scaffold may not have real CPT registrations or runtime typography controls yet.
 
 Keep `functions.php` lean as the project grows.
 

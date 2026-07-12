@@ -40,6 +40,8 @@ Review the relevant local Twig and CSS files together. Include any paired `.mbjs
 ### 3. Typography adherence
 - [ ] Typography hierarchy stays on the documented scale
 - [ ] Display, heading, and body usage feels intentional rather than arbitrary
+- [ ] Reusable responsive typography uses semantic `--mvs-type-*` role variables when MVS Typography Controls are enabled
+- [ ] View CSS does not bypass `Appearance > MVS Typography` with raw `font-size` values unless the exception is recorded in `_project-context.md`
 
 ### 4. Naming and markup adherence
 - [ ] Twig classes match the naming convention

@@ -7,6 +7,7 @@ The format is based on Keep a Changelog.
 ## [Unreleased]
 
 ### Added
+- Added planning and documentation for MVS Typography Controls, including semantic responsive `--mvs-type-*` roles and a focused `Appearance > MVS Typography` admin-control pattern
 - Added `START_HERE_MASTER_WORKFLOW.md` as the root front-door router for new projects, stale resumes, visual handoffs, build tasks, QA, deployment, and toolkit-improvement sessions
 - Added `d3-guides/CLAUDE_DESIGN_HANDOFF_WORKFLOW.md` and `d4-prompts/ds2-build/DESIGN_HANDOFF_TO_MVS_PROMPT.md` for Claude Design, mockup, screenshot, HTML export, and visual handoff conversion into MVS implementation decisions
 - Added `d1-setup/PROJECT_STATUS_TEMPLATE.md` for target-project `mvs-project-status.md` long-break recovery snapshots

@@ -16,6 +16,7 @@ Use it to:
 - pull a GridPane staging or production database into the matching LocalWP site
 - compare live/staging and LocalWP database state before replacing the LocalWP database
 - run source-domain to LocalWP-domain search-replace after import
+- reconnect local-only MCP/client credentials such as Novamira when the imported database invalidates LocalWP application passwords
 - copy missing remote uploads into the local uploads folder
 - validate the refreshed LocalWP state before continuing site work
 
@@ -96,6 +97,7 @@ Optional inputs:
 - whether uploads overwrite is explicitly approved
 - local-only plugin preservation allowlist, if the project uses tools that should exist only in LocalWP
 - environment plugin policy allowlist, if the project installs live/staging infrastructure plugins locally only to avoid missing-file warnings
+- local AI client MCP config path or reconnect workflow, when a LocalWP-only tool such as Novamira is expected to remain usable after the import
 
 Before asking broad questions, check for:
 - `[child-theme-root]/gridpane-deploy-context.md`
@@ -121,6 +123,10 @@ If the context file exists, read it first and use it as the primary source for s
 - Never leave GridPane-only infrastructure plugins active in LocalWP just because they were active in the imported GridPane database.
 - Never treat local comparison as proof that no local-only database edits exist.
 - Never use naive SQL search-replace for serialized WordPress data.
+- Never print, log, commit, or leave behind generated application passwords, MCP bearer tokens, Basic auth snippets, or credential-bearing page inspection files.
+- Never run a credential, reconnect, or temporary-admin helper against GridPane, staging, production, or any public URL.
+- Never keep a credential reconnect helper as a standing file; create it only on demand in the confirmed LocalWP target, protect it with a random token, make it self-delete, and verify it is gone.
+- Never create a temporary administrator account by default. Prefer a new application password for an existing trusted admin user, and require explicit user approval before using a temporary-admin fallback.
 - Never leave temporary SQL dumps or helper scripts behind except the required local pre-refresh backup.
 - Block if the LocalWP target cannot be confidently matched to the source site.
 - Block if the source and target paths indicate the same environment.
@@ -176,6 +182,7 @@ If the LocalWP site has Novamira/Novamira Pro plugin files present and the user 
 - confirm the local-vs-source database comparison is read-only and cannot merge local edits
 - confirm uploads default to missing-only copy
 - confirm no code files will be synced
+- when a LocalWP-only MCP/client tool such as Novamira is expected, confirm whether reconnect is approved if the database import invalidates the current application password, including use of an on-demand self-deleting LocalWP-only helper when needed
 - inspect or report the local and remote uploads paths
 
 If `preview only` is requested, stop after this phase and report the planned commands or steps without changing anything.
@@ -379,6 +386,50 @@ For Redis Object Cache:
 
 Do not deactivate normal shared functional plugins through this policy. Only apply this to explicit environment-plugin allowlist entries.
 
+### Phase 8.7: Reconnect LocalWP-only MCP clients
+
+Run this after local-only tool restoration and plugin activation reconciliation when a LocalWP-only MCP/client tool was preserved or expected, especially Novamira/Novamira Pro.
+
+Why this is needed:
+- a production/staging database import can replace LocalWP `wp_usermeta` application password rows
+- preserving Novamira plugin activation and options is not enough to preserve the current AI client's WordPress application password
+- the symptom is usually that Novamira MCP tools still exist in the AI client, but calls return `401`, `rest_forbidden`, or a similar authentication error
+
+For Novamira:
+- after restoring the local-only overlay, test whether the configured Novamira MCP server can still list or discover tools
+- if it works, report that no reconnect was needed
+- if it returns `401`, `rest_forbidden`, or an application-password failure, prefer an on-demand LocalWP-only temporary reconnect helper before asking the user to log in manually
+- create the helper only when the LocalWP target has already been confirmed and the current task approval includes MCP/client reconnect; otherwise ask for explicit approval before creating it
+- create the helper in the confirmed LocalWP web root or another confirmed LocalWP-only operator path, never in the child theme, plugin repository, uploads folder, workflow repo, GridPane path, or any deployable code surface
+- give the helper a random filename and require a separate random one-time token in the request
+- make the helper refuse to run unless the WordPress `home` and `siteurl` resolve to the expected LocalWP domain and the loaded `ABSPATH` resolves inside the expected LocalWP web root
+- make the helper bootstrap the confirmed LocalWP WordPress install through `wp-load.php`, then use WordPress APIs rather than direct database writes where practical
+- prefer creating a new WordPress application password for an existing trusted admin user from the site profile, known local MCP config username, or explicit user instruction, using `WP_Application_Passwords::create_new_application_password()` or the equivalent supported API
+- do not create a new administrator account unless no suitable admin user exists and the user explicitly approves that fallback in the current task
+- when a temporary admin fallback is approved, create a random username/password, use it only to create or recover the local MCP credential, then delete or demote the temporary account before the helper exits
+- print the generated application password only to the local process that immediately updates the AI client config; do not send it to chat, persistent logs, workflow notes, shell history, or saved inspection files
+- make the helper delete itself before exit, including failure paths when technically possible, then verify from the filesystem that the helper file no longer exists
+- if the helper path is unsafe, cannot bootstrap WordPress, cannot identify an admin user, cannot self-delete, or cannot be verified removed, stop the helper path and fall back to browser-based `wp-admin`
+- browser fallback: open the LocalWP `wp-admin` Novamira Configuration page when browser automation is available
+- if the browser fallback is not already logged in, ask the user to log in manually, then continue
+- in browser fallback, generate a new WordPress application password from the Novamira Configuration page
+- update only the matching local AI client MCP config server block, when the config path is known and writable
+- create a timestamped backup of the AI client config before editing it
+- pass credentials only as environment variables such as `WP_API_URL`, `WP_API_USERNAME`, and `WP_API_PASSWORD`
+- keep the Novamira transport args exactly as the generated setup prompt specifies, usually `["-y", "@automattic/mcp-wordpress-remote@latest"]`
+- do not pass credentials as CLI flags
+- do not print the generated application password in chat or logs
+- delete any temporary page-inspection files, generated verifier scripts, local snippets, or config fragments that contain the password after verification
+- verify in a fresh MCP process or fresh client session when possible by listing the Novamira adapter tools
+- if the current chat cannot reload MCP servers, report that the refreshed server should be available in a fresh chat or after restarting/reloading the AI client
+
+If the AI client config cannot be located or modified:
+- tell the user to copy the Novamira-generated setup prompt or JSON snippet manually
+- report that WordPress was refreshed successfully but the local MCP client still needs manual reconnect
+
+When the local AI Workflows task library is available, use the Novamira MCP server config workflow as the client-config reference:
+- `C:\Users\Captain\Documents\AI Workflows\Task Workflows\WordPress\novamira-mcp-server-config-workflow.md`
+
 ### Phase 9: Sync missing uploads
 
 Run this when uploads refresh is active.
@@ -417,6 +468,8 @@ At minimum, validate:
 - GridPane-only infrastructure plugins are inactive in LocalWP, especially `nginx-helper/nginx-helper.php` and `redis-cache/redis-cache.php`
 - no missing-plugin warnings remain for deactivated environment plugin entries when practical to verify
 - Novamira/Novamira Pro preserved options are present without exposing their values
+- Novamira MCP/client connectivity is verified or clearly reported as requiring manual reconnect after the database import
+- if a temporary reconnect helper was used, the helper file is verified deleted and any temporary admin fallback account is verified deleted or demoted
 - `wp-config.php` `DB_HOST` includes the LocalWP host and port when needed for plugin-owned PDO/database layers
 - representative pages listed in context
 - a representative media URL or file path
@@ -438,6 +491,7 @@ After successful import, search-replace, and uploads sync:
 - delete the remote source SQL dump from `/tmp/` or the chosen temporary remote location
 - delete the local copied source SQL dump unless the user explicitly asks to keep it
 - delete any temporary search-replace helper immediately after it runs
+- delete any temporary MCP/client reconnect helper immediately after it runs, verify it is absent from the LocalWP filesystem, and delete any secret-bearing reconnect verifier or inspection files
 - report what was kept and what was removed
 
 Do not delete the local pre-refresh backup automatically.
@@ -458,6 +512,10 @@ Report completed, skipped, blocked, and manually verified steps using the output
 - skipping the local database backup because LocalWP feels disposable
 - trying to merge selected local database rows into the pulled-down GridPane database
 - losing LocalWP-only tool configuration by replacing the database without a local-only preservation overlay
+- assuming restored Novamira plugin options also preserve the AI client's WordPress application password; the imported database can invalidate the LocalWP MCP credential and require reconnect
+- leaving a reconnect or temporary-admin helper permanently in the LocalWP web root, child theme, plugin repository, uploads folder, or any path that could be deployed
+- running a credential helper without hard-checking that it loaded the expected LocalWP domain and web root
+- creating a temporary admin account when a new application password for an existing trusted admin would have been enough
 - restoring local-only CPT rows by fixed IDs and accidentally overwriting imported live content
 - leaving GridPane-only cache/server plugins active in LocalWP after importing the live database
 - confusing "installed locally for parity" with "active locally"; infrastructure plugins may need files present but activation forced off
@@ -470,6 +528,7 @@ Report completed, skipped, blocked, and manually verified steps using the output
 - overwriting local media when missing-only sync was enough
 - corrupting serialized data with naive SQL search-replace
 - leaving remote SQL dumps or temporary local helper scripts behind
+- leaving generated application passwords in chat logs, inspection files, verifier scripts, shell history, or workflow notes after reconnecting MCP clients
 - treating third-party telemetry or video/ad console failures as proof that the local refresh failed
 - treating plugin parity warnings as permission to copy plugin folders from production
 
@@ -491,6 +550,7 @@ Database import: [done / blocked / not requested]
 Search-replace: [done / blocked / not needed]
 Local-only tool preservation: [restored / blocked / skipped with reason]
 Plugin activation policy: [reconciled / blocked / skipped with reason]
+MCP/client reconnect: [verified / reconnected / manual action needed / skipped with reason]
 Uploads sync: [missing-only / overwrite-approved / blocked / not requested]
 Cleanup: [done / blocked / not needed]
 Validation:
@@ -515,6 +575,8 @@ After the reverse refresh work is complete, report:
 - the search-replace method used and whether serialized values were handled safely
 - whether local-only tool/plugin configuration was preserved and restored
 - which environment plugins were forced inactive locally
+- whether Novamira MCP/client connectivity was verified, reconnected, or left for manual action after the database import
+- whether any temporary reconnect helper self-deleted and was verified absent, and whether any temporary admin fallback account was removed or demoted
 - whether uploads were missing-only or overwrite-approved
 - whether temporary source dumps and helper files were cleaned up
 - which validations passed

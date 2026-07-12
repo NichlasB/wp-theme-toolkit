@@ -56,8 +56,23 @@ Use this file as the canonical schema for each target project's `_project-contex
   --text-2xl: 1.5rem;
   --text-3xl: 2rem;
   --text-4xl: clamp(2rem, 5vw, 3.2rem);
+  --mvs-type-body-desktop: var(--text-base);
+  --mvs-type-body-tablet: var(--text-base);
+  --mvs-type-body-mobile: var(--text-base);
+  --mvs-type-h1-desktop: var(--text-4xl);
+  --mvs-type-h1-tablet: var(--text-3xl);
+  --mvs-type-h1-mobile: var(--text-2xl);
+  --mvs-type-section-title-desktop: var(--text-3xl);
+  --mvs-type-section-title-tablet: var(--text-2xl);
+  --mvs-type-section-title-mobile: var(--text-xl);
 }
 ```
+- Runtime Typography Controls:
+  - Status: [enabled / disabled / undecided]
+  - Admin Location: `Appearance > MVS Typography`
+  - Option Name: `mvs_typography_controls`
+  - Controlled Roles: [body / paragraph / list_item / h1-h6 / page_title / section_title / card_title / button / meta]
+  - Notes: [project-specific typography decisions or exceptions]
 - Palette Mapping:
   - `--theme-palette-color-1` = [role]
   - `--theme-palette-color-2` = [role]
@@ -117,7 +132,8 @@ Use this file as the canonical schema for each target project's `_project-contex
 - Keep this file in the target project root
 - Keep `mvs-project-status.md` beside this file when long-break recovery or active project tracking is useful
 - Update the placement map after every live assignment change
-- Treat the token block as the canonical source for spacing and type scale
+- Treat the token block as the canonical source for spacing, primitive type scale, and semantic typography defaults
+- If runtime typography controls are enabled, keep the `Appearance > MVS Typography` settings limited to sanitized responsive `--mvs-type-*` overrides and record any intentional exceptions here
 - Record the design source, design approval status, client editability level, and editable surface map before converting a visual design into MVS artifacts
 - If the project tracks `.mbjson` without duplicate `.json` export twins, note the `mbb_json_files` bridge in `functions.php` so future sessions know how Meta Box local-file mode is being satisfied
 - Do not let the only source of truth live in the WordPress admin

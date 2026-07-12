@@ -43,6 +43,7 @@ If inputs are missing, ask for only the minimum needed to choose a palette direc
 Update:
 - the token block in `style.css` when needed
 - the design-token and palette mapping section in `_project-context.md`
+- runtime typography-control notes in `_project-context.md` when the project enables `Appearance > MVS Typography`
 
 If the user asks for font recommendations, document them in `_project-context.md` rather than hardcoding font-family rules into individual views.
 
@@ -64,6 +65,7 @@ Do not touch individual MB View CSS in this workflow unless the user explicitly 
 
 ### 3. Normalize the token block
 - ensure spacing and typography values match the documented scale
+- ensure semantic responsive typography role variables exist when the project uses MVS Typography Controls
 - add missing canonical tokens
 - avoid one-off tokens unless the user explicitly wants a custom extension documented in `_project-context.md`
 
@@ -71,6 +73,7 @@ Do not touch individual MB View CSS in this workflow unless the user explicitly 
 - document the chosen palette direction
 - document the role of each Blocksy palette slot
 - document any font recommendations as project guidance rather than per-view CSS
+- document whether runtime typography controls are enabled and which semantic roles are controlled
 
 ### 5. Flag downstream review needs
 - if the token changes will affect existing views, recommend the appropriate review prompt
@@ -80,6 +83,7 @@ Do not touch individual MB View CSS in this workflow unless the user explicitly 
 ## Rules
 
 - keep spacing and type sizes on the documented scale
+- use semantic `--mvs-type-*` roles for responsive typography that should be adjustable from `Appearance > MVS Typography`
 - map colors to Blocksy palette slots instead of introducing raw values
 - do not solve brand direction by adding more breakpoints or more utility classes
 - do not create view-level color systems that bypass Blocksy

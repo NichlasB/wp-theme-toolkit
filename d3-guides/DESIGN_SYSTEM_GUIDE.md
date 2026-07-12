@@ -69,6 +69,31 @@ Example:
 
 If one page needs a different mobile or tablet title size, override the semantic token in that page scope instead of falling back to raw `--text-*` values throughout the component CSS.
 
+## Runtime Typography Controls
+
+MVS projects may include a focused `Appearance > MVS Typography` admin screen for common responsive type-size roles. This screen must control semantic CSS variables only; it must not become a freeform CSS editor or a replacement for the Git-backed token system.
+
+Required boundary:
+- `assets/css/tokens.css` keeps the default primitive scale and the default semantic `--mvs-type-*` role variables
+- the WordPress option stores only approved runtime overrides for desktop, tablet, and mobile
+- frontend CSS consumes semantic role variables such as `--mvs-type-body`, `--mvs-type-h1`, `--mvs-type-section-title`, `--mvs-type-card-title`, `--mvs-type-button`, and `--mvs-type-meta`
+- Blocksy continues to own global font-family selection
+- reset behavior must return the site to the static token defaults
+
+View and component CSS should prefer semantic typography roles when the same role appears across pages:
+
+```css
+.mv-section__title {
+  font-size: var(--mvs-type-section-title);
+}
+
+.mv-card__title {
+  font-size: var(--mvs-type-card-title);
+}
+```
+
+Do not bypass the runtime role system with raw `font-size` values unless the exception is deliberate and recorded in `_project-context.md`.
+
 ## Color Rules
 
 Use only Blocksy palette variables in view CSS:
