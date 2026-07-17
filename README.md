@@ -24,10 +24,11 @@ The goal: build launch-ready WordPress sites with a repeatable AI workflow, whil
 - a clear boundary between MB Views template logic and Blocksy Content Block placement
 - reusable session bootstrap, session handoff, and restore-point workflows
 - a local session-bootstrap adapter plus compatibility wrappers for shared workflow prompts sourced from `wp-workflow-toolkit`, while keeping local `@filename` usage unchanged
+- project-aware agent guardrails for Meta Views Stack sites, conventional themes, and plugins, with conservative OpenCode permissions and read-only review
 - a bounded first-party security review before the final operational checklist
 - a conditional handoff to the standalone WordPress component workflow when real runtime behavior needs testing or troubleshooting
 
-Shared workflow note: `SESSION_BOOTSTRAP_PROMPT.md` now combines theme-specific scan/output rules with the shared bootstrap core in `wp-workflow-toolkit`. `GUIDED_EXECUTION_PROMPT.md`, `SESSION_HANDOFF_PROMPT.md`, `RESTORE_POINT_PROMPT.md`, and `TOOLKIT_LESSONS_AUDIT_PROMPT.md` remain local prompt names but are thin wrappers around canonical shared sources there.
+Shared workflow note: `SESSION_BOOTSTRAP_PROMPT.md` combines theme-specific scan/output rules with the shared bootstrap core in `wp-workflow-toolkit`. `GUIDED_EXECUTION_PROMPT.md`, `SESSION_HANDOFF_PROMPT.md`, `RESTORE_POINT_PROMPT.md`, `INSTALL_AGENT_GUARDRAILS_PROMPT.md`, and `TOOLKIT_LESSONS_AUDIT_PROMPT.md` remain local prompt names but are thin wrappers or adapters around canonical shared sources there.
 
 Shared workflow boundary:
 - a prompt belongs in `wp-workflow-toolkit` only when the workflow intent, execution contract, and safety assumptions stay materially the same across both toolkits
@@ -56,12 +57,13 @@ Add this repository and your target site project to the same IDE workspace.
 ### 2. Starting A New Site Project
 
 1. Run `@START_HERE_MASTER_WORKFLOW.md run`
-2. Follow the recommended route into project intake, Claude Design handoff, project bootstrap, token setup, page/CPT build, review, deployment, or maintenance
-3. Continue with `@DESIGN_TOKENS_PROMPT.md run`, `@DESIGN_HANDOFF_TO_MVS_PROMPT.md run`, `@PAGE_SCOPING_CHECKLIST_PROMPT.md run`, `@NEW_PAGE_PROMPT.md run`, or `@NEW_CPT_PROMPT.md run`
-4. Run the review prompts and the pre-launch sequence: prompts `01` through `05`, `@05A-SECURITY_REVIEW_PROMPT.md run`, then `@06-FINAL_CHECKLIST_PROMPT.md run` last
-5. Run `@GRIDPANE_DEPLOYMENT_PROMPT.md run`
-6. Run `@LOCALWP_REVERSE_REFRESH_PROMPT.md run` after launch when LocalWP needs fresh GridPane content or missing uploads
-7. Run `@GIT_OPERATIONS_PROMPT.md run` when you want assisted commit, push, or release help for either the toolkit repo or the child theme repo
+2. Run `@INSTALL_AGENT_GUARDRAILS_PROMPT.md run` when the project lacks repository instructions or will be handed to OpenCode or a lower-capability model
+3. Follow the recommended route into project intake, Claude Design handoff, project bootstrap, token setup, page/CPT build, review, deployment, or maintenance
+4. Continue with `@DESIGN_TOKENS_PROMPT.md run`, `@DESIGN_HANDOFF_TO_MVS_PROMPT.md run`, `@PAGE_SCOPING_CHECKLIST_PROMPT.md run`, `@NEW_PAGE_PROMPT.md run`, or `@NEW_CPT_PROMPT.md run`
+5. Run the review prompts and the pre-launch sequence: prompts `01` through `05`, `@05A-SECURITY_REVIEW_PROMPT.md run`, then `@06-FINAL_CHECKLIST_PROMPT.md run` last
+6. Run `@GRIDPANE_DEPLOYMENT_PROMPT.md run`
+7. Run `@LOCALWP_REVERSE_REFRESH_PROMPT.md run` after launch when LocalWP needs fresh GridPane content or missing uploads
+8. Run `@GIT_OPERATIONS_PROMPT.md run` when you want assisted commit, push, or release help for either the toolkit repo or the child theme repo
 
 ### 3. Starting A New Chat On An Existing Site
 
@@ -93,7 +95,7 @@ Prompt `05A` reviews first-party executable behavior in the child theme or site 
 
 ## Repository Structure
 
-Current inventory: `60` versionable files, including `25` prompt files and `7` files in `d4-prompts/ds4-pre-launch/`.
+Current inventory: `62` versionable files, including `26` prompt files and `7` files in `d4-prompts/ds4-pre-launch/`.
 
 ```text
 wp-theme-toolkit/
@@ -118,7 +120,9 @@ wp-theme-toolkit/
 |   |-- LOCALWP_BLUEPRINT_SETUP.md
 |   |-- PROJECT_CONTEXT_TEMPLATE.md
 |   |-- PROJECT_STATUS_TEMPLATE.md
-|   `-- STACK_REFERENCE.md
+|   |-- STACK_REFERENCE.md
+|   `-- agent-guardrails/
+|       `-- README.md
 |
 |-- d2-scripts/
 |   |-- restore-point.ps1
@@ -141,6 +145,7 @@ wp-theme-toolkit/
 |   |-- ds1-setup/
 |   |   |-- PROJECT_BOOTSTRAP_PROMPT.md
 |   |   |-- GUIDED_EXECUTION_PROMPT.md
+|   |   |-- INSTALL_AGENT_GUARDRAILS_PROMPT.md
 |   |   |-- RESTORE_POINT_PROMPT.md
 |   |   |-- SESSION_HANDOFF_PROMPT.md
 |   |   `-- SESSION_BOOTSTRAP_PROMPT.md
@@ -235,6 +240,10 @@ Reference prompts directly in chat:
 
 ```text
 @GUIDED_EXECUTION_PROMPT.md run
+```
+
+```text
+@INSTALL_AGENT_GUARDRAILS_PROMPT.md run
 ```
 
 ```text

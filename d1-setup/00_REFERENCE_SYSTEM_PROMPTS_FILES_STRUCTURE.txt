@@ -1,4 +1,4 @@
-Current inventory: 60 versionable files, including 25 prompt files and
+Current inventory: 62 versionable files, including 26 prompt files and
 7 files under d4-prompts/ds4-pre-launch/.
 
 wp-theme-toolkit/
@@ -22,7 +22,9 @@ wp-theme-toolkit/
 |   |-- LOCALWP_BLUEPRINT_SETUP.md
 |   |-- PROJECT_CONTEXT_TEMPLATE.md
 |   |-- PROJECT_STATUS_TEMPLATE.md
-|   `-- 00_REFERENCE_SYSTEM_PROMPTS_FILES_STRUCTURE.txt
+|   |-- 00_REFERENCE_SYSTEM_PROMPTS_FILES_STRUCTURE.txt
+|   `-- agent-guardrails/
+|       `-- README.md
 |
 |-- d2-scripts/
 |   |-- restore-point.ps1
@@ -45,6 +47,7 @@ wp-theme-toolkit/
 |   |-- ds1-setup/
 |   |   |-- PROJECT_BOOTSTRAP_PROMPT.md
 |   |   |-- GUIDED_EXECUTION_PROMPT.md
+|   |   |-- INSTALL_AGENT_GUARDRAILS_PROMPT.md
 |   |   |-- RESTORE_POINT_PROMPT.md
 |   |   |-- SESSION_HANDOFF_PROMPT.md
 |   |   `-- SESSION_BOOTSTRAP_PROMPT.md

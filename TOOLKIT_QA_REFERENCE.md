@@ -56,7 +56,12 @@ A: Check three things in order:
 3. Confirm child CSS and JS assets are versioned by file modification time instead of only the static theme version header, otherwise the browser can keep serving stale files during local iteration.
 
 ### Q: How do the shared workflow prompts work after consolidation?
-A: Keep using the local prompt filenames in `wp-theme-toolkit`. `SESSION_BOOTSTRAP_PROMPT.md` is now a local adapter around the shared bootstrap core in `wp-workflow-toolkit/d4-prompts/ds1-session/SESSION_BOOTSTRAP_CORE_PROMPT.md`. `GUIDED_EXECUTION_PROMPT.md`, `SESSION_HANDOFF_PROMPT.md`, `RESTORE_POINT_PROMPT.md`, and `TOOLKIT_LESSONS_AUDIT_PROMPT.md` are local wrappers backed by canonical shared prompt bodies there. Update the shared source first; touch the local theme file only when the theme-specific notes, scan surface, output format, or safety rules change.
+A: Keep using the local prompt filenames in `wp-theme-toolkit`. `SESSION_BOOTSTRAP_PROMPT.md` is a local adapter around the shared bootstrap core in `wp-workflow-toolkit/d4-prompts/ds1-session/SESSION_BOOTSTRAP_CORE_PROMPT.md`. `GUIDED_EXECUTION_PROMPT.md`, `SESSION_HANDOFF_PROMPT.md`, `RESTORE_POINT_PROMPT.md`, `INSTALL_AGENT_GUARDRAILS_PROMPT.md`, and `TOOLKIT_LESSONS_AUDIT_PROMPT.md` are local wrappers or adapters backed by canonical shared sources there. Update the shared source first; touch the local theme file only when the theme-specific notes, scan surface, output format, or safety rules change.
+
+### Q: Which guardrail profile should a theme or Meta Views Stack project use?
+A: Run `@INSTALL_AGENT_GUARDRAILS_PROMPT.md run` and let Phase 1 inspect source evidence. A normal WordPress theme or child theme uses the `theme` profile. A Meta Views Stack project uses `meta-views-stack` only when the theme evidence is accompanied by an explicit stack declaration or at least two independent signals such as `_project-context.md`, `mvs-project-status.md`, `mb-json/`, `views/`, Meta Box local JSON, MB Views reference copies, or Blocksy placement documentation.
+
+The Meta Views Stack profile adds the crucial ownership rule that a source-controlled Twig/CSS reference is not automatically the active database-resident MB View. It also requires placement-map evidence and keeps child-theme code deployment separate from database, assignment, settings, and content migration. An ordinary child theme must not receive those assumptions merely because it has a parent-theme header.
 
 ### Q: When should I run the LocalWP reverse refresh workflow?
 A: Run `@LOCALWP_REVERSE_REFRESH_PROMPT.md` when an existing LocalWP site needs current GridPane staging or production database content, settings, or media before new development, QA, troubleshooting, or post-launch refinement.

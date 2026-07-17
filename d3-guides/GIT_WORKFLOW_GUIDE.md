@@ -100,7 +100,7 @@ Once the site is live on GridPane:
 
 When LocalWP needs the latest production or staging content, run `@LOCALWP_REVERSE_REFRESH_PROMPT.md`. That workflow pulls database content and missing uploads back to LocalWP while keeping code movement in Git.
 
-If the repository contains tracked non-runtime files that the user does not want on the server, do not treat `git pull` as the only acceptable deployment path. Use a clean deployment copy when needed so the GridPane payload stays production-ready.
+If the repository contains tracked non-runtime files that the user does not want on the server, do not treat `git pull` as the only acceptable deployment path. Use a clean deployment copy when needed so the GridPane payload stays production-ready. Development-only guardrails such as `AGENTS.md`, `AI_CODING_RULES.md`, `docs/ENGINEERING_STANDARD.md`, `opencode.json`, and `.opencode/` stay tracked in Git but are excluded from clean runtime payloads by default.
 
 Never edit code directly on production.
 

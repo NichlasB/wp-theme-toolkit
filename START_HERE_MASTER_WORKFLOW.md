@@ -16,6 +16,7 @@ Before making a recommendation, read only the references needed for the detected
 - `d3-guides/WORKFLOW_QUICK_REFERENCE.md`
 - `d1-setup/PROJECT_CONTEXT_TEMPLATE.md`
 - `d1-setup/PROJECT_STATUS_TEMPLATE.md`
+- `d1-setup/agent-guardrails/README.md` when installing project instructions, preparing OpenCode, or constraining a lower-capability agent
 - `d3-guides/CLAUDE_DESIGN_HANDOFF_WORKFLOW.md` when a visual design, Claude Design project, mockup, screenshot, or HTML export is involved
 
 If the target project already exists, also look for:
@@ -26,6 +27,7 @@ If the target project already exists, also look for:
 - `session-handoff.tmp.md`
 - `DEPLOYMENT_CHECKLIST.md`
 - `PRE_LAUNCH_CHECKLIST.md`
+- `AGENTS.md`, `AI_CODING_RULES.md`, `docs/ENGINEERING_STANDARD.md`, and harness configuration
 - Git status for the target project or child theme
 
 ---
@@ -59,6 +61,7 @@ Also read these when relevant:
 - `d1-setup/LOCALWP_DATABASE_ACCESS_WORKFLOW.md` before LocalWP SQL, migration, import, export, or reconciliation work
 - `d3-guides/CLAUDE_DESIGN_HANDOFF_WORKFLOW.md` before Claude Design or visual handoff conversion
 - deployment checklists before GridPane launch, post-launch update, or reverse refresh work
+- the selected shared guardrail profile before a lower-capability-agent handoff or harness migration
 
 Use this rule proactively. The user should not have to ask for a memory refresh when the workflow is changing phases or the chat has become long.
 
@@ -131,7 +134,8 @@ Output:
 - recommended phase: `Intake`
 - open decisions
 - whether Claude Design should be used
-- next prompt: `@PROJECT_BOOTSTRAP_PROMPT.md run`
+- missing project guardrails -> next prompt: `@INSTALL_AGENT_GUARDRAILS_PROMPT.md run`
+- guardrails present -> next prompt: `@PROJECT_BOOTSTRAP_PROMPT.md run`
 
 If Claude Design should come first, generate a Claude Design starter prompt and route to the handoff guide before bootstrap.
 
@@ -177,6 +181,8 @@ Output:
 
 If edits are likely, recommend `@RESTORE_POINT_PROMPT.md run` after session bootstrap.
 
+If project instructions, risk tiers, harness permissions, or profile provenance are missing or stale, route first to `@INSTALL_AGENT_GUARDRAILS_PROMPT.md run`.
+
 ### Mode D: Build Next Page / Section / CPT
 
 Use when:
@@ -216,7 +222,20 @@ Route:
 - incremental update -> `@POST_LAUNCH_GRIDPANE_UPDATE_PROMPT.md run`
 - pull GridPane content back to LocalWP -> `@LOCALWP_REVERSE_REFRESH_PROMPT.md run`
 
-### Mode G: Toolkit Improvement
+### Mode G: Agent Guardrails / Harness Migration
+
+Use when:
+- the project needs `AGENTS.md`, project coding rules, an engineering standard, risk tiers, or conservative harness permissions
+- the user is moving to OpenCode or a lower-capability model
+- installed guardrails need a provenance-aware refresh
+- the project may be a conventional theme rather than Meta Views Stack
+
+Route:
+- `@INSTALL_AGENT_GUARDRAILS_PROMPT.md run`
+
+The shared installer detects plugin, conventional theme, or Meta Views Stack from source evidence. Do not force the Meta Views Stack profile onto an ordinary child theme.
+
+### Mode H: Toolkit Improvement
 
 Use only when:
 - the user wants to improve `wp-theme-toolkit`
@@ -234,7 +253,7 @@ Do not use this mode for normal project-specific styling, content, or deployment
 Return this concise router summary:
 
 ```text
-Detected mode: [A-G]
+Detected mode: [A-H]
 Current phase: [phase number and name]
 Target project: [path or unknown]
 Status snapshot: [present / missing / needs update]

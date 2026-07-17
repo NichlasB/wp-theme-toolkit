@@ -36,7 +36,7 @@ CURRENT SHAPE
 - Dominant file types: Markdown, text references, helper scripts
 - Runtime code surface: Minimal; operational logic mainly lives in
   d2-scripts/restore-point.ps1 and d2-scripts/restore-point.sh
-- Repository inventory: 60 versionable files, including 25 prompt files and
+- Repository inventory: 62 versionable files, including 26 prompt files and
   7 files under d4-prompts/ds4-pre-launch/
 - Target domain: Blocksy child-theme site projects using Meta Box AIO,
   MB Views, and Git-backed child-theme code deployment
@@ -51,6 +51,8 @@ CURRENT SHAPE
   per-project deployment checklist and a LocalWP reverse refresh workflow
 - Shared workflow sourcing: SESSION_BOOTSTRAP_PROMPT.md is a local adapter
   around the shared bootstrap core in sibling repo wp-workflow-toolkit/
+- Shared agent governance: INSTALL_AGENT_GUARDRAILS_PROMPT.md is a local
+  adapter around the shared project-aware guardrail core and profiles
 
 Core workflow order:
 1. START_HERE_MASTER_WORKFLOW.md when the next workflow is not obvious
@@ -97,7 +99,9 @@ wp-theme-toolkit/
 |   |-- LOCALWP_DATABASE_ACCESS_WORKFLOW.md
 |   |-- PROJECT_CONTEXT_TEMPLATE.md
 |   |-- PROJECT_STATUS_TEMPLATE.md
-|   `-- 00_REFERENCE_SYSTEM_PROMPTS_FILES_STRUCTURE.txt
+|   |-- 00_REFERENCE_SYSTEM_PROMPTS_FILES_STRUCTURE.txt
+|   `-- agent-guardrails/
+|       `-- README.md
 |
 |-- d2-scripts/
 |   |-- restore-point.ps1
@@ -118,6 +122,12 @@ wp-theme-toolkit/
 |
 |-- d4-prompts/
 |   |-- ds1-setup/
+|   |   |-- PROJECT_BOOTSTRAP_PROMPT.md
+|   |   |-- SESSION_BOOTSTRAP_PROMPT.md
+|   |   |-- GUIDED_EXECUTION_PROMPT.md
+|   |   |-- SESSION_HANDOFF_PROMPT.md
+|   |   |-- RESTORE_POINT_PROMPT.md
+|   |   `-- INSTALL_AGENT_GUARDRAILS_PROMPT.md
 |   |-- ds2-build/
 |   |   `-- DESIGN_HANDOFF_TO_MVS_PROMPT.md
 |   |-- ds3-review/
@@ -175,6 +185,11 @@ SESSION_BOOTSTRAP_PROMPT.md
     wp-workflow-toolkit/
   - Reads project status when available and flags missing/stale status as a
     long-break recovery risk
+
+INSTALL_AGENT_GUARDRAILS_PROMPT.md
+  - Local adapter around the shared two-phase project-aware guardrail core
+  - Detects plugin, conventional theme, or Meta Views Stack and composes the
+    correct profile without overwriting existing project instructions
 
 STACK_REFERENCE.md
   - Single source of truth for the Meta Views Stack workflow, child-theme

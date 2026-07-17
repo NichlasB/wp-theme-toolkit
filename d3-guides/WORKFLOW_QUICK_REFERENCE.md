@@ -13,24 +13,25 @@ mvs-project-status.md
 the next routed prompt
 ```
 
-Also read session handoff/context files, LocalWP database guidance, Claude Design handoff guidance, or deployment checklists when the task touches those areas.
+Also read session handoff/context files, the selected shared agent-guardrail profile, LocalWP database guidance, Claude Design handoff guidance, or deployment checklists when the task touches those areas.
 
 ## New Site Project
 
 ```text
 1.  @START_HERE_MASTER_WORKFLOW.md run
-2.  Follow the detected route into intake, Claude Design handoff, bootstrap, build, review, deploy, or maintenance
-3.  Read d1-setup/STACK_REFERENCE.md when routed into setup or build work
-4.  Read d1-setup/LOCALWP_DATABASE_ACCESS_WORKFLOW.md when LocalWP SQL or migration work is likely
-5.  @PROJECT_BOOTSTRAP_PROMPT.md run
-6.  @RESTORE_POINT_PROMPT.md run
-7.  @DESIGN_TOKENS_PROMPT.md run
-8.  @DESIGN_HANDOFF_TO_MVS_PROMPT.md run when a Claude Design/mockup/HTML handoff exists
-9.  @NEW_PAGE_PROMPT.md run and/or @NEW_CPT_PROMPT.md run
-10. @VIEW_REVIEW_PROMPT.md run
-11. @CSS_CONSISTENCY_AUDIT_PROMPT.md run
-12. @DESIGN_SYSTEM_COMPLIANCE_PROMPT.md run
-13. Pre-launch: run 01 through 05, then 05A, then 06 last
+2.  @INSTALL_AGENT_GUARDRAILS_PROMPT.md run when project instructions are missing or a lower-capability model will be used
+3.  Follow the detected route into intake, Claude Design handoff, bootstrap, build, review, deploy, or maintenance
+4.  Read d1-setup/STACK_REFERENCE.md when routed into setup or build work
+5.  Read d1-setup/LOCALWP_DATABASE_ACCESS_WORKFLOW.md when LocalWP SQL or migration work is likely
+6.  @PROJECT_BOOTSTRAP_PROMPT.md run
+7.  @RESTORE_POINT_PROMPT.md run
+8.  @DESIGN_TOKENS_PROMPT.md run
+9.  @DESIGN_HANDOFF_TO_MVS_PROMPT.md run when a Claude Design/mockup/HTML handoff exists
+10. @NEW_PAGE_PROMPT.md run and/or @NEW_CPT_PROMPT.md run
+11. @VIEW_REVIEW_PROMPT.md run
+12. @CSS_CONSISTENCY_AUDIT_PROMPT.md run
+13. @DESIGN_SYSTEM_COMPLIANCE_PROMPT.md run
+14. Pre-launch: run 01 through 05, then 05A, then 06 last
 ```
 
 ## New Chat On Existing Project
@@ -38,14 +39,25 @@ Also read session handoff/context files, LocalWP database guidance, Claude Desig
 ```text
 1.  @START_HERE_MASTER_WORKFLOW.md run
 2.  @SESSION_BOOTSTRAP_PROMPT.md run when routed into existing project resume
-3.  Read d1-setup/LOCALWP_DATABASE_ACCESS_WORKFLOW.md before LocalWP SQL, migration, or reconciliation work
-4.  @GUIDED_EXECUTION_PROMPT.md run
-5.  @RESTORE_POINT_PROMPT.md run
-6.  Review mvs-project-status.md, session-context.tmp.md, and session-handoff.tmp.md when present
-7.  Continue with build, review, or pre-launch workflows
+3.  @INSTALL_AGENT_GUARDRAILS_PROMPT.md run when instructions, permissions, or profile provenance are missing or stale
+4.  Read d1-setup/LOCALWP_DATABASE_ACCESS_WORKFLOW.md before LocalWP SQL, migration, or reconciliation work
+5.  @GUIDED_EXECUTION_PROMPT.md run
+6.  @RESTORE_POINT_PROMPT.md run
+7.  Review mvs-project-status.md, session-context.tmp.md, and session-handoff.tmp.md when present
+8.  Continue with build, review, or pre-launch workflows
 ```
 
 Use `@GUIDED_EXECUTION_PROMPT.md run` after session bootstrap when the user wants lower-overwhelm pacing, explicit progress tracking, or one approved task slice at a time. If the next specialized workflow is already obvious and the user wants a faster pass, you can skip it.
+
+## Agent Guardrails / OpenCode / Lower-Capability Models
+
+```text
+1. Run @INSTALL_AGENT_GUARDRAILS_PROMPT.md run
+2. Verify the detected profile: plugin, theme, or meta-views-stack
+3. Review the Phase 1 file plan, R0-R4 policy, and harness permissions
+4. Approve Phase 2 only after the profile and ownership boundaries are correct
+5. For MVS, verify source references, active MB Views, placement, and code/database deployment channels remain distinct
+```
 
 ## LocalWP Database Work
 

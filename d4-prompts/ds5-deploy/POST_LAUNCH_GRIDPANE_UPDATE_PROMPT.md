@@ -251,6 +251,11 @@ If a child-theme `.distignore` file exists, use it as the baseline exclusion rul
 - `.idea/`
 - `.gitignore`
 - `.gitattributes`
+- `AGENTS.md`
+- `AI_CODING_RULES.md`
+- `docs/ENGINEERING_STANDARD.md`
+- `opencode.json`
+- `.opencode/`
 - `*.tmp.md`
 - `session-context.tmp.md`
 - `session-handoff.tmp.md`

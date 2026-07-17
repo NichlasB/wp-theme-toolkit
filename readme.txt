@@ -23,22 +23,23 @@ Primary workflow:
 3. Read d1-setup/LOCALWP_DATABASE_ACCESS_WORKFLOW.md before any LocalWP SQL or migration work
 4. Create or update _project-context.md from d1-setup/PROJECT_CONTEXT_TEMPLATE.md
 5. Create or update mvs-project-status.md from d1-setup/PROJECT_STATUS_TEMPLATE.md
-6. Run d4-prompts/ds1-setup/PROJECT_BOOTSTRAP_PROMPT.md for new projects
-7. Run d4-prompts/ds1-setup/SESSION_BOOTSTRAP_PROMPT.md for existing project resumes
-8. Run d4-prompts/ds2-build/DESIGN_HANDOFF_TO_MVS_PROMPT.md for Claude Design, mockup, screenshot, or HTML handoffs
-9. Run d4-prompts/ds1-setup/GUIDED_EXECUTION_PROMPT.md after bootstrap when you want slower pacing or explicit progress tracking
-10. Run d4-prompts/ds1-setup/SESSION_HANDOFF_PROMPT.md before switching to a fresh chat
-11. Run d4-prompts/ds7-maintenance/TOOLKIT_LESSONS_AUDIT_PROMPT.md against wp-theme-toolkit when a working chat reveals reusable toolkit lessons
-12. Build with d4-prompts/ds2-build/
-13. Review with d4-prompts/ds3-review/
-14. Launch-check with prompts 01 through 05, then 05A-SECURITY_REVIEW_PROMPT.md, then 06-FINAL_CHECKLIST_PROMPT.md last
-15. Run d4-prompts/ds5-deploy/GRIDPANE_DEPLOYMENT_PROMPT.md for the first LocalWP-to-GridPane launch only after 05A, any applicable runtime evidence, and final prompt 06 are complete
-16. Run d4-prompts/ds5-deploy/POST_LAUNCH_GRIDPANE_UPDATE_PROMPT.md for incremental staging or production updates after launch
-17. Run d4-prompts/ds5-deploy/LOCALWP_REVERSE_REFRESH_PROMPT.md when LocalWP needs current GridPane database content or missing uploads
+6. Run d4-prompts/ds1-setup/INSTALL_AGENT_GUARDRAILS_PROMPT.md before handing a project to OpenCode or a lower-capability model
+7. Run d4-prompts/ds1-setup/PROJECT_BOOTSTRAP_PROMPT.md for new projects
+8. Run d4-prompts/ds1-setup/SESSION_BOOTSTRAP_PROMPT.md for existing project resumes
+9. Run d4-prompts/ds2-build/DESIGN_HANDOFF_TO_MVS_PROMPT.md for Claude Design, mockup, screenshot, or HTML handoffs
+10. Run d4-prompts/ds1-setup/GUIDED_EXECUTION_PROMPT.md after bootstrap when you want slower pacing or explicit progress tracking
+11. Run d4-prompts/ds1-setup/SESSION_HANDOFF_PROMPT.md before switching to a fresh chat
+12. Run d4-prompts/ds7-maintenance/TOOLKIT_LESSONS_AUDIT_PROMPT.md against wp-theme-toolkit when a working chat reveals reusable toolkit lessons
+13. Build with d4-prompts/ds2-build/
+14. Review with d4-prompts/ds3-review/
+15. Launch-check with prompts 01 through 05, then 05A-SECURITY_REVIEW_PROMPT.md, then 06-FINAL_CHECKLIST_PROMPT.md last
+16. Run d4-prompts/ds5-deploy/GRIDPANE_DEPLOYMENT_PROMPT.md for the first LocalWP-to-GridPane launch only after 05A, any applicable runtime evidence, and final prompt 06 are complete
+17. Run d4-prompts/ds5-deploy/POST_LAUNCH_GRIDPANE_UPDATE_PROMPT.md for incremental staging or production updates after launch
+18. Run d4-prompts/ds5-deploy/LOCALWP_REVERSE_REFRESH_PROMPT.md when LocalWP needs current GridPane database content or missing uploads
 
 Shared workflow note:
 - d4-prompts/ds1-setup/SESSION_BOOTSTRAP_PROMPT.md is a local adapter around wp-workflow-toolkit/d4-prompts/ds1-session/SESSION_BOOTSTRAP_CORE_PROMPT.md
-- d4-prompts/ds1-setup/GUIDED_EXECUTION_PROMPT.md, d4-prompts/ds1-setup/SESSION_HANDOFF_PROMPT.md, d4-prompts/ds1-setup/RESTORE_POINT_PROMPT.md, and d4-prompts/ds7-maintenance/TOOLKIT_LESSONS_AUDIT_PROMPT.md remain local entry points but are backed by canonical shared prompt bodies in wp-workflow-toolkit/
+- d4-prompts/ds1-setup/GUIDED_EXECUTION_PROMPT.md, d4-prompts/ds1-setup/SESSION_HANDOFF_PROMPT.md, d4-prompts/ds1-setup/RESTORE_POINT_PROMPT.md, d4-prompts/ds1-setup/INSTALL_AGENT_GUARDRAILS_PROMPT.md, and d4-prompts/ds7-maintenance/TOOLKIT_LESSONS_AUDIT_PROMPT.md remain local entry points but are backed by canonical shared sources in wp-workflow-toolkit/
 
 Shared workflow boundary:
 - move a prompt into wp-workflow-toolkit only when the workflow intent, execution contract, and safety assumptions stay materially the same across both toolkits

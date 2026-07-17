@@ -8,6 +8,8 @@ This file provides execution context for AI assistants running tasks from this t
 
 This toolkit contains build, review, maintenance, launch-readiness, and deployment tasks for WordPress site projects built with the Meta Views Stack.
 
+The agent-guardrail installer is a shared governance exception: it may also target a conventional WordPress theme or child theme, and it may inspect an explicitly selected plugin, because project-type detection and template composition are owned by `wp-workflow-toolkit`.
+
 Important: the `wp-theme-toolkit/` folder is normally not the target of these tasks. It contains the instructions, not the site code.
 
 When the user is unsure where to begin, use the root `START_HERE_MASTER_WORKFLOW.md` first. It is a router and planning workflow that classifies the session, checks long-break recovery state, and recommends the next specialized prompt.
@@ -53,6 +55,8 @@ A target site project or child theme is usually identified by one or more of the
 For site-facing prompts, use the rules below.
 
 For `GIT_OPERATIONS_PROMPT.md` and `TOOLKIT_LESSONS_AUDIT_PROMPT.md`, the valid target may be either `wp-theme-toolkit/` itself or a site/child-theme repository as defined by the prompt.
+
+For `INSTALL_AGENT_GUARDRAILS_PROMPT.md`, conventional WordPress themes and child themes are valid targets. An explicitly selected plugin is also permitted as an atypical target. Apply the shared core's project-type evidence and ambiguity rules rather than the normal Meta Views Stack-only heuristic.
 
 1. Scan the workspace for likely site targets, excluding `wp-theme-toolkit/`.
 2. If one likely target exists, proceed with it and confirm to the user.
@@ -110,6 +114,7 @@ Phase boundaries are marked with `<!-- PHASE 1 END -->` in the task file. Stop a
 ### Tasks in this category
 
 - 05A-SECURITY_REVIEW_PROMPT.md
+- INSTALL_AGENT_GUARDRAILS_PROMPT.md
 - TOOLKIT_LESSONS_AUDIT_PROMPT.md
 
 ---
@@ -145,6 +150,7 @@ Rules:
 - If a task fails, is partially verified, pauses for confirmation, or leaves a required runtime or security blocker unresolved, do not mark it complete
 - `SESSION_HANDOFF_PROMPT.md` is a session-level operational workflow and does not update `PRE_LAUNCH_CHECKLIST.md`
 - `GUIDED_EXECUTION_PROMPT.md` is an orchestration workflow and does not update `PRE_LAUNCH_CHECKLIST.md`
+- `INSTALL_AGENT_GUARDRAILS_PROMPT.md` installs project governance and does not update `PRE_LAUNCH_CHECKLIST.md` or `DEPLOYMENT_CHECKLIST.md`
 - `TOOLKIT_LESSONS_AUDIT_PROMPT.md` targets the toolkit itself and does not update `PRE_LAUNCH_CHECKLIST.md` or `DEPLOYMENT_CHECKLIST.md`
 
 Prompt-to-checklist mapping:

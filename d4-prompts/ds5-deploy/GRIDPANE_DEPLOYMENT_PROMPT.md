@@ -182,6 +182,8 @@ When creating or updating `gridpane-deploy-context.md`, keep it concise and oper
 - confirm all child-theme code is committed and pushed to GitHub
 - confirm the child-theme deploy surface is production-ready and does not include tracked non-runtime files the user does not want on GridPane
 - if a child-theme `.distignore` file exists, use it as the baseline exclusion rule for any clean deployment copy
+- exclude development-only agent governance from clean deployment payloads by default: `AGENTS.md`, `AI_CODING_RULES.md`, `docs/ENGINEERING_STANDARD.md`, `opencode.json`, and `.opencode/`
+- do not confuse those exclusions with runtime or required project artifacts; retain child-theme code, built assets, `mb-json/`, and project-approved MB Views reference files
 - run final functional QA in LocalWP
 - export the local database with a migration plugin
 - confirm the uploads library is included in the migration package when needed

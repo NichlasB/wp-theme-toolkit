@@ -10,6 +10,14 @@ Stable delegation logic:
 - Use Codex for bounded implementation and pattern-based transformation
 - Use a standards-oriented model for accessibility and written review quality
 - Use a deeper judgment-oriented model for high-stakes launch decisions
+- Before handing code to a lower-capability or unfamiliar model, run
+  @INSTALL_AGENT_GUARDRAILS_PROMPT.md and keep its maximum autonomous tier
+  externally assigned
+
+Model capability never grants site, database, deployment, release, or Git
+authority. For a Meta Views Stack project, the installed profile must also
+keep source-controlled view references, active database-resident MB Views,
+placement assignments, and deployment channels distinct.
 
 ---------------------------------------------------------------------------
 CURRENT MODEL LINEUP
@@ -38,6 +46,7 @@ TL;DR: MODEL SELECTION BY TASK
 TASK                         MODEL(S)                    REASONING       PATTERN
 ---------------------------  --------------------------  --------------  ----------
 Project Bootstrap            GPT-5.4                     High            Single
+Agent Guardrail Install      GPT-5.4                     High            Two-phase
 Session Bootstrap            GPT-5.4 Mini or GPT-5.4    Medium-High     Single
 Restore Point Workflow       GPT-5.4 Mini or GPT-5.4    Medium-High     Single
 Design Tokens                GPT-5.4 -> GPT-5.3 Codex   High -> Medium  Single
