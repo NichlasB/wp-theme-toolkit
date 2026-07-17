@@ -30,7 +30,7 @@ Also read session handoff/context files, LocalWP database guidance, Claude Desig
 10. @VIEW_REVIEW_PROMPT.md run
 11. @CSS_CONSISTENCY_AUDIT_PROMPT.md run
 12. @DESIGN_SYSTEM_COMPLIANCE_PROMPT.md run
-13. Pre-launch: run 01 through 06 in order
+13. Pre-launch: run 01 through 05, then 05A, then 06 last
 ```
 
 ## New Chat On Existing Project
@@ -207,6 +207,16 @@ promote to CPT only when the content wants its own lifecycle
 3.  @DESIGN_SYSTEM_COMPLIANCE_PROMPT.md run before larger milestones
 ```
 
+## Runtime Component Testing Or Troubleshooting
+
+Use the standalone workflow when a real WordPress environment is required to reproduce, test, troubleshoot, fix, or retest behavior:
+
+```text
+C:\Users\Captain\Documents\AI Workflows\Task Workflows\WordPress\wordpress-component-testing-troubleshooting-debugging-workflow.md
+```
+
+Route only the focused behavior and evidence question. Keep Site Operations target confirmation and approval gates in force. Do not copy the standalone runtime procedure into this toolkit, and do not require a full runtime component pass for static presentation-only work; record the not-applicable rationale.
+
 ## Pre-Launch Order
 
 | # | Prompt | What It Catches |
@@ -216,7 +226,10 @@ promote to CPT only when the content wants its own lifecycle
 | 03 | SEO Review | heading hierarchy, metadata, image and schema issues |
 | 04 | Performance Review | image sizes, lazy loading, CSS efficiency |
 | 05 | Cross-Browser QA | CSS support issues, fallback gaps, rendering risks |
-| 06 | Final Checklist | forms, links, analytics, favicon, 404, redirects |
+| 05A | First-Party Security Review | first-party trust boundaries, input/output handling, authorization, data access, runtime handoffs |
+| 06 | Final Checklist | 05A status, runtime disposition, forms, links, analytics, favicon, 404, redirects |
+
+Prompt `06` remains last. If `05A` identifies behavior that static review cannot prove, complete the focused standalone runtime handoff before final prompt `06`.
 
 ## Common Tooling Workflow
 
@@ -228,6 +241,7 @@ promote to CPT only when the content wants its own lifecycle
 | Restore point | GPT-5.4 Mini or GPT-5.4 | Preview before rollback |
 | Project bootstrap | GPT-5.4 | Best when planning and file generation happen together |
 | New page / new CPT | GPT-5.4 then GPT-5.3 Codex | Explore first, then implement |
+| 05A first-party security | GPT-5.4 then GPT-5.3 Codex | Phase 1 maps trust boundaries at High reasoning; Phase 2 applies only approved bounded fixes at Medium |
 | Toolkit lessons audit | GPT-5.4 then GPT-5.3 Codex | Use when a working chat exposed reusable toolkit lessons or repeated mistakes |
 | Launch reviews | GPT-5.4, Sonnet, or stronger judgment model as needed | Use deeper review for accessibility and final launch judgment |
 | LocalWP reverse refresh | GPT-5.4 or GPT-5.4 Mini | Use the larger model when source/target context is incomplete or the refresh has unusual DB/upload risks |
@@ -294,6 +308,12 @@ Run launch sequence starting at step 01:
 
 ```text
 @01-RESPONSIVE_QA_PROMPT.md run
+```
+
+Run the first-party security review after prompt 05:
+
+```text
+@05A-SECURITY_REVIEW_PROMPT.md run
 ```
 
 Git operations:

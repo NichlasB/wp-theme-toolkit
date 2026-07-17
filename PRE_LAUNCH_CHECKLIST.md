@@ -13,7 +13,7 @@ Track bootstrap workflows, build workflows, review workflows, and pre-launch rev
 
 - Setup & Build - project bootstrap, session bootstrap, tokens, pages, and CPT work
 - Review Workflows - view review and design-system audits
-- Pre-Launch Reviews - the ordered 01-06 launch sequence
+- Pre-Launch Reviews - the ordered `01` through `05`, `05A`, then `06` launch sequence
 - Launch Notes - final notes, blockers, or follow-up work
 
 ---
@@ -50,6 +50,7 @@ Track bootstrap workflows, build workflows, review workflows, and pre-launch rev
 | 03 | SEO Review | [ ] | | |
 | 04 | Performance Review | [ ] | | |
 | 05 | Cross-Browser QA | [ ] | | |
+| 05A | First-Party Security Review | [ ] | | |
 | 06 | Final Checklist | [ ] | | |
 
 ### Launch Notes
@@ -95,6 +96,7 @@ Track bootstrap workflows, build workflows, review workflows, and pre-launch rev
 | 03 | SEO Review | [ ] | | |
 | 04 | Performance Review | [ ] | | |
 | 05 | Cross-Browser QA | [ ] | | |
+| 05A | First-Party Security Review | [ ] | | |
 | 06 | Final Checklist | [ ] | | |
 
 ### Launch Notes
@@ -140,6 +142,7 @@ Track bootstrap workflows, build workflows, review workflows, and pre-launch rev
 | 03 | SEO Review | [ ] | | |
 | 04 | Performance Review | [ ] | | |
 | 05 | Cross-Browser QA | [ ] | | |
+| 05A | First-Party Security Review | [ ] | | |
 | 06 | Final Checklist | [ ] | | |
 
 ### Launch Notes
@@ -185,6 +188,7 @@ Track bootstrap workflows, build workflows, review workflows, and pre-launch rev
 | 03 | SEO Review | [ ] | | |
 | 04 | Performance Review | [ ] | | |
 | 05 | Cross-Browser QA | [ ] | | |
+| 05A | First-Party Security Review | [ ] | | |
 | 06 | Final Checklist | [ ] | | |
 
 ### Launch Notes
@@ -230,6 +234,7 @@ Track bootstrap workflows, build workflows, review workflows, and pre-launch rev
 | 03 | SEO Review | [ ] | | |
 | 04 | Performance Review | [ ] | | |
 | 05 | Cross-Browser QA | [ ] | | |
+| 05A | First-Party Security Review | [ ] | | |
 | 06 | Final Checklist | [ ] | | |
 
 ### Launch Notes
@@ -243,4 +248,4 @@ Track bootstrap workflows, build workflows, review workflows, and pre-launch rev
 
 ## Next Step After Pre-Launch
 
-When a project passes the 01-06 review sequence, continue with `DEPLOYMENT_CHECKLIST.md` and run `@GRIDPANE_DEPLOYMENT_PROMPT.md run`.
+When a project passes prompts `01` through `05`, `05A`, and final prompt `06`, continue with `DEPLOYMENT_CHECKLIST.md` and run `@GRIDPANE_DEPLOYMENT_PROMPT.md run`.

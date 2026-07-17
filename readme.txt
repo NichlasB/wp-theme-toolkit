@@ -31,8 +31,8 @@ Primary workflow:
 11. Run d4-prompts/ds7-maintenance/TOOLKIT_LESSONS_AUDIT_PROMPT.md against wp-theme-toolkit when a working chat reveals reusable toolkit lessons
 12. Build with d4-prompts/ds2-build/
 13. Review with d4-prompts/ds3-review/
-14. Launch-check with d4-prompts/ds4-pre-launch/01 through 06
-15. Run d4-prompts/ds5-deploy/GRIDPANE_DEPLOYMENT_PROMPT.md for the first LocalWP-to-GridPane launch
+14. Launch-check with prompts 01 through 05, then 05A-SECURITY_REVIEW_PROMPT.md, then 06-FINAL_CHECKLIST_PROMPT.md last
+15. Run d4-prompts/ds5-deploy/GRIDPANE_DEPLOYMENT_PROMPT.md for the first LocalWP-to-GridPane launch only after 05A, any applicable runtime evidence, and final prompt 06 are complete
 16. Run d4-prompts/ds5-deploy/POST_LAUNCH_GRIDPANE_UPDATE_PROMPT.md for incremental staging or production updates after launch
 17. Run d4-prompts/ds5-deploy/LOCALWP_REVERSE_REFRESH_PROMPT.md when LocalWP needs current GridPane database content or missing uploads
 
@@ -44,6 +44,12 @@ Shared workflow boundary:
 - move a prompt into wp-workflow-toolkit only when the workflow intent, execution contract, and safety assumptions stay materially the same across both toolkits
 - keep a prompt local when theme-specific targets, scan surfaces, release rules, or output formats would otherwise dominate the file
 - update the shared canonical source first; update the local theme wrapper or adapter only when the theme-specific supplement changes
+
+Security and runtime boundary:
+- d4-prompts/ds4-pre-launch/05A-SECURITY_REVIEW_PROMPT.md reviews first-party executable behavior in the child theme or site project
+- confirmed WordPress runtime testing and troubleshooting belongs to C:\Users\Captain\Documents\AI Workflows\Task Workflows\WordPress\wordpress-component-testing-troubleshooting-debugging-workflow.md
+- static presentation-only work may record runtime component testing as not applicable with a concrete rationale
+- 06-FINAL_CHECKLIST_PROMPT.md remains the last pre-launch gate
 
 Repository structure:
 - START_HERE_MASTER_WORKFLOW.md root router for new, stale, handoff, build, QA, deployment, and toolkit-improvement sessions
@@ -57,6 +63,7 @@ Important setup note:
 - d1-setup/LOCALWP_DATABASE_ACCESS_WORKFLOW.md is the canonical LocalWP SQL access guide for fresh chats and migration work on Windows
 
 Current release highlights:
+- Add the first-party 05A security review, conditional standalone runtime-testing bridge, and 01-05 -> 05A -> 06 launch order
 - Add the start-here router, project-status recovery, guided execution, and toolkit lessons workflows
 - Add Claude Design-to-MVS handoff and responsive typography-control guidance
 - Add and harden LocalWP reverse refresh with local-data review, utf8mb4 protection, plugin reconciliation, and local-tool preservation

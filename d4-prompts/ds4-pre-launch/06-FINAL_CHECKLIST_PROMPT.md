@@ -16,6 +16,8 @@ Read:
 - `_TASK_RUNNER.md`
 - `_project-context.md`
 - `PRE_LAUNCH_CHECKLIST.md`
+- the completed `05A-SECURITY_REVIEW_PROMPT.md` result
+- `C:\Users\Captain\Documents\AI Workflows\Task Workflows\WordPress\wordpress-component-testing-troubleshooting-debugging-workflow.md` only when runtime component testing was applicable
 
 ## Checklist
 
@@ -39,6 +41,16 @@ Read:
 - [ ] Placement map and `_project-context.md` reflect final live assignments
 - [ ] Local reference files still match what is live in WordPress admin
 
+### 6. Security and runtime evidence
+- [ ] The final `05A` status is recorded as `Clean`, `No updates needed`, `Partially verified`, or `Blocked`
+- [ ] Any unresolved `05A` finding or unavailable security evidence is identified as a launch blocker
+- [ ] Runtime component testing has exactly one disposition: `Applicable - passed`, `Not applicable`, or `Blocked`
+- [ ] An `Applicable - passed` disposition points to focused evidence from the standalone WordPress component-testing workflow
+- [ ] A `Not applicable` disposition includes a concrete rationale, such as presentation-only work with no meaningful executable behavior
+- [ ] A `Blocked` disposition states what remains unproven and is treated as a launch blocker
+
+This final gate verifies existing evidence; it does not initiate broad adversarial tests against a live site. If focused runtime evidence is missing, route the case back through the standalone workflow and follow its Site Operations target-confirmation and approval gates.
+
 ## Output Format
 
 ```text
@@ -46,12 +58,15 @@ Checklist items reviewed: [count]
 Open launch blockers: [count]
 Resolved during review: [count]
 Remaining follow-ups: [count]
+Final 05A status: [Clean / No updates needed / Partially verified / Blocked]
+Runtime component testing: [Applicable - passed / Not applicable / Blocked]
+Runtime evidence or rationale: [reference or concise explanation]
 ```
 
 For each blocker or follow-up:
 
 ```text
-TYPE: [Forms / Links / Assets / Analytics / 404 and Redirects / Context Sync]
+TYPE: [Forms / Links / Assets / Analytics / 404 and Redirects / Context Sync / Security / Runtime Testing]
 ISSUE: [description]
 ACTION: [Resolved / Flagged / Needs manual review]
 ```

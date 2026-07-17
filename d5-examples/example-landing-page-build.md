@@ -78,7 +78,11 @@ Run these in order:
 3. `@03-SEO_REVIEW_PROMPT.md run`
 4. `@04-PERFORMANCE_REVIEW_PROMPT.md run`
 5. `@05-CROSS_BROWSER_QA_PROMPT.md run`
-6. `@06-FINAL_CHECKLIST_PROMPT.md run`
+6. `@05A-SECURITY_REVIEW_PROMPT.md run`
+7. When first-party forms, handlers, queries, redirects, or other behavior need a confirmed WordPress runtime, use `C:\Users\Captain\Documents\AI Workflows\Task Workflows\WordPress\wordpress-component-testing-troubleshooting-debugging-workflow.md`
+8. `@06-FINAL_CHECKLIST_PROMPT.md run` last
+
+For a presentation-only landing page with no meaningful executable behavior, record why runtime component testing is not applicable instead of manufacturing a ceremonial full runtime pass.
 
 ## 9. Go Live Preparation
 
@@ -88,4 +92,7 @@ Before launch, confirm:
 - analytics is connected
 - the 404 page is styled
 - redirects are documented
+- the final `05A` status is `Clean` or `No updates needed`, with no unresolved launch blocker
+- runtime component testing is recorded as `Applicable - passed` or `Not applicable` with rationale
+- final prompt `06` has passed
 - Git is clean and the local reference copies match the live templates

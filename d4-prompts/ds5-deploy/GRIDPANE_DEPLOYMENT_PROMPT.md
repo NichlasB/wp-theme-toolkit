@@ -12,7 +12,7 @@ It is a deployment workflow, not a site-bootstrap workflow.
 
 ## Purpose
 
-Run this after build work, reviews, and the 01-06 pre-launch sequence are complete.
+Run this after build work, reviews, and the complete pre-launch sequence: prompts `01` through `05`, then `05A-SECURITY_REVIEW_PROMPT.md`, then `06-FINAL_CHECKLIST_PROMPT.md` last.
 
 Use it to:
 - confirm the local site is ready to ship
@@ -176,6 +176,9 @@ When creating or updating `gridpane-deploy-context.md`, keep it concise and oper
 
 ### Phase 1: Prepare the local site
 
+- confirm the pre-launch record shows prompts `01` through `05`, `05A`, and final prompt `06` complete
+- confirm final prompt `06` records a `05A` status of `Clean` or `No updates needed`, with no unresolved launch blocker, and a runtime component-testing disposition of `Applicable - passed` or `Not applicable` with rationale
+- stop before deployment when `05A`, runtime component testing, or final prompt `06` is blocked
 - confirm all child-theme code is committed and pushed to GitHub
 - confirm the child-theme deploy surface is production-ready and does not include tracked non-runtime files the user does not want on GridPane
 - if a child-theme `.distignore` file exists, use it as the baseline exclusion rule for any clean deployment copy
@@ -186,6 +189,8 @@ When creating or updating `gridpane-deploy-context.md`, keep it concise and oper
 Do not continue if the child-theme repo has unreviewed local changes.
 
 Do not continue if the child-theme deploy surface still includes local-only planning notes, temporary workflow files, migration runbooks, or maintenance utilities the user does not want on the server.
+
+Do not use deployment or production verification as permission to run broad adversarial, exploit, resource-exhaustion, or state-corruption tests against the live site. Any required focused runtime testing must use the standalone WordPress component-testing workflow with its Site Operations target and approval gates.
 
 ### Phase 2: Set up the GridPane server
 

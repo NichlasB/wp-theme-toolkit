@@ -73,7 +73,9 @@ Do not turn this into a full-project audit unless the user asked for that. Keep 
 ### 6. Escalation rules
 - [ ] If multiple views changed or CSS drift appears widespread, run `CSS_CONSISTENCY_AUDIT_PROMPT.md`
 - [ ] If the issues point to broader pattern drift, run `DESIGN_SYSTEM_COMPLIANCE_PROMPT.md`
-- [ ] If this review is happening near launch, remind that the six-step pre-launch sequence is still required
+- [ ] If the view exposes a real WordPress behavior or reproducible defect that source review cannot prove, route the focused test or troubleshooting case to `C:\Users\Captain\Documents\AI Workflows\Task Workflows\WordPress\wordpress-component-testing-troubleshooting-debugging-workflow.md`
+- [ ] Do not require full runtime component testing for static presentation-only changes; record why it is not applicable
+- [ ] If this review is happening near launch, remind that prompts `01` through `05`, then `05A-SECURITY_REVIEW_PROMPT.md`, then `06-FINAL_CHECKLIST_PROMPT.md` last are still required
 
 ---
 

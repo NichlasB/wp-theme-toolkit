@@ -70,3 +70,10 @@ The workflow is intentionally content-facing:
 Uploads are additive by default because local media may include temporary test files, local-only QA artifacts, or work-in-progress assets that should not be deleted or overwritten during a content refresh. Overwriting uploads requires explicit approval, and deletion is still outside the default workflow.
 
 The local database review is a warning layer, not a merge layer. It can surface recent posts, pages, attachments, content blocks, MB Views, counts, and key options before import, but it cannot prove that every local-only edit was found. If the review finds local work that matters, stop and preserve it manually before pulling the GridPane database down.
+
+### Q: How do the 05A security review and the standalone WordPress component workflow fit together?
+A: Use `@05A-SECURITY_REVIEW_PROMPT.md run` for the bounded pre-launch review of first-party executable behavior in the child theme or site project. It owns source-level security scope, findings, approval-gated fixes, and the decision about which claims still need runtime evidence.
+
+Use `C:\Users\Captain\Documents\AI Workflows\Task Workflows\WordPress\wordpress-component-testing-troubleshooting-debugging-workflow.md` when a confirmed WordPress environment is needed to reproduce, test, troubleshoot, fix, and retest actual behavior. The standalone workflow owns the runtime procedure and Site Operations gates; `05A` preserves the handoff question and consumes the resulting evidence.
+
+Do not duplicate the standalone steps inside the theme toolkit. For static presentation-only work with no meaningful executable behavior, record why runtime component testing is not applicable and continue with the relevant visual, source, and pre-launch checks. Prompt `06` remains the final operational gate and records the final `05A` status plus one runtime disposition: passed, not applicable with rationale, or blocked.

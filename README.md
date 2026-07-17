@@ -24,6 +24,8 @@ The goal: build launch-ready WordPress sites with a repeatable AI workflow, whil
 - a clear boundary between MB Views template logic and Blocksy Content Block placement
 - reusable session bootstrap, session handoff, and restore-point workflows
 - a local session-bootstrap adapter plus compatibility wrappers for shared workflow prompts sourced from `wp-workflow-toolkit`, while keeping local `@filename` usage unchanged
+- a bounded first-party security review before the final operational checklist
+- a conditional handoff to the standalone WordPress component workflow when real runtime behavior needs testing or troubleshooting
 
 Shared workflow note: `SESSION_BOOTSTRAP_PROMPT.md` now combines theme-specific scan/output rules with the shared bootstrap core in `wp-workflow-toolkit`. `GUIDED_EXECUTION_PROMPT.md`, `SESSION_HANDOFF_PROMPT.md`, `RESTORE_POINT_PROMPT.md`, and `TOOLKIT_LESSONS_AUDIT_PROMPT.md` remain local prompt names but are thin wrappers around canonical shared sources there.
 
@@ -56,7 +58,7 @@ Add this repository and your target site project to the same IDE workspace.
 1. Run `@START_HERE_MASTER_WORKFLOW.md run`
 2. Follow the recommended route into project intake, Claude Design handoff, project bootstrap, token setup, page/CPT build, review, deployment, or maintenance
 3. Continue with `@DESIGN_TOKENS_PROMPT.md run`, `@DESIGN_HANDOFF_TO_MVS_PROMPT.md run`, `@PAGE_SCOPING_CHECKLIST_PROMPT.md run`, `@NEW_PAGE_PROMPT.md run`, or `@NEW_CPT_PROMPT.md run`
-4. Run the review prompts and the pre-launch sequence `@01-RESPONSIVE_QA_PROMPT.md run` through `@06-FINAL_CHECKLIST_PROMPT.md run`
+4. Run the review prompts and the pre-launch sequence: prompts `01` through `05`, `@05A-SECURITY_REVIEW_PROMPT.md run`, then `@06-FINAL_CHECKLIST_PROMPT.md run` last
 5. Run `@GRIDPANE_DEPLOYMENT_PROMPT.md run`
 6. Run `@LOCALWP_REVERSE_REFRESH_PROMPT.md run` after launch when LocalWP needs fresh GridPane content or missing uploads
 7. Run `@GIT_OPERATIONS_PROMPT.md run` when you want assisted commit, push, or release help for either the toolkit repo or the child theme repo
@@ -84,16 +86,23 @@ Run these prompts in order before launch:
 3. `@03-SEO_REVIEW_PROMPT.md run`
 4. `@04-PERFORMANCE_REVIEW_PROMPT.md run`
 5. `@05-CROSS_BROWSER_QA_PROMPT.md run`
-6. `@06-FINAL_CHECKLIST_PROMPT.md run`
+6. `@05A-SECURITY_REVIEW_PROMPT.md run`
+7. `@06-FINAL_CHECKLIST_PROMPT.md run`
+
+Prompt `05A` reviews first-party executable behavior in the child theme or site project. When a finding or defect needs a confirmed WordPress runtime, use `C:\Users\Captain\Documents\AI Workflows\Task Workflows\WordPress\wordpress-component-testing-troubleshooting-debugging-workflow.md` and return its evidence to the security or final-checklist workflow. Do not require a ceremonial full runtime pass for static presentation-only work; record the not-applicable rationale instead.
 
 ## Repository Structure
+
+Current inventory: `60` versionable files, including `25` prompt files and `7` files in `d4-prompts/ds4-pre-launch/`.
 
 ```text
 wp-theme-toolkit/
 |
+|-- .gitignore
 |-- CHANGELOG.md
 |-- DEPLOYMENT_CHECKLIST.md
 |-- LICENSE
+|-- MVS_TYPOGRAPHY_CONTROLS_IMPLEMENTATION_PLAN.md
 |-- PRE_LAUNCH_CHECKLIST.md
 |-- PROJECT_CONTEXT_REFERENCE.txt
 |-- README.md
@@ -154,6 +163,7 @@ wp-theme-toolkit/
 |   |   |-- 03-SEO_REVIEW_PROMPT.md
 |   |   |-- 04-PERFORMANCE_REVIEW_PROMPT.md
 |   |   |-- 05-CROSS_BROWSER_QA_PROMPT.md
+|   |   |-- 05A-SECURITY_REVIEW_PROMPT.md
 |   |   `-- 06-FINAL_CHECKLIST_PROMPT.md
 |   |
 |   |-- ds5-deploy/
@@ -182,7 +192,7 @@ wp-theme-toolkit/
 5. Generate MB Views Twig and CSS from the field model
 6. Record placement decisions in the assignment map
 7. Refine the live result with Element to LLM
-8. Run review prompts before launch
+8. Run review prompts, prompts `01` through `05`, the first-party `05A` security review, and final prompt `06`; use the standalone WordPress component workflow only when real runtime evidence is needed
 9. Deploy the first launch with the GridPane workflow and track rollout in `DEPLOYMENT_CHECKLIST.md`
 10. Use the post-launch GridPane update workflow for smaller follow-up staging or production pushes after launch
 11. Use the LocalWP reverse refresh workflow when local needs current GridPane database content or missing uploads
@@ -196,7 +206,7 @@ Included in v1:
 - Blocksy child theme workflows
 - Meta Box AIO and MB Views usage
 - project bootstrap, project status snapshots, session bootstrap, and session handoff
-- design tokens, page creation, CPT creation, view reviews, and pre-launch QA
+- design tokens, page creation, CPT creation, view reviews, pre-launch QA, bounded first-party security review, and conditional runtime-testing handoff
 - restore-point safety workflow
 - deployment checklist and GridPane deployment workflow
 - post-launch GridPane update workflow for incremental code, uploads, and selected DB-content pushes
@@ -245,6 +255,10 @@ Reference prompts directly in chat:
 
 ```text
 @VIEW_REVIEW_PROMPT.md run
+```
+
+```text
+@05A-SECURITY_REVIEW_PROMPT.md run
 ```
 
 ```text

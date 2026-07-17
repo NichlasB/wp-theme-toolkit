@@ -109,6 +109,7 @@ Phase boundaries are marked with `<!-- PHASE 1 END -->` in the task file. Stop a
 
 ### Tasks in this category
 
+- 05A-SECURITY_REVIEW_PROMPT.md
 - TOOLKIT_LESSONS_AUDIT_PROMPT.md
 
 ---
@@ -137,7 +138,11 @@ Rules:
 - If the target project does not yet have an entry, create one from the template before finishing
 - Update only the row that matches the completed workflow
 - Preserve older completion dates unless the user explicitly wants to overwrite them
+- For two-phase tasks, mark the workflow complete only after successful Phase 2
+- Exception: if a two-phase task ends at Phase 1 with an explicit final `No updates needed` outcome, it may be recorded as complete with that date
+- For `05A-SECURITY_REVIEW_PROMPT.md`, the exception applies only when Phase 1 explicitly reports `Phase 2 recommendation: No updates needed`, records the proportionate scope and rationale, and has no approved fixes awaiting execution; this is a terminal no-change outcome under the runner, while a normal Phase 1 handoff awaiting Phase 2 is not complete
 - If a task is blocked, do not mark it complete
+- If a task fails, is partially verified, pauses for confirmation, or leaves a required runtime or security blocker unresolved, do not mark it complete
 - `SESSION_HANDOFF_PROMPT.md` is a session-level operational workflow and does not update `PRE_LAUNCH_CHECKLIST.md`
 - `GUIDED_EXECUTION_PROMPT.md` is an orchestration workflow and does not update `PRE_LAUNCH_CHECKLIST.md`
 - `TOOLKIT_LESSONS_AUDIT_PROMPT.md` targets the toolkit itself and does not update `PRE_LAUNCH_CHECKLIST.md` or `DEPLOYMENT_CHECKLIST.md`
@@ -159,6 +164,7 @@ Prompt-to-checklist mapping:
 - `03-SEO_REVIEW_PROMPT.md` -> `Pre-Launch Reviews` -> `03 SEO Review`
 - `04-PERFORMANCE_REVIEW_PROMPT.md` -> `Pre-Launch Reviews` -> `04 Performance Review`
 - `05-CROSS_BROWSER_QA_PROMPT.md` -> `Pre-Launch Reviews` -> `05 Cross-Browser QA`
+- `05A-SECURITY_REVIEW_PROMPT.md` -> `Pre-Launch Reviews` -> `05A First-Party Security Review`
 - `06-FINAL_CHECKLIST_PROMPT.md` -> `Pre-Launch Reviews` -> `06 Final Checklist`
 
 Deployment workflows:

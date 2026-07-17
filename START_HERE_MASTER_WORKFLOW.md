@@ -199,7 +199,10 @@ Route:
 - view/template review -> `@VIEW_REVIEW_PROMPT.md run`
 - multi-view CSS audit -> `@CSS_CONSISTENCY_AUDIT_PROMPT.md run`
 - design-system compliance -> `@DESIGN_SYSTEM_COMPLIANCE_PROMPT.md run`
-- pre-launch sequence -> `@01-RESPONSIVE_QA_PROMPT.md run`
+- pre-launch sequence -> run prompts `01` through `05`, then `@05A-SECURITY_REVIEW_PROMPT.md run`, then `@06-FINAL_CHECKLIST_PROMPT.md run` last
+- confirmed WordPress runtime behavior needs testing or troubleshooting -> `C:\Users\Captain\Documents\AI Workflows\Task Workflows\WordPress\wordpress-component-testing-troubleshooting-debugging-workflow.md`
+
+Use the standalone component workflow only when real WordPress behavior, environment state, or a reproducible defect needs runtime evidence. Do not require a ceremonial full runtime pass for static presentation-only work; record the not-applicable rationale and continue with the relevant source, visual, and pre-launch checks.
 
 ### Mode F: Deploy / Post-Launch / Reverse Refresh
 

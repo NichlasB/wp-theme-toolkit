@@ -6,6 +6,14 @@ The format is based on Keep a Changelog.
 
 ## [Unreleased]
 
+### Added
+- Added `d4-prompts/ds4-pre-launch/05A-SECURITY_REVIEW_PROMPT.md`, a two-phase, first-party security review for executable child-theme and site-project behavior.
+
+### Changed
+- Updated the pre-launch lifecycle to run prompts `01` through `05`, then `05A`, then `06` as the final operational gate.
+- Added a conditional bridge to the standalone WordPress component-testing, troubleshooting, and debugging workflow for behavior that requires a confirmed runtime, while allowing presentation-only work to record a proportionate not-applicable rationale.
+- Registered `05A` in the task runner and pre-launch checklist, added final-checklist runtime dispositions, and made deployment contingent on completed or explicitly not-applicable runtime evidence without authorizing live adversarial testing.
+
 ## [0.2.0] - 2026-07-12
 
 ### Added

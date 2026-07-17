@@ -1,10 +1,15 @@
+Current inventory: 60 versionable files, including 25 prompt files and
+7 files under d4-prompts/ds4-pre-launch/.
+
 wp-theme-toolkit/
+|-- .gitignore
 |-- _TASK_RUNNER.md
 |-- START_HERE_MASTER_WORKFLOW.md
 |-- README.md
 |-- readme.txt
 |-- CHANGELOG.md
 |-- LICENSE
+|-- MVS_TYPOGRAPHY_CONTROLS_IMPLEMENTATION_PLAN.md
 |-- PROJECT_CONTEXT_REFERENCE.txt
 |-- PRE_LAUNCH_CHECKLIST.md
 |-- DEPLOYMENT_CHECKLIST.md
@@ -62,6 +67,7 @@ wp-theme-toolkit/
 |   |   |-- 03-SEO_REVIEW_PROMPT.md
 |   |   |-- 04-PERFORMANCE_REVIEW_PROMPT.md
 |   |   |-- 05-CROSS_BROWSER_QA_PROMPT.md
+|   |   |-- 05A-SECURITY_REVIEW_PROMPT.md
 |   |   `-- 06-FINAL_CHECKLIST_PROMPT.md
 |   |
 |   |-- ds5-deploy/
@@ -92,3 +98,10 @@ Related shared workflow repo that may appear beside this toolkit in the workspac
       behind the local restore-point wrapper
     - d4-prompts/ds3-maintenance/TOOLKIT_LESSONS_AUDIT_PROMPT.md is the
       canonical source behind the local toolkit-lessons wrapper
+
+Related standalone WordPress runtime workflow:
+- C:\Users\Captain\Documents\AI Workflows\Task Workflows\WordPress\
+  wordpress-component-testing-troubleshooting-debugging-workflow.md owns
+  confirmed-runtime testing, troubleshooting, evidence, fixes, and retesting.
+- The theme toolkit references that workflow from 05A and routing surfaces;
+  it does not copy the standalone runtime procedure.

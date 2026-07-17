@@ -51,6 +51,7 @@ Accessibility Review         Sonnet 4.6 or GPT-5.4      Medium-High     Single
 SEO Review                   GPT-5.4                     High            Single
 Performance Review           GPT-5.4 -> Opus 4.6        High            Single
 Cross-Browser QA             GPT-5.4                     High            Single
+First-Party Security 05A     GPT-5.4 -> GPT-5.3 Codex   High -> Medium  Two-phase
 Final Checklist              GPT-5.4                     Medium          Single
 
 ---------------------------------------------------------------------------
@@ -78,6 +79,33 @@ Claude Sonnet 4.6
 Claude Opus 4.6
   - final judgment on harder performance or launch-risk questions
   - situations where missing a serious issue would be costly
+
+---------------------------------------------------------------------------
+05A FIRST-PARTY SECURITY REVIEW
+---------------------------------------------------------------------------
+
+Phase 1: GPT-5.4 at High reasoning
+  - map first-party executable surfaces and trust boundaries
+  - distinguish source findings from claims that require WordPress runtime
+    evidence
+  - classify severity, exclusions, and the smallest approval-ready Phase 2
+    plan
+  - use Extra High only for unusually large, tangled, or integration-heavy
+    site projects
+
+Phase 2: GPT-5.3 Codex at Medium reasoning
+  - apply the approved bounded fixes and affected static checks
+  - preserve the Phase 1 scope, unrelated user changes, and first-party
+    ownership boundary
+  - hand confirmed-runtime verification to the standalone WordPress component
+    workflow instead of inventing local runtime steps
+  - return to GPT-5.4 at High when a finding changes architecture, expands
+    scope, or requires a new security judgment
+
+Optional second look:
+  - use Claude Opus 4.6 at High, or GPT-5.4 at High for an OpenAI-only
+    workflow, when a high-impact authorization, data-exposure, or integration
+    decision remains ambiguous
 
 ---------------------------------------------------------------------------
 REASONING LEVEL GUIDE

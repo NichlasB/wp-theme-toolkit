@@ -1,7 +1,7 @@
 =======================================================================
 WP THEME TOOLKIT - PROJECT CONTEXT REFERENCE
 =======================================================================
-Generated: June 5, 2026
+Generated: July 17, 2026
 Purpose: Compact repository map and context-transfer reference for AI
 assistants working with the Meta Views Stack toolkit.
 
@@ -19,8 +19,10 @@ Purpose: Provide structured workflow documents for start-here routing,
          project bootstrap, project status snapshots, Claude Design and visual
          handoff conversion, session bootstrap, session handoff, restore
          points, design-token generation, new page and CPT creation, view
-         review, launch-readiness QA, deployment, LocalWP reverse refresh, Git
-         operations, post-launch guidance, and toolkit retrospective learning.
+         review, launch-readiness QA, first-party security review, conditional
+         WordPress runtime testing handoff, deployment, LocalWP reverse
+         refresh, Git operations, post-launch guidance, and toolkit
+         retrospective learning.
 
 Target Audience: WordPress developers building sites with the Meta Views
                  Stack in VS Code, Cursor, Windsurf, Copilot, or Codex-like
@@ -34,6 +36,8 @@ CURRENT SHAPE
 - Dominant file types: Markdown, text references, helper scripts
 - Runtime code surface: Minimal; operational logic mainly lives in
   d2-scripts/restore-point.ps1 and d2-scripts/restore-point.sh
+- Repository inventory: 60 versionable files, including 25 prompt files and
+  7 files under d4-prompts/ds4-pre-launch/
 - Target domain: Blocksy child-theme site projects using Meta Box AIO,
   MB Views, and Git-backed child-theme code deployment
 - Master routing: START_HERE_MASTER_WORKFLOW.md is the root entry point when
@@ -57,7 +61,8 @@ Core workflow order:
 5. RESTORE_POINT_PROMPT.md before edit-heavy work
 6. Build prompts in ds2-build/
 7. Review prompts in ds3-review/
-8. Pre-launch prompts 01-06 in ds4-pre-launch/
+8. Pre-launch prompts 01 through 05, then 05A, then final prompt 06 in
+   ds4-pre-launch/
 9. GRIDPANE_DEPLOYMENT_PROMPT.md in ds5-deploy/
 10. LOCALWP_REVERSE_REFRESH_PROMPT.md when local needs current GridPane
     content or missing uploads
@@ -76,11 +81,13 @@ wp-theme-toolkit/
 |-- README.md
 |-- readme.txt
 |-- CHANGELOG.md
+|-- .gitignore
 |-- _TASK_RUNNER.md
 |-- PROJECT_CONTEXT_REFERENCE.txt
 |-- PRE_LAUNCH_CHECKLIST.md
 |-- DEPLOYMENT_CHECKLIST.md
 |-- TOOLKIT_QA_REFERENCE.md
+|-- MVS_TYPOGRAPHY_CONTROLS_IMPLEMENTATION_PLAN.md
 |-- LICENSE
 |
 |-- d1-setup/
@@ -115,6 +122,13 @@ wp-theme-toolkit/
 |   |   `-- DESIGN_HANDOFF_TO_MVS_PROMPT.md
 |   |-- ds3-review/
 |   |-- ds4-pre-launch/
+|   |   |-- 01-RESPONSIVE_QA_PROMPT.md
+|   |   |-- 02-ACCESSIBILITY_REVIEW_PROMPT.md
+|   |   |-- 03-SEO_REVIEW_PROMPT.md
+|   |   |-- 04-PERFORMANCE_REVIEW_PROMPT.md
+|   |   |-- 05-CROSS_BROWSER_QA_PROMPT.md
+|   |   |-- 05A-SECURITY_REVIEW_PROMPT.md
+|   |   `-- 06-FINAL_CHECKLIST_PROMPT.md
 |   |-- ds5-deploy/
 |   |-- ds6-git/
 |   `-- ds7-maintenance/
@@ -173,6 +187,12 @@ DESIGN_SYSTEM_GUIDE.md
 WORKFLOW_QUICK_REFERENCE.md
   - Fast route map for operating the toolkit day to day
 
+05A-SECURITY_REVIEW_PROMPT.md
+  - Two-phase, first-party security review for executable child-theme or
+    site-project behavior
+  - Hands confirmed runtime questions to the standalone WordPress component
+    workflow and leaves prompt 06 as the final operational gate
+
 =======================================================================
 WORKING ASSUMPTIONS
 =======================================================================
@@ -193,6 +213,12 @@ WORKING ASSUMPTIONS
   Gutenberg only when the editability level calls for it.
 - Code moves through Git; content and settings move through a database
   migration workflow.
+- Runtime testing and troubleshooting instructions stay canonical in
+  C:\Users\Captain\Documents\AI Workflows\Task Workflows\WordPress\
+  wordpress-component-testing-troubleshooting-debugging-workflow.md; the
+  theme toolkit references that workflow instead of duplicating it.
+- Presentation-only work does not require ceremonial full runtime component
+  testing when the not-applicable rationale is recorded.
 - TOOLKIT_LESSONS_AUDIT_PROMPT.md is intentionally excluded from
   PRE_LAUNCH_CHECKLIST.md and DEPLOYMENT_CHECKLIST.md because it targets the
   toolkit itself rather than a site project.
